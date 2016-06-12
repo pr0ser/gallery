@@ -31,7 +31,8 @@ class PhotoAdmin(admin.ModelAdmin):
         (_('Photo metadata'),
             {'fields': ('title',
                         'description',
-                        'file_hash',)
+                        'file_hash',
+                        'preview_img',)
              }
          ),
     )

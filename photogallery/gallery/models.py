@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from wand.image import Image
 import os
 import hashlib
+from django.conf import settings
 
 
 def calc_hash(filename):
@@ -43,6 +45,25 @@ class Photo(models.Model):
     image = models.ImageField(_('Image file'), upload_to=upload_dir)
     description = models.TextField(_('Description'), null=True, blank=True)
     file_hash = models.CharField(_('SHA-256'), max_length=255, null=True, blank=True)
+    preview_img = models.ImageField(_('Preview image'), null=True, blank=True)
+    hidpi_preview_img = models.ImageField(_('High DPI preview image'), null=True, blank=True)
+    thumbnaiL_img = models.ImageField(_('Thumbnail image'), null=True, blank=True)
+
+    def filename(self):
+        return os.path.basename(self.image.name)
+
+    def preview_dir(self):
+        preview_dir = os.path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
+        if not os.path.exists(preview_dir):
+            os.makedirs(preview_dir)
+        return os.path.join(os.path.relpath(preview_dir, start=settings.MEDIA_ROOT))
+
+    def create_preview_image(self):
+        with Image(filename=self.image.path) as img:
+            img.transform(resize='1170x1170')
+            img.compression_quality = 80
+            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), self.filename()))
+            self.preview_img = os.path.join(self.preview_dir(), self.filename())
 
     def __str__(self):
         return self.title
@@ -51,14 +72,14 @@ class Photo(models.Model):
         self.slug = slugify(self.title)
         super(Photo, self).save(*args, **kwargs)
         self.file_hash = calc_hash(self.image.path)
+        self.create_preview_image()
         super(Photo, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         if os.path.isfile(self.image.path):
-            try:
-                os.remove(self.image.path)
-            except:
-                raise
+            os.remove(self.image.path)
+        if os.path.isfile(self.preview_img.path):
+            os.remove(self.preview_img.path)
         super(Photo, self).delete(*args, **kwargs)
 
 
