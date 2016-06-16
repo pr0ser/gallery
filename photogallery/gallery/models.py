@@ -53,6 +53,10 @@ class Photo(models.Model):
     def filename(self):
         return os.path.basename(self.image.name)
 
+    def preview_filename(self):
+        fname = os.path.basename(self.image.name)
+        return 'preview_' + fname
+
     def preview_dir(self):
         preview_dir = os.path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
         if not os.path.exists(preview_dir):
@@ -64,8 +68,8 @@ class Photo(models.Model):
             with Image(filename=self.image.path) as img:
                 img.transform(resize='1170x1170')
                 img.compression_quality = 80
-                img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), 'preview_' + self.filename()))
-                self.preview_img = os.path.join(self.preview_dir(), self.filename())
+                img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), self.preview_filename()))
+                self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
 
     def __str__(self):
         return self.title
