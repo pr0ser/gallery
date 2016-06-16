@@ -43,11 +43,12 @@ class Photo(models.Model):
     slug = models.SlugField(_('Slug'))
     date = models.DateTimeField(_('Date'), auto_now_add=True)
     image = models.ImageField(_('Image file'), upload_to=upload_dir)
-    description = models.TextField(_('Description'), null=True, blank=True)
-    file_hash = models.CharField(_('SHA-256'), max_length=255, null=True, blank=True)
-    preview_img = models.ImageField(_('Preview image'), null=True, blank=True)
-    hidpi_preview_img = models.ImageField(_('High DPI preview image'), null=True, blank=True)
-    thumbnaiL_img = models.ImageField(_('Thumbnail image'), null=True, blank=True)
+    description = models.TextField(_('Description'), blank=True)
+    file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
+    preview_img = models.ImageField(_('Preview image'), blank=True)
+    hidpi_preview_img = models.ImageField(_('High DPI preview image'), blank=True)
+    thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True)
+    hidpi_thumbnail_img = models.ImageField(_('High DPI thumbnail image'), blank=True)
 
     def filename(self):
         return os.path.basename(self.image.name)
@@ -59,11 +60,12 @@ class Photo(models.Model):
         return os.path.join(os.path.relpath(preview_dir, start=settings.MEDIA_ROOT))
 
     def create_preview_image(self):
-        with Image(filename=self.image.path) as img:
-            img.transform(resize='1170x1170')
-            img.compression_quality = 80
-            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), self.filename()))
-            self.preview_img = os.path.join(self.preview_dir(), self.filename())
+        if self.image.height > 1170 or self.image.width > 1170:
+            with Image(filename=self.image.path) as img:
+                img.transform(resize='1170x1170')
+                img.compression_quality = 80
+                img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), 'preview_' + self.filename()))
+                self.preview_img = os.path.join(self.preview_dir(), self.filename())
 
     def __str__(self):
         return self.title
@@ -78,8 +80,11 @@ class Photo(models.Model):
     def delete(self, *args, **kwargs):
         if os.path.isfile(self.image.path):
             os.remove(self.image.path)
-        if os.path.isfile(self.preview_img.path):
-            os.remove(self.preview_img.path)
+        if self.preview_img:
+            try:
+                os.remove(self.preview_img.path)
+            except Exception:
+                pass
         super(Photo, self).delete(*args, **kwargs)
 
 
