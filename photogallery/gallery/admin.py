@@ -32,7 +32,8 @@ class PhotoAdmin(admin.ModelAdmin):
             {'fields': ('title',
                         'description',
                         'file_hash',
-                        'preview_img',)
+                        'preview_img',
+                        'hidpi_preview_img')
              }
          ),
     )

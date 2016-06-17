@@ -57,19 +57,40 @@ class Photo(models.Model):
         fname = os.path.basename(self.image.name)
         return 'preview_' + fname
 
+    def hidpi_preview_filename(self):
+        fname = os.path.basename(self.image.name)
+        return 'hidpipreview_' + fname
+
+    def thumbnaiL_img_filename(self):
+        fname = os.path.basename(self.image.name)
+        return 'thumb_' + fname
+
+    def hidpi_thumbnaiL_img_filename(self):
+        fname = os.path.basename(self.image.name)
+        return 'hidpithumb_' + fname
+
     def preview_dir(self):
         preview_dir = os.path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
         if not os.path.exists(preview_dir):
             os.makedirs(preview_dir)
-        return os.path.join(os.path.relpath(preview_dir, start=settings.MEDIA_ROOT))
+        return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
-    def create_preview_image(self):
+    def preview_relative_path(self, filename):
+        return os.path.join(self.preview_dir(), filename)
+
+    def create_preview_image(self, size, quality, image_filename):
+        with Image(filename=self.image.path) as img:
+            img.transform(resize=size)
+            img.compression_quality = quality
+            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), image_filename))
+
+    def create_previews(self):
         if self.image.height > 1170 or self.image.width > 1170:
-            with Image(filename=self.image.path) as img:
-                img.transform(resize='1170x1170')
-                img.compression_quality = 80
-                img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), self.preview_filename()))
-                self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
+            self.create_preview_image(size='1170x1170', quality=80, image_filename=self.preview_filename())
+            self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
+        if self.image.height > 2340 or self.image.width > 2340:
+            self.create_preview_image(size='2340x2340', quality=80, image_filename=self.hidpi_preview_filename())
+            self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
 
     def __str__(self):
         return self.title
@@ -78,7 +99,7 @@ class Photo(models.Model):
         self.slug = slugify(self.title)
         super(Photo, self).save(*args, **kwargs)
         self.file_hash = calc_hash(self.image.path)
-        self.create_preview_image()
+        self.create_previews()
         super(Photo, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
