@@ -16,13 +16,13 @@ def calc_hash(filename):
 
 
 class Album(models.Model):
-    parent_album = models.PositiveIntegerField(_('Parent album'), null=True, blank=True)
+    parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
     title = models.CharField(_('Title'), max_length=255)
     date = models.DateField(_('Date'), auto_now_add=True)
-    description = models.TextField(_('Description'), null=True, blank=True)
+    description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'))
-    album_cover = models.CharField(_('Album cover'), max_length=255)
-    sort_order = models.CharField(_('Sort order'), max_length=255, null=True, blank=True)
+    album_cover = models.OneToOneField('Photo', related_name='Photo', null=True, blank=True)
+    sort_order = models.CharField(_('Sort order'), max_length=255, blank=True)
     public = models.BooleanField(_('Public'), default=True)
 
     def __str__(self):
@@ -75,22 +75,38 @@ class Photo(models.Model):
             os.makedirs(preview_dir)
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
-    def preview_relative_path(self, filename):
-        return os.path.join(self.preview_dir(), filename)
-
-    def create_preview_image(self, size, quality, image_filename):
+    def create_preview_image(self, size, quality, output_filename):
         with Image(filename=self.image.path) as img:
             img.transform(resize=size)
-            img.compression_quality = quality
+            if img.format == 'JPEG':
+                img.compression_quality = quality
+            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_filename))
+
+    def create_thumbnail(self, size, quality, image_filename):
+        if self.image.width > self.image.height:
+            resize = 'x{}'.format(size)
+        else:
+            resize = '{}x'.format(size)
+        with Image(filename=self.image.path) as img:
+            img.transform(resize=resize)
+            img.crop(width=size, height=size, gravity='center')
+            if img.format == 'JPEG':
+                img.compression_quality = quality
             img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), image_filename))
 
     def create_previews(self):
         if self.image.height > 1170 or self.image.width > 1170:
-            self.create_preview_image(size='1170x1170', quality=80, image_filename=self.preview_filename())
+            self.create_preview_image(size='1170', quality=80, output_filename=self.preview_filename())
             self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
         if self.image.height > 2340 or self.image.width > 2340:
-            self.create_preview_image(size='2340x2340', quality=80, image_filename=self.hidpi_preview_filename())
+            self.create_preview_image(size='2340', quality=75, output_filename=self.hidpi_preview_filename())
             self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
+
+    def create_thumbnails(self):
+        self.create_thumbnail(size=250, quality=65, image_filename=self.thumbnaiL_img_filename())
+        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnaiL_img_filename())
+        self.create_thumbnail(size=500, quality=65, image_filename=self.hidpi_thumbnaiL_img_filename())
+        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnaiL_img_filename())
 
     def __str__(self):
         return self.title
@@ -100,6 +116,7 @@ class Photo(models.Model):
         super(Photo, self).save(*args, **kwargs)
         self.file_hash = calc_hash(self.image.path)
         self.create_previews()
+        self.create_thumbnails()
         super(Photo, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):

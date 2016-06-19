@@ -9,7 +9,6 @@ class AlbumAdmin(admin.ModelAdmin):
         'date',
         'directory',
         'description',
-        'parent_album',
         'public',
         )
 
@@ -33,7 +32,9 @@ class PhotoAdmin(admin.ModelAdmin):
                         'description',
                         'file_hash',
                         'preview_img',
-                        'hidpi_preview_img')
+                        'hidpi_preview_img',
+                        'thumbnail_img',
+                        'hidpi_thumbnail_img',)
              }
          ),
     )
