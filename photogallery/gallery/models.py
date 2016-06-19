@@ -33,10 +33,10 @@ class Album(models.Model):
     def delete_album_dirs(self):
         dirs = [os.path.join(settings.MEDIA_ROOT, 'photos', self.directory),
                 os.path.join(settings.MEDIA_ROOT, 'previews', self.directory)]
-        for dir in dirs:
-            if os.path.isdir(dir):
+        for d in dirs:
+            if os.path.isdir(d):
                 try:
-                    os.rmdir(dir)
+                    os.rmdir(d)
                 except OSError:
                     raise ValidationError(_('Directory is not empty.'))
 
@@ -142,7 +142,7 @@ class Photo(models.Model):
             try:
                 if os.path.isfile(image):
                     os.remove(image)
-            except Exception:
+            except OSError:
                 pass
 
     def __str__(self):
@@ -160,7 +160,6 @@ class Photo(models.Model):
     def delete(self, *args, **kwargs):
         super(Photo, self).delete(*args, **kwargs)
         self.delete_images()
-
 
     class Meta:
         verbose_name = _('photo')
