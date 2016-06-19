@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from wand.image import Image
 import os
@@ -21,9 +22,23 @@ class Album(models.Model):
     date = models.DateField(_('Date'), auto_now_add=True)
     description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'))
-    album_cover = models.OneToOneField('Photo', related_name='Photo', null=True, blank=True)
+    album_cover = models.OneToOneField('Photo',
+                                       related_name='Photo',
+                                       null=True,
+                                       blank=True,
+                                       on_delete=models.SET_NULL)
     sort_order = models.CharField(_('Sort order'), max_length=255, blank=True)
     public = models.BooleanField(_('Public'), default=True)
+
+    def delete_album_dirs(self):
+        dirs = [os.path.join(settings.MEDIA_ROOT, 'photos', self.directory),
+                os.path.join(settings.MEDIA_ROOT, 'previews', self.directory)]
+        for dir in dirs:
+            if os.path.isdir(dir):
+                try:
+                    os.rmdir(dir)
+                except OSError:
+                    raise ValidationError(_('Directory is not empty.'))
 
     def __str__(self):
         return self.title
@@ -31,6 +46,10 @@ class Album(models.Model):
     def save(self, *args, **kwargs):
         self.directory = slugify(self.title)
         super(Album, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super(Album, self).delete(*args, **kwargs)
+        self.delete_album_dirs()
 
 
     class Meta:
@@ -79,13 +98,6 @@ class Photo(models.Model):
         if not os.path.exists(preview_dir):
             os.makedirs(preview_dir)
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
-
-    def has_changed(instance, field):
-        if not instance.pk:
-            return False
-        old_value = instance.__class__._default_manager. \
-            filter(pk=instance.pk).values(field).get()[field]
-        return not getattr(instance, field) == old_value
 
     def create_preview_image(self, size, quality, output_filename):
         with Image(filename=self.image.path) as img:
