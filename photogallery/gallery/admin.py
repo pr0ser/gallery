@@ -6,11 +6,25 @@ from django.utils.translation import ugettext_lazy as _
 class AlbumAdmin(admin.ModelAdmin):
     list_display = (
         'title',
+        'description',
         'date',
         'directory',
-        'description',
+        'parent',
         'public',
         )
+    fieldsets = (
+        (_('Parent album'),
+            {'fields': ('parent',)}
+         ),
+        (_('Album details'),
+            {'fields': ('title',
+                        'description',
+                        'album_cover',
+                        'public',
+                        'sort_order',)
+             }
+         ),
+    )
 
 
 class PhotoAdmin(admin.ModelAdmin):

@@ -28,6 +28,11 @@ class Album(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        self.directory = slugify(self.title)
+        super(Album, self).save(*args, **kwargs)
+
+
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')
@@ -61,11 +66,11 @@ class Photo(models.Model):
         fname = os.path.basename(self.image.name)
         return 'hidpipreview_' + fname
 
-    def thumbnaiL_img_filename(self):
+    def thumbnail_img_filename(self):
         fname = os.path.basename(self.image.name)
         return 'thumb_' + fname
 
-    def hidpi_thumbnaiL_img_filename(self):
+    def hidpi_thumbnail_img_filename(self):
         fname = os.path.basename(self.image.name)
         return 'hidpithumb_' + fname
 
@@ -74,6 +79,13 @@ class Photo(models.Model):
         if not os.path.exists(preview_dir):
             os.makedirs(preview_dir)
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
+
+    def has_changed(instance, field):
+        if not instance.pk:
+            return False
+        old_value = instance.__class__._default_manager. \
+            filter(pk=instance.pk).values(field).get()[field]
+        return not getattr(instance, field) == old_value
 
     def create_preview_image(self, size, quality, output_filename):
         with Image(filename=self.image.path) as img:
@@ -103,10 +115,23 @@ class Photo(models.Model):
             self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
 
     def create_thumbnails(self):
-        self.create_thumbnail(size=250, quality=65, image_filename=self.thumbnaiL_img_filename())
-        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnaiL_img_filename())
-        self.create_thumbnail(size=500, quality=65, image_filename=self.hidpi_thumbnaiL_img_filename())
-        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnaiL_img_filename())
+        self.create_thumbnail(size=250, quality=65, image_filename=self.thumbnail_img_filename())
+        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename())
+        self.create_thumbnail(size=500, quality=65, image_filename=self.hidpi_thumbnail_img_filename())
+        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename())
+
+    def delete_images(self):
+        images = [self.image.path,
+                  self.preview_img.path,
+                  self.hidpi_preview_img.path,
+                  self.thumbnail_img.path,
+                  self.hidpi_thumbnail_img.path]
+        for image in images:
+            try:
+                if os.path.isfile(image):
+                    os.remove(image)
+            except Exception:
+                pass
 
     def __str__(self):
         return self.title
@@ -114,20 +139,15 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Photo, self).save(*args, **kwargs)
-        self.file_hash = calc_hash(self.image.path)
-        self.create_previews()
-        self.create_thumbnails()
-        super(Photo, self).save(*args, **kwargs)
+        if calc_hash(self.image.path) != self.file_hash:
+            self.file_hash = calc_hash(self.image.path)
+            self.create_previews()
+            self.create_thumbnails()
+            super(Photo, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        if os.path.isfile(self.image.path):
-            os.remove(self.image.path)
-        if self.preview_img:
-            try:
-                os.remove(self.preview_img.path)
-            except Exception:
-                pass
         super(Photo, self).delete(*args, **kwargs)
+        self.delete_images()
 
 
     class Meta:
