@@ -51,7 +51,6 @@ class Album(models.Model):
         super(Album, self).delete(*args, **kwargs)
         self.delete_album_dirs()
 
-
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')
