@@ -9,4 +9,4 @@ class index(generic.ListView):
     context_object_name = 'all_albums'
 
     def get_queryset(self):
-        return Album.objects.all()
+        return Album.objects.all().filter(parent=None)

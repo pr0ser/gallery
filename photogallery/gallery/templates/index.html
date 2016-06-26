@@ -1,1 +1,22 @@
-<h1>Hello!</h1>
+{% extends "base.html" %}
+
+{% block title %}Galleria{% endblock %}
+
+{% block content %}
+<div class="col-lg-12">
+    <h1>Gallerian etusivu</h1>
+    <div class="row">
+{% for album in all_albums %}
+      <div class="col-md-3">
+        <div class="thumbnail">
+          <img src="{{ album.album_cover.thumbnail_img.url }}" srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
+          <div class="caption">
+            <h3>{{ album.title }}</h3>
+            <p>{{ album.description }}</p>
+          </div>
+        </div>
+      </div>
+{% endfor %}
+    </div>
+</div>
+{% endblock %}
