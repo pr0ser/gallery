@@ -43,7 +43,7 @@
   {% if album.photos.all %}
     <div class="ui center aligned images container ">
       {% for photo in album.photos.all %}
-        <a href="#" class="ui centered image">
+        <a href="#" class="ui image">
           <img class="ui rounded image" src="{{ photo.thumbnail_img.url }}"
                srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
         </a>

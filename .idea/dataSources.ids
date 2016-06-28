@@ -428,80 +428,98 @@ model</columns>
       <column id="105" parent="12" name="parent_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="106" parent="12" name="gallery_album_5f8f22b8">
+      <index id="106" parent="12" name="directory">
+        <columns>directory</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <index id="107" parent="12" name="gallery_album_5f8f22b8">
         <columns>directory</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="107" parent="12" name="gallery_album_6be37982">
+      <index id="108" parent="12" name="gallery_album_6be37982">
         <columns>parent_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="108" parent="12" name="PRIMARY">
+      <key id="109" parent="12" name="directory">
+        <columns>directory</columns>
+        <underlying-index>directory</underlying-index>
+      </key>
+      <key id="110" parent="12" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="109" parent="13" name="id">
+      <column id="111" parent="13" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="110" parent="13" name="title">
+      <column id="112" parent="13" name="title">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="111" parent="13" name="slug">
+      <column id="113" parent="13" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="112" parent="13" name="date">
+      <column id="114" parent="13" name="date">
         <mandatory>1</mandatory>
         <data-type>datetime</data-type>
       </column>
-      <column id="113" parent="13" name="description">
+      <column id="115" parent="13" name="description">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="114" parent="13" name="image">
+      <column id="116" parent="13" name="image">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="115" parent="13" name="file_hash">
+      <column id="117" parent="13" name="file_hash">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="116" parent="13" name="album_id">
+      <column id="118" parent="13" name="album_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="117" parent="13" name="hidpi_preview_img">
+      <column id="119" parent="13" name="hidpi_preview_img">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="118" parent="13" name="preview_img">
+      <column id="120" parent="13" name="preview_img">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="119" parent="13" name="thumbnail_img">
+      <column id="121" parent="13" name="thumbnail_img">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="120" parent="13" name="hidpi_thumbnail_img">
+      <column id="122" parent="13" name="hidpi_thumbnail_img">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <index id="121" parent="13" name="gallery_photo_2dbcba41">
+      <index id="123" parent="13" name="gallery_photo_2dbcba41">
         <columns>slug</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="122" parent="13" name="gallery_photo_album_id_898c46f6_fk_gallery_album_id">
+      <index id="124" parent="13" name="gallery_photo_album_id_898c46f6_fk_gallery_album_id">
         <columns>album_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="123" parent="13" name="PRIMARY">
+      <index id="125" parent="13" name="slug">
+        <columns>slug</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="126" parent="13" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="124" parent="13" name="gallery_photo_album_id_898c46f6_fk_gallery_album_id">
+      <key id="127" parent="13" name="slug">
+        <columns>slug</columns>
+        <underlying-index>slug</underlying-index>
+      </key>
+      <foreign-key id="128" parent="13" name="gallery_photo_album_id_898c46f6_fk_gallery_album_id">
         <columns>album_id</columns>
         <ref-key>~.gallery_album.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
