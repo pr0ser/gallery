@@ -2,21 +2,22 @@
 <!doctype html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Galleria{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static 'gallery/css/semantic.min.css' %}">
-    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
-    {% block header %}
-    {% endblock %}
+  <meta charset="UTF-8">
+  <title>{% block title %}Galleria{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{% static 'gallery/css/semantic.min.css' %}">
+  <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+  <link rel='stylesheet prefetch'
+        href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+  {% block header %}
+  {% endblock %}
 </head>
 <body>
-    {% include "navbar.html" %}
-    <div class="ui container">
-        {% block content %} {% endblock %}
-    </div>
+{% include "navbar.html" %}
+<div class="ui container">
+  {% block content %} {% endblock %}
+</div>
 
 <script src="{% static 'gallery/js/jquery-3.0.0.min.js' %}"></script>
 <script src="{% static 'gallery/js/semantic.min.js' %}"></script>
