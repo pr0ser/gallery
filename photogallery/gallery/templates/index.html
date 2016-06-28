@@ -3,20 +3,29 @@
 {% block title %}Galleria{% endblock %}
 
 {% block content %}
-<div class="col-lg-12">
-    <h1>Gallerian etusivu</h1>
-    <div class="row">
-{% for album in all_albums %}
-      <div class="col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <img src="{{ album.album_cover.thumbnail_img.url }}" srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
-          <div class="caption">
-            <h3>{{ album.title }}</h3>
-            <p>{{ album.description }}</p>
-          </div>
-        </div>
-      </div>
-{% endfor %}
+    <div class="ui centered cards">
+        {% for album in albums %}
+            <a class="ui card" href="{% url 'gallery:album' album.directory %}">
+                <div class="image">
+                    <img src="{{ album.album_cover.thumbnail_img.url }}"
+                         srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
+                </div>
+                <div class="content">
+                    <div class="header">{{ album.title }}</div>
+                    <div class="description">
+                        {{ album.description }}
+                    </div>
+                </div>
+                <div class="extra content">
+                    <span class="right floated">
+                    {{ album.date|date:'j.n.Y' }}
+                    </span>
+                    <span>
+                        <i class="image icon"></i>
+                        {{ album.photos.count }}
+                    </span>
+                </div>
+            </a>
+        {% endfor %}
     </div>
-</div>
 {% endblock %}

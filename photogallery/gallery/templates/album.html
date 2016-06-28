@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block content %}
+    <div class="ui centered cards">
+        {% for photo in album.photos.all %}
+            <a class="ui card" href="#">
+                <div class="image">
+                    <img src="{{ photo.thumbnail_img.url }}"
+                         srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

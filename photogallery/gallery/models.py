@@ -6,6 +6,7 @@ from wand.image import Image
 import os
 import hashlib
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 
 def calc_hash(filename):
@@ -17,11 +18,11 @@ def calc_hash(filename):
 
 
 class Album(models.Model):
-    parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
+    parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True)
     title = models.CharField(_('Title'), max_length=255)
     date = models.DateField(_('Date'), auto_now_add=True)
     description = models.TextField(_('Description'), blank=True)
-    directory = models.SlugField(_('Directory'))
+    directory = models.SlugField(_('Directory'), unique=True)
     album_cover = models.OneToOneField('Photo',
                                        related_name='Photo',
                                        null=True,
@@ -29,6 +30,9 @@ class Album(models.Model):
                                        on_delete=models.SET_NULL)
     sort_order = models.CharField(_('Sort order'), max_length=255, blank=True)
     public = models.BooleanField(_('Public'), default=True)
+
+    def get_absolute_url(self):
+        return reverse('gallery:album', kwargs={'slug': self.directory})
 
     def delete_album_dirs(self):
         dirs = [os.path.join(settings.MEDIA_ROOT, 'photos', self.directory),
@@ -61,7 +65,7 @@ class Photo(models.Model):
     def upload_dir(instance, filename):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos')
     title = models.CharField(_('Title'), max_length=255)
     slug = models.SlugField(_('Slug'))
     date = models.DateTimeField(_('Date'), auto_now_add=True)
