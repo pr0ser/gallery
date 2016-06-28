@@ -40,7 +40,7 @@
     <div class="ui divider"></div>
   {% endif %}
 
-  {% if album.photos %}
+  {% if album.photos.all %}
     <div class="ui center aligned images container ">
       {% for photo in album.photos.all %}
         <a href="#" class="ui centered image">
