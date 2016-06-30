@@ -17,3 +17,10 @@ class album(generic.DetailView):
     slug_field = 'directory'
     template_name = 'album.html'
     context_object_name = 'album'
+
+
+class photo(generic.DetailView):
+    model = Photo
+    slug_field = 'slug'
+    template_name = 'photo.html'
+    context_object_name = 'photo'

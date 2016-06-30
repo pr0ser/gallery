@@ -77,6 +77,9 @@ class Photo(models.Model):
     thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True)
     hidpi_thumbnail_img = models.ImageField(_('High DPI thumbnail image'), blank=True)
 
+    def get_absolute_url(self):
+        return reverse('gallery:photo', kwargs={'slug': self.slug})
+
     def filename(self):
         return os.path.basename(self.image.name)
 

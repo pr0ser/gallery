@@ -43,15 +43,19 @@
   {% if album.photos.all %}
     <div class="ui center aligned images container ">
       {% for photo in album.photos.all %}
-        <a href="#" class="ui image">
+        <a href="{% url 'gallery:photo' photo.slug %}" class="ui image">
           <img class="ui rounded image" src="{{ photo.thumbnail_img.url }}"
                srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
         </a>
       {% endfor %}
     </div>
   {% else %}
-    <div class="ui center aligned container">
-      <h2>Ei kuvia</h2>
-    </div>
+    <h2 class="ui center aligned icon header">
+  <i class="image icon"></i>
+  <div class="content">
+    Ei kuvia
+    <div class="sub header">Albumiin ei ole lisätty kuvia.</div>
+  </div>
+</h2>
   {% endif %}
 {% endblock %}

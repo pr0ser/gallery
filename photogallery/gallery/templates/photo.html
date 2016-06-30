@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ photo.title }}{% endblock %}
+
+{% block content %}
+  <h2 class="ui top attached header centered">
+    {{ photo.title }}
+  </h2>
+  <div class="ui attached segment photo">
+    {% if photo.preview_img %}
+      <img class="ui image centered" src="{{ photo.preview_img.url }}"
+          {% if photo.hidpi_preview_img.url %} srcset="{{ photo.hidpi_preview_img.url }} 2x" {% endif %}
+           alt="{{ photo.title }}">
+    {% else %}
+      <img class="ui image centered" src="{{ photo.image.url }}"
+           alt="{{ photo.title }}">
+    {% endif %}
+  </div>
+  {% if photo.description %}
+    <div class="ui attached segment">
+      <p>{{ photo.description }}</p>
+    </div>
+  {% endif %}
+
+{% endblock %}
