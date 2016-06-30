@@ -6,7 +6,7 @@
 {% block content %}
   {% if album.subalbums.all %}
     <div class="ui container subalbums">
-      <h1 class="ui header centered">Albumit</h1>
+      <h1 class="ui header centered">Alialbumit</h1>
       <div class="ui centered cards">
         {% for album in album.subalbums.all %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
@@ -41,6 +41,9 @@
   {% endif %}
 
   {% if album.photos.all %}
+    <h1 class="ui header centered">{{ album.title }}
+      <div class="sub header">{{ album.description }}</div>
+    </h1>
     <div class="ui center aligned images container ">
       {% for photo in album.photos.all %}
         <a href="{% url 'gallery:photo' photo.slug %}" class="ui image">
@@ -51,11 +54,11 @@
     </div>
   {% else %}
     <h2 class="ui center aligned icon header">
-  <i class="image icon"></i>
-  <div class="content">
-    Ei kuvia
-    <div class="sub header">Albumiin ei ole lisätty kuvia.</div>
-  </div>
-</h2>
+      <i class="image icon"></i>
+      <div class="content">
+        Ei kuvia
+        <div class="sub header">Albumiin ei ole lisätty kuvia.</div>
+      </div>
+    </h2>
   {% endif %}
 {% endblock %}
