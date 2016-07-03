@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Kirjaudu sisään{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <h2 class="ui header">Olet kirjautunut sisään käyttäjänä {{ user.username }}</h2>
+    <a class="ui large button" href="{% url 'gallery:logout' %}">Kirjaudu ulos</a>
+  {% else %}
+    <div class="ui stackable grid centered">
+      <div class="six wide column">
+        <h2 class="ui header">Kirjaudu sisään</h2>
+        <form class="ui form" action="{% url 'gallery:login' %}" method="post">
+          {% csrf_token %}
+          <div class="field">
+            <label>Käyttäjätunnus</label>
+            <input type="text" name="username" placeholder="käyttäjätunnus">
+          </div>
+          <div class="field">
+            <label>Salasana</label>
+            <input type="password" name="password" placeholder="salasana">
+          </div>
+          <button class="ui primary button" type="submit">Kirjaudu</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

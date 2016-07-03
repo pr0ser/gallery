@@ -1,8 +1,16 @@
 <div class="ui inverted top fixed menu">
   <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
   <div class="right menu">
-      <a class="item">
-          <i class="sign in icon"></i>
-      </a>
+    <div class="ui top right pointing dropdown link item">
+      <i class="configure icon"></i>
+      Ylläpito<i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item" href="#">Uusi albumi</a>
+        {% block navbar %} {% endblock %}
+      </div>
+    </div>
+    <a class="item" href="#">
+      <i class="sign in icon"></i>
+    </a>
   </div>
 </div>

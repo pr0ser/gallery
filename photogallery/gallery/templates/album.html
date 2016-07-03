@@ -3,10 +3,17 @@
 
 {% block title %}{{ album.title }}{% endblock %}
 
+{% block navbar %}
+  <div class="ui divider"></div>
+  <div class="header">Albumi</div>
+  <a class="item" href="#">Muokkaa</a>
+  <a class="item" href="#">Poista</a>
+{% endblock %}
+
 {% block content %}
   {% if album.subalbums.all %}
     <div class="ui container subalbums">
-      <h1 class="ui header centered">Alialbumit</h1>
+      <h2 class="ui header centered">Alialbumit</h2>
       <div class="ui centered cards">
         {% for album in album.subalbums.all %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
@@ -15,7 +22,7 @@
                 <img src="{{ album.album_cover.thumbnail_img.url }}"
                      srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
               {% else %}
-                <img src="{% static 'gallery/images/no_image.png' %}">
+                <img src="{% static 'gallery/images/no_image.png' %}" alt="Ei kuvaa">
               {% endif %}
             </div>
             <div class="content">
@@ -41,9 +48,14 @@
   {% endif %}
 
   {% if album.photos.all %}
-    <h1 class="ui header centered">{{ album.title }}
-      <div class="sub header">{{ album.description }}</div>
-    </h1>
+
+    <h2 class="ui header centered">
+      <div class="content">
+        {{ album.title }}
+        <div class="sub header">{{ album.description }}</div>
+      </div>
+    </h2>
+
     <div class="ui center aligned images container ">
       {% for photo in album.photos.all %}
         <a href="{% url 'gallery:photo' photo.slug %}" class="ui image">

@@ -14,12 +14,42 @@
   {% endblock %}
 </head>
 <body>
-{% include "navbar.html" %}
+<div class="ui inverted top fixed menu">
+  <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
+  <div class="right menu">
+    {% if user.is_authenticated %}
+      <div class="ui top right pointing dropdown link item">
+        <i class="configure icon"></i>
+        Ylläpito<i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item" href="#">Uusi albumi</a>
+          {% block navbar %} {% endblock %}
+        </div>
+      </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <a class="item" href="{% url 'gallery:logout' %}">
+        <span data-tooltip="Kirjaudu ulos" data-position="bottom right">
+          <i class="sign out icon"></i>
+        </span>
+      </a>
+    {% else %}
+      <a class="item" href="{% url 'gallery:login' %}">
+        <span data-tooltip="Kirjaudu sisään" data-position="bottom right">
+          <i class="sign in icon"></i>
+        </span>
+      </a>
+    {% endif %}
+  </div>
+</div>
 <div class="ui container">
   {% block content %} {% endblock %}
 </div>
 
 <script src="{% static 'gallery/js/jquery-3.0.0.min.js' %}"></script>
 <script src="{% static 'gallery/js/semantic.min.js' %}"></script>
+<script>
+  $('.ui.dropdown').dropdown();
+</script>
 </body>
 </html>
