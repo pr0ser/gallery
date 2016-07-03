@@ -4,6 +4,7 @@ from .models import Album, Photo
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class IndexView(ListView):
@@ -52,7 +53,7 @@ class LogoutView(View):
         return redirect('gallery:index')
 
 
-class NewAlbumView(CreateView):
+class NewAlbumView(LoginRequiredMixin, CreateView):
     model = Album
     template_name = 'album-new.html'
     fields = ['title', 'description', 'parent', 'public']
