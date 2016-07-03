@@ -9,7 +9,8 @@
     <div class="ui stackable grid centered">
       <div class="six wide column">
         <h2 class="ui header">Kirjaudu sisään</h2>
-        <form class="ui form" action="{% url 'gallery:login' %}" method="post">
+        <div class="ui hidden divider"></div>
+        <form class="ui big form" action="{% url 'gallery:login' %}" method="post">
           {% csrf_token %}
           <div class="field">
             <label>Käyttäjätunnus</label>

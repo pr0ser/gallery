@@ -5,8 +5,6 @@ from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import LoginForm
-
 
 class IndexView(ListView):
     template_name = 'index.html'
@@ -52,3 +50,9 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('gallery:index')
+
+
+class NewAlbumView(CreateView):
+    model = Album
+    template_name = 'album-new.html'
+    fields = ['title', 'description', 'parent', 'public']

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Luo uusi albumi{% endblock %}
+
+{% block content %}
+  <div class="ui container">
+    <form class="ui large form" action="{% url 'gallery:new-album' %}" method="post">
+      {% csrf_token %}
+      <div class="field">
+        <label>Nimi</label>
+        <input type="text" name="title" placeholder="Albumin nimi" required>
+      </div>
+      <div class="field">
+        <label>Kuvaus</label>
+        <input type="text" name="description" placeholder="Albumin kuvaus">
+      </div>
+      <div class="field">
+        <label>Pääalbumi</label>
+        <div class="ui selection dropdown">
+          <input type="hidden" name="parent">
+          <i class="dropdown icon"></i>
+          <div class="default text">Valitse pääalbumi</div>
+          <div class="menu">
+            {% for choice in form.parent.field.choices %}
+              <div class="item" data-value="{{ choice.0 }}">{{choice.1}}</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="inline field">
+        <label>Julkinen</label>
+        <input type="checkbox" name="public" checked>
+      </div>
+      <input class="ui primary big button" type="submit" value="Tallenna"/>
+    </form>
+  </div>
+{% endblock %}
