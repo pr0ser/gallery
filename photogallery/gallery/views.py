@@ -57,3 +57,10 @@ class NewAlbumView(LoginRequiredMixin, CreateView):
     model = Album
     template_name = 'album-new.html'
     fields = ['title', 'description', 'parent', 'public']
+
+
+class EditAlbumView(LoginRequiredMixin, UpdateView):
+    model = Album
+    slug_field = 'directory'
+    template_name = 'album-edit.html'
+    fields = ['title', 'description', 'parent', 'public']

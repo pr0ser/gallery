@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Luo uusi albumi{% endblock %}
+{% block title %}Muokkaa albumia {{ album.name }}{% endblock %}
 
 {% block content %}
   <div class="ui container">
-    <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-new' %}"
+    <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-edit' form.instance.directory %}"
           method="post">
       {% csrf_token %}
       {% include 'album-form.html' %}

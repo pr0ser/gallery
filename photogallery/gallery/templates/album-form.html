@@ -1,0 +1,47 @@
+<div class="required field {% if form.title.errors %}error{% endif %}">
+  <label>{{ form.title.label }}</label>
+  {{ form.title }}
+</div>
+{% if form.title.errors %}
+  <div class="ui error message">
+    {{ form.title.errors }}
+  </div>
+{% endif %}
+<div class="field {% if form.description.errors %}error{% endif %}">
+  <label>{{ form.description.label }}</label>
+  {{ form.description }}
+</div>
+{% if form.description.errors %}
+  <div class="ui error message">
+    {{ form.description.errors }}
+  </div>
+{% endif %}
+<div class="field {% if form.parent.errors %}error{% endif %}">
+  <label>{{ form.parent.label }}</label>
+  <div class="ui selection dropdown">
+    <input type="hidden" name="parent">
+    <i class="dropdown icon"></i>
+    <div class="default text">Valitse pääalbumi</div>
+    <div class="menu">
+      {% for choice in form.parent.field.choices %}
+        <div class="item" data-value="{{ choice.0 }}">{{ choice.1 }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% if form.parent.errors %}
+  <div class="ui error message">
+    {{ form.parent.errors }}
+  </div>
+{% endif %}
+<div class="inline field {% if form.public.errors %}error{% endif %}">
+  <div class="ui toggle checkbox">
+    <label>{{ form.public.label }}</label>
+    {{ form.public }}
+  </div>
+</div>
+{% if form.public.errors %}
+  <div class="ui error message">
+    {{ form.public.errors }}
+  </div>
+{% endif %}

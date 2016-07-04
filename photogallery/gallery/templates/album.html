@@ -6,7 +6,7 @@
 {% block navbar %}
   <div class="ui divider"></div>
   <div class="header">Albumi</div>
-  <a class="item" href="#">Muokkaa</a>
+  <a class="item" href="{% url 'gallery:album-edit' album.directory %}">Muokkaa</a>
   <a class="item" href="#">Poista</a>
 {% endblock %}
 

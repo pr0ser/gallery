@@ -22,7 +22,7 @@
         <i class="configure icon"></i>
         Ylläpito<i class="dropdown icon"></i>
         <div class="menu">
-          <a class="item" href="{% url 'gallery:new-album' %}">Uusi albumi</a>
+          <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
           {% block navbar %} {% endblock %}
         </div>
       </div>
@@ -51,5 +51,6 @@
 <script>
   $('.ui.dropdown').dropdown();
 </script>
+{% block scripts %}{% endblock %}
 </body>
 </html>
