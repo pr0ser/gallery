@@ -5,6 +5,8 @@ from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse_lazy
+from .forms import NewAlbumForm, EditAlbumForm
 
 
 class IndexView(ListView):
@@ -20,6 +22,24 @@ class AlbumView(DetailView):
     slug_field = 'directory'
     template_name = 'album.html'
     context_object_name = 'album'
+
+
+class NewAlbumView(LoginRequiredMixin, CreateView):
+    form_class = NewAlbumForm
+    template_name = 'album-new.html'
+
+
+class EditAlbumView(LoginRequiredMixin, UpdateView):
+    model = Album
+    form_class = EditAlbumForm
+    slug_field = 'directory'
+    template_name = 'album-edit.html'
+
+
+class DeleteAlbumView(LoginRequiredMixin, DeleteView):
+    model = Album
+    slug_field = 'directory'
+    success_url = reverse_lazy('gallery:index')
 
 
 class PhotoView(DetailView):
@@ -51,16 +71,3 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('gallery:index')
-
-
-class NewAlbumView(LoginRequiredMixin, CreateView):
-    model = Album
-    template_name = 'album-new.html'
-    fields = ['title', 'description', 'parent', 'public']
-
-
-class EditAlbumView(LoginRequiredMixin, UpdateView):
-    model = Album
-    slug_field = 'directory'
-    template_name = 'album-edit.html'
-    fields = ['title', 'description', 'parent', 'public']

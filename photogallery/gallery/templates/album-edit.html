@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Muokkaa albumia {{ album.name }}{% endblock %}
+{% block title %}Muokkaa albumia {{ form.instance.title }}{% endblock %}
 
 {% block content %}
   <div class="ui container">
@@ -16,6 +16,13 @@
   <script>
     $('.ui.checkbox')
       .checkbox()
+    ;
+  </script>
+  <script>
+    $('#select')
+      .dropdown({
+        placeholder: false
+      })
     ;
   </script>
 {% endblock %}

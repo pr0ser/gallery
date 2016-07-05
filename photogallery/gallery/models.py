@@ -3,10 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from wand.image import Image
-import os
-import hashlib
 from django.conf import settings
 from django.core.urlresolvers import reverse
+import os
+import hashlib
 
 
 def calc_hash(filename):
@@ -17,9 +17,18 @@ def calc_hash(filename):
     return hash_sha256.hexdigest()
 
 
+def validate_album_title(value):
+    invalid_names = ['new', 'edit', 'delete']
+    if value in invalid_names:
+        raise ValidationError(
+            _('%(value)s is not allowed title name.'),
+            params={'value': value},
+        )
+
+
 class Album(models.Model):
     parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True)
-    title = models.CharField(_('Title'), max_length=255)
+    title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_album_title])
     date = models.DateField(_('Date'), auto_now_add=True)
     description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'), unique=True)
@@ -66,7 +75,7 @@ class Photo(models.Model):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos')
-    title = models.CharField(_('Title'), max_length=255)
+    title = models.CharField(_('Title'), max_length=255, unique=True)
     slug = models.SlugField(_('Slug'), unique=True)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
     image = models.ImageField(_('Image file'), upload_to=upload_dir)

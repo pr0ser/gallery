@@ -18,16 +18,7 @@
 {% endif %}
 <div class="field {% if form.parent.errors %}error{% endif %}">
   <label>{{ form.parent.label }}</label>
-  <div class="ui selection dropdown">
-    <input type="hidden" name="parent">
-    <i class="dropdown icon"></i>
-    <div class="default text">Valitse pääalbumi</div>
-    <div class="menu">
-      {% for choice in form.parent.field.choices %}
-        <div class="item" data-value="{{ choice.0 }}">{{ choice.1 }}</div>
-      {% endfor %}
-    </div>
-  </div>
+  {{ form.parent }}
 </div>
 {% if form.parent.errors %}
   <div class="ui error message">

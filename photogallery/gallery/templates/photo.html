@@ -3,6 +3,15 @@
 
 {% block title %}{{ photo.title }}{% endblock %}
 
+{% if user.is_authenticated %}
+  {% block navbar %}
+  <div class="ui divider"></div>
+  <div class="header">Albumi</div>
+  <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
+  <a class="item" href="#" id="delete-album">Poista</a>
+  {% endblock %}
+{% endif%}
+
 {% block content %}
   <h2 class="ui top attached header centered">
     {{ photo.title }}
@@ -24,3 +33,36 @@
   {% endif %}
 
 {% endblock %}
+
+{% if user.is_authenticated %}
+  {% block modals %}
+    <div class="ui small modal">
+      <div class="header">
+        Poista albumi
+      </div>
+      <div class="content">
+        <p>Poistetaanko albumi "{{ photo.album.title }}" ja kaikki sen alla olevat kuvat?</p>
+      </div>
+      <div class="actions">
+        <form action="{% url 'gallery:album-delete' photo.album.directory %}" method="post">
+          {% csrf_token %}
+          <div class="ui cancel button">
+            Peruuta
+          </div>
+          <input class="ui negative button" type="submit" value="Poista"/>
+        </form>
+      </div>
+    </div>
+  {% endblock %}
+{% endif %}
+
+{% if user.is_authenticated %}
+  {% block scripts %}
+    <script>
+      $('.ui.small.modal')
+          .modal('setting', 'duration', 0)
+          .modal('attach events', '#delete-album', 'show')
+      ;
+    </script>
+  {% endblock %}
+{% endif %}
