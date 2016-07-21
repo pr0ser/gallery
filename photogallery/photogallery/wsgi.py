@@ -10,15 +10,16 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-#DJ-static
+# DJ-static
 from django.core.wsgi import get_wsgi_application
 from dj_static import Cling, MediaCling
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "photogallery.settings")
 
-application = get_wsgi_application()
+# Uncomment when in prod
+# application = get_wsgi_application()
 
 
-#DJ-static
+# DJ-static
 application = Cling(MediaCling(get_wsgi_application()))

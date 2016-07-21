@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 blank_choice = (('', '---------'),)
 
+
 class NewAlbumForm(ModelForm):
     class Meta:
         model = Album

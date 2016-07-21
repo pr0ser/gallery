@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'debug_toolbar',
+    # 'debug_toolbar',
     'dj_static',
 ]
 
@@ -115,8 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'fi'
 
 TIME_ZONE = 'Europe/Helsinki'
-
-TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
