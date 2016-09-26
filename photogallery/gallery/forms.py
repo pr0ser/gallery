@@ -39,5 +39,5 @@ class EditPhotoForm(ModelForm):
         model = Photo
         fields = ['title', 'description', 'album', 'image']
         widgets = {
-            'parent': forms.Select(attrs={'id': 'select'}),
+            'album': forms.Select(attrs={'id': 'select'}),
         }
