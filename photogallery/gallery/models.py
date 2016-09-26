@@ -115,19 +115,23 @@ class Photo(models.Model):
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
     def create_preview_image(self, size, quality, output_filename):
+        if self.image.width < self.image.height:
+            long_side = 'x{}'.format(size)
+        else:
+            long_side = '{}x'.format(size)
         with Image(filename=self.image.path) as img:
-            img.transform(resize=size)
+            img.transform(resize=long_side)
             if img.format == 'JPEG':
                 img.compression_quality = quality
             img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_filename))
 
     def create_thumbnail(self, size, quality, image_filename):
         if self.image.width > self.image.height:
-            resize = 'x{}'.format(size)
+            long_side = 'x{}'.format(size)
         else:
-            resize = '{}x'.format(size)
+            long_side = '{}x'.format(size)
         with Image(filename=self.image.path) as img:
-            img.transform(resize=resize)
+            img.transform(resize=long_side)
             img.crop(width=size, height=size, gravity='center')
             if img.format == 'JPEG':
                 img.compression_quality = quality
