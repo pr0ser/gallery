@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Muokkaa kuvaa {{ form.instance.title }}{% endblock %}
+
+{% block content %}
+  <div class="ui container">
+    <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-edit' form.instance.slug %}"
+          method="post">
+      {% csrf_token %}
+      {% include 'photo-form.html' %}
+      <input class="ui primary big button" type="submit" value="Tallenna"/>
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $('.ui.checkbox')
+      .checkbox()
+    ;
+  </script>
+  <script>
+    $('#select')
+      .dropdown({
+        placeholder: false
+      })
+    ;
+  </script>
+{% endblock %}

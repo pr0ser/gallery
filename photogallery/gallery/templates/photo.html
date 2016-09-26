@@ -6,9 +6,13 @@
 {% if user.is_authenticated %}
   {% block navbar %}
   <div class="ui divider"></div>
+  <div class="header">Kuva</div>
+  <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
+  <a class="item" href="#" id="photo-delete">Poista</a>
+  <div class="ui divider"></div>
   <div class="header">Albumi</div>
   <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
-  <a class="item" href="#" id="delete-album">Poista</a>
+  <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
 {% endif%}
 
@@ -36,7 +40,7 @@
 
 {% if user.is_authenticated %}
   {% block modals %}
-    <div class="ui small modal">
+    <div class="ui small modal album-delete">
       <div class="header">
         Poista albumi
       </div>
@@ -53,15 +57,37 @@
         </form>
       </div>
     </div>
+    <div class="ui small modal photo-delete">
+      <div class="header">
+        Poista kuva
+      </div>
+      <div class="content">
+        <p>Poistetaanko kuva "{{ photo.title }}"?</p>
+      </div>
+      <div class="actions">
+        <form action="{% url 'gallery:photo-delete' photo.slug %}" method="post">
+          {% csrf_token %}
+          <div class="ui cancel button">
+            Peruuta
+          </div>
+          <input class="ui negative button" type="submit" value="Poista"/>
+        </form>
+      </div>
+    </div>
   {% endblock %}
 {% endif %}
 
 {% if user.is_authenticated %}
   {% block scripts %}
     <script>
-      $('.ui.small.modal')
+      $('.ui.small.modal.album-delete')
           .modal('setting', 'duration', 0)
-          .modal('attach events', '#delete-album', 'show')
+          .modal('attach events', '#album-delete', 'show')
+      ;
+
+      $('.ui.small.modal.photo-delete')
+          .modal('setting', 'duration', 0)
+          .modal('attach events', '#photo-delete', 'show')
       ;
     </script>
   {% endblock %}

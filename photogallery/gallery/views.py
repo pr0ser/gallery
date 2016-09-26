@@ -54,6 +54,19 @@ class NewPhotoView(LoginRequiredMixin, CreateView):
     template_name = 'photo-new.html'
 
 
+class EditPhotoView(LoginRequiredMixin, UpdateView):
+    model = Photo
+    form_class = EditPhotoForm
+    slug_field = 'slug'
+    template_name = 'photo-edit.html'
+
+
+class DeletePhotoView(LoginRequiredMixin, DeleteView):
+    model = Photo
+    slug_field = 'slug'
+    success_url = reverse_lazy('gallery:index')
+
+
 class LoginView(View):
     def post(self, request):
         username = request.POST['username']

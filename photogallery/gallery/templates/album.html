@@ -8,7 +8,7 @@
     <div class="ui divider"></div>
     <div class="header">Albumi</div>
     <a class="item" href="{% url 'gallery:album-edit' album.directory %}">Muokkaa</a>
-    <a class="item" href="#" id="delete-album">Poista</a>
+    <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
 {% endif %}
 
@@ -104,7 +104,7 @@
     <script>
       $('.ui.small.modal')
           .modal('setting', 'duration', 0)
-          .modal('attach events', '#delete-album', 'show')
+          .modal('attach events', '#album-delete', 'show')
       ;
     </script>
   {% endblock %}
