@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'album/edit/(?P<slug>[-\w]+)/$', views.EditAlbumView.as_view(), name='album-edit'),
     url(r'album/delete/(?P<slug>[-\w]+)/$', views.DeleteAlbumView.as_view(), name='album-delete'),
     url(r'^photo/(?P<slug>[-\w]+)/$', views.PhotoView.as_view(), name='photo'),
+    url(r'photo/new$', views.NewPhotoView.as_view(), name='photo-new'),
     url(r'^login/', views.LoginView.as_view(), name='login'),
     url(r'^logout/', views.LogoutView.as_view(), name='logout'),
 ]

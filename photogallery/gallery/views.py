@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
-from .forms import NewAlbumForm, EditAlbumForm
+from .forms import *
 
 
 class IndexView(ListView):
@@ -47,6 +47,11 @@ class PhotoView(DetailView):
     slug_field = 'slug'
     template_name = 'photo.html'
     context_object_name = 'photo'
+
+
+class NewPhotoView(LoginRequiredMixin, CreateView):
+    form_class = NewPhotoForm
+    template_name = 'photo-new.html'
 
 
 class LoginView(View):

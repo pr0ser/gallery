@@ -23,3 +23,12 @@ class EditAlbumForm(ModelForm):
         widgets = {
             'parent': forms.Select(attrs={'id': 'select'}),
         }
+
+
+class NewPhotoForm(ModelForm):
+    class Meta:
+        model = Photo
+        fields = ['title', 'description', 'album', 'image']
+        widgets = {
+            'album': forms.Select(attrs={'id': 'select'}),
+        }

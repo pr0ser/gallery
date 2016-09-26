@@ -22,6 +22,7 @@
         <i class="configure icon"></i>
         Ylläpito<i class="dropdown icon"></i>
         <div class="menu">
+          <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
           <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
           {% block navbar %} {% endblock %}
         </div>
