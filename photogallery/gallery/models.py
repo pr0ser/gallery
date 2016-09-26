@@ -151,19 +151,6 @@ class Photo(models.Model):
         self.create_thumbnail(size=500, quality=65, image_filename=self.hidpi_thumbnail_img_filename())
         self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename())
 
-    def delete_images(self):
-        images = [self.image.path,
-                  self.preview_img.path,
-                  self.hidpi_preview_img.path,
-                  self.thumbnail_img.path,
-                  self.hidpi_thumbnail_img.path]
-        for image in images:
-            try:
-                if os.path.isfile(image):
-                    os.remove(image)
-            except OSError:
-                pass
-
     def __str__(self):
         return self.title
 
@@ -175,10 +162,6 @@ class Photo(models.Model):
             self.create_previews()
             self.create_thumbnails()
             super(Photo, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        super(Photo, self).delete(*args, **kwargs)
-        self.delete_images()
 
     class Meta:
         verbose_name = _('photo')
