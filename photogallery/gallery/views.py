@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from .forms import *
+from os import path
 
 
 class IndexView(ListView):
@@ -14,7 +15,11 @@ class IndexView(ListView):
     context_object_name = 'albums'
 
     def get_queryset(self):
-        return Album.objects.all().filter(parent=None)
+        user = self.request.user
+        if user.is_authenticated:
+            return Album.objects.all().filter(parent=None)
+        else:
+            return Album.objects.all().filter(parent=None).filter(public=True)
 
 
 class AlbumView(DetailView):
@@ -65,6 +70,26 @@ class DeletePhotoView(LoginRequiredMixin, DeleteView):
     model = Photo
     slug_field = 'slug'
     success_url = reverse_lazy('gallery:index')
+
+
+class MassUploadView(LoginRequiredMixin, FormView):
+    form_class = MassUploadForm
+    template_name = 'photo-massupload.html'
+    success_url = reverse_lazy('gallery:index')
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        files = request.FILES.getlist('image')
+        if form.is_valid():
+            for file in files:
+                instance = Photo(title=path.splitext(file.name)[0],
+                                 album_id=form.instance.album.id,
+                                 image=file)
+                instance.save()
+            return redirect('gallery:index')
+        else:
+            return self.form_invalid(form)
 
 
 class LoginView(View):

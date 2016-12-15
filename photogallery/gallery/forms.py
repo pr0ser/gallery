@@ -41,3 +41,13 @@ class EditPhotoForm(ModelForm):
         widgets = {
             'album': forms.Select(attrs={'id': 'select'}),
         }
+
+
+class MassUploadForm(ModelForm):
+    class Meta:
+        model = Photo
+        fields = ['album', 'image']
+        widgets = {
+            'album': forms.Select(attrs={'id': 'select'}),
+            'image': forms.ClearableFileInput(attrs={'multiple': True})
+        }
