@@ -1,12 +1,20 @@
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
-from django.utils.text import slugify
-from wand.image import Image
-from django.conf import settings
-from django.core.urlresolvers import reverse
-import os
 import hashlib
+import os
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
+from django.db import models
+from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
+from wand.image import Image
+
+sort_order_choices = (
+    ('date', _('Date (ascending')),
+    ('-date', _('Date (descending)')),
+    ('title', _('Title (ascending)')),
+    ('-title', _('Title (descending)')),
+)
 
 
 def calc_hash(filename):
@@ -37,7 +45,11 @@ class Album(models.Model):
                                        null=True,
                                        blank=True,
                                        on_delete=models.SET_NULL)
-    sort_order = models.CharField(_('Sort order'), max_length=255, blank=True)
+    sort_order = models.CharField(_('Sort order'),
+                                  max_length=255,
+                                  blank=True,
+                                  choices=sort_order_choices,
+                                  help_text=_('Sort order of photos in this album'))
     public = models.BooleanField(_('Public'), default=True)
 
     def get_absolute_url(self):

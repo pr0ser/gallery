@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Album, Photo
 from django.utils.translation import ugettext_lazy as _
+
+from .models import Album, Photo
 
 
 class AlbumAdmin(admin.ModelAdmin):

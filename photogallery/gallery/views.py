@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
-from .models import Album, Photo
-from django.views.generic import ListView, DetailView, View
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from os import path
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+
 from .forms import *
-from os import path
 
 
 class IndexView(ListView):
