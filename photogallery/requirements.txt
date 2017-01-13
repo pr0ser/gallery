@@ -1,0 +1,8 @@
+Django
+Pillow
+Wand
+dj-static
+django-cleanup
+gunicorn
+mysqlclient
+static3
