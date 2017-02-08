@@ -81,12 +81,12 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'photogallery',
-        'USER': 'gallery',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gallery_dev',
+        'USER': 'gallery_dev',
         'PASSWORD': 'bgWuqzEGA7azrIaeKFNI',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
