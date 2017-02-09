@@ -47,9 +47,9 @@ class Album(models.Model):
                                        on_delete=models.SET_NULL)
     sort_order = models.CharField(_('Sort order'),
                                   max_length=255,
-                                  blank=True,
                                   choices=sort_order_choices,
-                                  help_text=_('Sort order of photos in this album'))
+                                  help_text=_('Sort order of photos in this album'),
+                                  default='title')
     public = models.BooleanField(_('Public'), default=True)
 
     def get_absolute_url(self):

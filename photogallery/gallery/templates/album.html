@@ -49,7 +49,7 @@
     <div class="ui divider"></div>
   {% endif %}
 
-  {% if album.photos.all %}
+  {% if photos %}
 
     <h2 class="ui header centered">
       <div class="content">
@@ -59,13 +59,24 @@
     </h2>
 
     <div class="ui center aligned images container ">
-      {% for photo in album.photos.all %}
+      {% for photo in photos %}
         <a href="{% url 'gallery:photo' photo.slug %}" class="ui image">
           <img class="ui rounded image" src="{{ photo.thumbnail_img.url }}"
                srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
         </a>
       {% endfor %}
+
+    {% if is_paginated %}
+      <div class="ui hidden divider"></div>
+      <div class="ui pagination menu">
+        {% for page in paginator.page_range %}
+          <a class={% if page_obj.number == page %}"active item"{% else %}"item"{% endif %} href="?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+      </div>
+      <div class="ui hidden divider"></div>
+    {% endif %}
     </div>
+
   {% else %}
     <h2 class="ui center aligned icon header">
       <i class="image icon"></i>
