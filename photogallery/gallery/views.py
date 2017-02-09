@@ -4,11 +4,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
 from .forms import *
+from .models import Album, Photo
 
 
 class IndexView(ListView):
@@ -23,11 +24,20 @@ class IndexView(ListView):
             return Album.objects.all().filter(parent=None).filter(public=True)
 
 
-class AlbumView(DetailView):
-    model = Album
-    slug_field = 'directory'
+class AlbumView(ListView):
     template_name = 'album.html'
-    context_object_name = 'album'
+    context_object_name = 'photos'
+    paginate_by = 40
+
+    def get_queryset(self):
+        album = get_object_or_404(Album, directory=self.kwargs['slug'])
+        queryset = Photo.objects.filter(album_id=album.id).order_by(album.sort_order)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(AlbumView, self).get_context_data(**kwargs)
+        context['album'] = Album.objects.get(directory=self.kwargs['slug'])
+        return context
 
 
 class NewAlbumView(LoginRequiredMixin, CreateView):

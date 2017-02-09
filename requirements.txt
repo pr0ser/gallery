@@ -4,5 +4,5 @@ Wand
 dj-static
 django-cleanup
 gunicorn
-mysqlclient
+psycopg2
 static3
