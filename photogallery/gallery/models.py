@@ -120,6 +120,28 @@ class Photo(models.Model):
         fname = os.path.basename(self.image.name)
         return 'hidpithumb_' + fname
 
+    def next_photo(self):
+        photo_list = list(Photo.objects.filter(album_id=self.album_id)
+                          .order_by(self.album.sort_order)
+                          .values_list('id', flat=True))
+        current = photo_list.index(self.pk)
+        try:
+            next_item = photo_list[current + 1]
+            return Photo.objects.get(pk=next_item)
+        except IndexError:
+            return None
+
+    def previous_photo(self):
+        photo_list = list(Photo.objects.filter(album_id=self.album_id)
+                          .order_by(self.album.sort_order)
+                          .values_list('id', flat=True))
+        current = photo_list.index(self.pk)
+        if current == 0:
+            return None
+        else:
+            previous_item = photo_list[current - 1]
+            return Photo.objects.get(pk=previous_item)
+
     def preview_dir(self):
         preview_dir = os.path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
         if not os.path.exists(preview_dir):

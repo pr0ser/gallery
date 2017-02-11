@@ -2,6 +2,16 @@
 {% load staticfiles %}
 
 {% block title %}{{ photo.title }}{% endblock %}
+{% block header %}
+  {% if photo.next_photo %}
+    <link rel="next" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+    <link rel="prefetch" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+    <link rel="prerender" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+  {% endif %}
+  {% if photo.previous_photo %}
+    <link rel="prev" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+  {% endif %}
+{% endblock %}
 
 {% if user.is_authenticated %}
   {% block navbar %}
@@ -17,10 +27,24 @@
 {% endif%}
 
 {% block content %}
-  <h2 class="ui top attached header centered">
-    {{ photo.title }}
-  </h2>
-  <div class="ui attached segment photo">
+  <div id="photonav" class="ui basic clearing segment">
+  {% if photo.next_photo %}
+    <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
+      <button class="ui basic right floated right labeled icon button">Next
+        <i class="right chevron icon"></i>
+      </button>
+    </a>
+  {% endif %}
+  {% if photo.previous_photo %}
+    <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+      <button class="ui basic left floated left labeled icon button">Previous
+        <i class="left chevron icon"></i>
+      </button>
+    </a>
+  {% endif %}
+  </div>
+
+  <div id="photo" class="ui basic segment photo">
     {% if photo.preview_img %}
       <img class="ui image centered" src="{{ photo.preview_img.url }}"
           {% if photo.hidpi_preview_img %} srcset="{{ photo.hidpi_preview_img.url }} 2x" {% endif %}
@@ -30,12 +54,10 @@
            alt="{{ photo.title }}">
     {% endif %}
   </div>
+  <div class="ui small header">{{ photo.title }}</div>
   {% if photo.description %}
-    <div class="ui attached segment">
-      <p>{{ photo.description }}</p>
-    </div>
+    <p>{{ photo.description }}</p>
   {% endif %}
-
 {% endblock %}
 
 {% if user.is_authenticated %}
