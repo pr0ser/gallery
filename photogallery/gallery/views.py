@@ -57,10 +57,6 @@ class DeleteAlbumView(LoginRequiredMixin, DeleteView):
     slug_field = 'directory'
     success_url = reverse_lazy('gallery:index')
 
-#class UpdateAlbumCoverView(LoginRequiredMixin, View):
-#    def get(self, request, *args, **kwargs):
-
-
 
 class PhotoView(DetailView):
     model = Photo

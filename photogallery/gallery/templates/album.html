@@ -51,17 +51,17 @@
 
   {% if photos %}
 
-    <h2 class="ui header centered">
+    <h2 class="ui header">
       <div class="content">
         {{ album.title }}
         <div class="sub header">{{ album.description }}</div>
       </div>
     </h2>
 
-    <div class="ui center aligned images container ">
+    <div class="ui images container ">
       {% for photo in photos %}
         <a href="{% url 'gallery:photo' photo.slug %}" class="ui image">
-          <img class="ui rounded image" src="{{ photo.thumbnail_img.url }}"
+          <img class="ui image" src="{{ photo.thumbnail_img.url }}"
                srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
         </a>
       {% endfor %}
