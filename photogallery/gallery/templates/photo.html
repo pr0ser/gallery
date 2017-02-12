@@ -17,6 +17,7 @@
   {% block navbar %}
   <div class="ui divider"></div>
   <div class="header">Kuva</div>
+  <a class="item" href="{% url 'gallery:album-update-cover' album_id=photo.album.pk photo_id=photo.pk %}">Aseta oletuskuvaksi</a>
   <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
   <a class="item" href="#" id="photo-delete">Poista</a>
   <div class="ui divider"></div>

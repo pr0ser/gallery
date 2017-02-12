@@ -26,7 +26,7 @@ def calc_hash(filename):
 
 
 def validate_album_title(value):
-    invalid_names = ['new', 'edit', 'delete']
+    invalid_names = ['new', 'edit', 'delete', 'updatecover']
     if value in invalid_names:
         raise ValidationError(
             _('%(value)s is not allowed title name.'),
