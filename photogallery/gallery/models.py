@@ -1,5 +1,6 @@
 import hashlib
 import os
+import shutil
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -61,9 +62,9 @@ class Album(models.Model):
         for d in dirs:
             if os.path.isdir(d):
                 try:
-                    os.rmdir(d)
+                    shutil.rmtree(d)
                 except OSError:
-                    raise ValidationError(_('Directory is not empty.'))
+                    raise ValidationError(_('Unable to delete album directories.'))
 
     def __str__(self):
         return self.title
