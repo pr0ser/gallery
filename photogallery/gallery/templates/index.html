@@ -4,7 +4,7 @@
 {% block title %}Galleria{% endblock %}
 
 {% block content %}
-  <div class="ui centered cards">
+  <div class="ui four stackable cards">
     {% for album in albums %}
       <a class="ui card" href="{% url 'gallery:album' album.directory %}">
         <div class="image">

@@ -48,7 +48,9 @@
   <div id="photo" class="ui basic segment photo">
     {% if photo.preview_img %}
       <img class="ui image centered" src="{{ photo.preview_img.url }}"
-          {% if photo.hidpi_preview_img %} srcset="{{ photo.hidpi_preview_img.url }} 2x" {% endif %}
+          {% if photo.hidpi_preview_img %}
+            srcset="{{ photo.hidpi_preview_img.url }} 2x"
+          {% endif %}
            alt="{{ photo.title }}">
     {% else %}
       <img class="ui image centered" src="{{ photo.image.url }}"

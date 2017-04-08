@@ -37,7 +37,7 @@
             <span class="right floated">
               {{ album.date|date:'j.n.Y' }}
             </span>
-            <span>
+              <span>
               <i class="image icon"></i>
               {{ album.photos.count }}
             </span>
@@ -66,15 +66,19 @@
         </a>
       {% endfor %}
 
-    {% if is_paginated %}
-      <div class="ui hidden divider"></div>
-      <div class="ui pagination menu">
-        {% for page in paginator.page_range %}
-          <a class={% if page_obj.number == page %}"active item"{% else %}"item"{% endif %} href="?page={{ page }}">{{ page }}</a>
-        {% endfor %}
-      </div>
-      <div class="ui hidden divider"></div>
-    {% endif %}
+      {% if is_paginated %}
+        <div class="ui hidden divider"></div>
+        <div class="ui pagination menu">
+          {% for page in paginator.page_range %}
+            {% if page_obj.number == page %}
+              <a class="active item" href="?page={{ page }}">{{ page }}</a>
+            {% else %}
+              <a class="item" href="?page={{ page }}">{{ page }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="ui hidden divider"></div>
+      {% endif %}
     </div>
 
   {% else %}
@@ -88,8 +92,8 @@
   {% endif %}
 {% endblock %}
 
-{% if user.is_authenticated %}
-  {% block modals %}
+{% block modals %}
+  {% if user.is_authenticated %}
     <div class="ui small modal">
       <div class="header">
         Poista albumi
@@ -107,16 +111,18 @@
         </form>
       </div>
     </div>
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}
 
-{% if user.is_authenticated %}
-  {% block scripts %}
+
+
+{% block scripts %}
+  {% if user.is_authenticated %}
     <script>
-      $('.ui.small.modal')
-          .modal('setting', 'duration', 0)
-          .modal('attach events', '#album-delete', 'show')
-      ;
+        $('.ui.small.modal')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#album-delete', 'show')
+        ;
     </script>
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}
