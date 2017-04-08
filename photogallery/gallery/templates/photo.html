@@ -15,42 +15,43 @@
 
 {% if user.is_authenticated %}
   {% block navbar %}
-  <div class="ui divider"></div>
-  <div class="header">Kuva</div>
-  <a class="item" href="{% url 'gallery:album-update-cover' album_id=photo.album.pk photo_id=photo.pk %}">Aseta oletuskuvaksi</a>
-  <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
-  <a class="item" href="#" id="photo-delete">Poista</a>
-  <div class="ui divider"></div>
-  <div class="header">Albumi</div>
-  <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
-  <a class="item" href="#" id="album-delete">Poista</a>
+    <div class="ui divider"></div>
+    <div class="header">Kuva</div>
+    <a class="item" href="{% url 'gallery:album-update-cover' album_id=photo.album.pk photo_id=photo.pk %}">Aseta
+      oletuskuvaksi</a>
+    <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
+    <a class="item" href="#" id="photo-delete">Poista</a>
+    <div class="ui divider"></div>
+    <div class="header">Albumi</div>
+    <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
+    <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
-{% endif%}
+{% endif %}
 
 {% block content %}
   <div id="photonav" class="ui basic clearing segment">
-  {% if photo.next_photo %}
-    <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
-      <button class="ui basic right floated right labeled icon button">Next
-        <i class="right chevron icon"></i>
-      </button>
-    </a>
-  {% endif %}
-  {% if photo.previous_photo %}
-    <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-      <button class="ui basic left floated left labeled icon button">Previous
-        <i class="left chevron icon"></i>
-      </button>
-    </a>
-  {% endif %}
+    {% if photo.next_photo %}
+      <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
+        <button class="ui basic right floated right labeled icon button">Next
+          <i class="right chevron icon"></i>
+        </button>
+      </a>
+    {% endif %}
+    {% if photo.previous_photo %}
+      <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+        <button class="ui basic left floated left labeled icon button">Previous
+          <i class="left chevron icon"></i>
+        </button>
+      </a>
+    {% endif %}
   </div>
 
   <div id="photo" class="ui basic segment photo">
     {% if photo.preview_img %}
       <img class="ui image centered" src="{{ photo.preview_img.url }}"
-          {% if photo.hidpi_preview_img %}
-            srcset="{{ photo.hidpi_preview_img.url }} 2x"
-          {% endif %}
+              {% if photo.hidpi_preview_img %}
+           srcset="{{ photo.hidpi_preview_img.url }} 2x"
+              {% endif %}
            alt="{{ photo.title }}">
     {% else %}
       <img class="ui image centered" src="{{ photo.image.url }}"
@@ -63,8 +64,9 @@
   {% endif %}
 {% endblock %}
 
-{% if user.is_authenticated %}
-  {% block modals %}
+{% block modals %}
+  {% if user.is_authenticated %}
+
     <div class="ui small modal album-delete">
       <div class="header">
         Poista albumi
@@ -99,21 +101,22 @@
         </form>
       </div>
     </div>
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}
 
-{% if user.is_authenticated %}
-  {% block scripts %}
+{% block scripts %}
+  {% if user.is_authenticated %}
+
     <script>
-      $('.ui.small.modal.album-delete')
-          .modal('setting', 'duration', 0)
-          .modal('attach events', '#album-delete', 'show')
-      ;
+        $('.ui.small.modal.album-delete')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#album-delete', 'show')
+        ;
 
-      $('.ui.small.modal.photo-delete')
-          .modal('setting', 'duration', 0)
-          .modal('attach events', '#photo-delete', 'show')
-      ;
+        $('.ui.small.modal.photo-delete')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#photo-delete', 'show')
+        ;
     </script>
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}
