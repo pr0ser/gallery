@@ -6,7 +6,6 @@
   {% if photo.next_photo %}
     <link rel="next" href="{% url 'gallery:photo' photo.next_photo.slug %}">
     <link rel="prefetch" href="{% url 'gallery:photo' photo.next_photo.slug %}">
-    <link rel="prerender" href="{% url 'gallery:photo' photo.next_photo.slug %}">
   {% endif %}
   {% if photo.previous_photo %}
     <link rel="prev" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
@@ -17,8 +16,9 @@
   {% block navbar %}
     <div class="ui divider"></div>
     <div class="header">Kuva</div>
-    <a class="item" href="{% url 'gallery:album-update-cover' album_id=photo.album.pk photo_id=photo.pk %}">Aseta
-      oletuskuvaksi</a>
+    <a class="item" href="{% url 'gallery:album-update-cover' album_id=photo.album.pk photo_id=photo.pk %}">
+      Aseta oletuskuvaksi
+    </a>
     <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
     <a class="item" href="#" id="photo-delete">Poista</a>
     <div class="ui divider"></div>
@@ -58,6 +58,7 @@
            alt="{{ photo.title }}">
     {% endif %}
   </div>
+
   <div class="ui small header">{{ photo.title }}</div>
   {% if photo.description %}
     <p>{{ photo.description }}</p>
@@ -66,7 +67,6 @@
 
 {% block modals %}
   {% if user.is_authenticated %}
-
     <div class="ui small modal album-delete">
       <div class="header">
         Poista albumi
@@ -84,6 +84,7 @@
         </form>
       </div>
     </div>
+
     <div class="ui small modal photo-delete">
       <div class="header">
         Poista kuva
@@ -106,7 +107,6 @@
 
 {% block scripts %}
   {% if user.is_authenticated %}
-
     <script>
         $('.ui.small.modal.album-delete')
             .modal('setting', 'duration', 0)
