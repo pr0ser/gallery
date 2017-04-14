@@ -32,14 +32,14 @@
   <div id="photonav" class="ui basic clearing segment">
     {% if photo.next_photo %}
       <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
-        <button class="ui basic right floated right labeled icon button">Next
+        <button class="ui right floated right labeled icon button">Next
           <i class="right chevron icon"></i>
         </button>
       </a>
     {% endif %}
     {% if photo.previous_photo %}
       <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-        <button class="ui basic left floated left labeled icon button">Previous
+        <button class="ui left floated left labeled icon button">Previous
           <i class="left chevron icon"></i>
         </button>
       </a>

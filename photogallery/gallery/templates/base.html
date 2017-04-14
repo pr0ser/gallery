@@ -6,8 +6,7 @@
   <title>{% block title %}Galleria{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="{% static 'gallery/css/semantic.min.css' %}">
-  <link rel="stylesheet prefetch" href="{% static 'gallery/css/icon.min.css' %}">
+  <link rel="stylesheet" href="{% static 'gallery/semantic/semantic.min.css' %}">
   <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
 
   {% block header %}
@@ -18,7 +17,7 @@
   <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
   <div class="right menu">
     {% if user.is_authenticated %}
-      <div class="ui top right pointing dropdown link item">
+      <div class="ui top right dropdown link item">
         <i class="configure icon"></i>
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -49,7 +48,7 @@
 </div>
 
 <script src="{% static 'gallery/js/jquery-3.1.1.min.js' %}"></script>
-<script src="{% static 'gallery/js/semantic.min.js' %}"></script>
+<script src="{% static 'gallery/semantic/semantic.min.js' %}"></script>
 {% block modals %}{% endblock %}
 <script>
   $('.ui.dropdown').dropdown();
