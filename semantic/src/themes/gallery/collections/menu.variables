@@ -10,7 +10,7 @@
 @verticalMargin: @medium;
 @horizontalMargin: 0em;
 @margin: @verticalMargin @horizontalMargin;
-@background: #030303;
+@background: #232323;
 @fontFamily: @pageFont;
 @itemBackground: none;
 @fontWeight: normal;

@@ -285,7 +285,7 @@
 --------------------*/
 
 @subtleTransparentBlack     : rgba(0, 0, 0, 0.10);
-@transparentBlack           : rgba(0, 0, 0, 0.05);
+@transparentBlack           : rgba(0, 0, 0, 0.20);
 @strongTransparentBlack     : rgba(0, 0, 0, 0.10);
 @veryStrongTransparentBlack : rgba(0, 0, 0, 0.15);
 
