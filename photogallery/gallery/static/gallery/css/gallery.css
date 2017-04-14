@@ -6,3 +6,10 @@
     padding-top: 1em;
     padding-bottom: 1.5em;
 }
+#photo {
+    max-height: 1200px;
+}
+#photo .ui.fluid.image.centered {
+    max-height: 100%;
+    width: auto;
+}

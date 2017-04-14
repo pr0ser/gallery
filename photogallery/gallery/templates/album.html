@@ -15,8 +15,8 @@
 {% block content %}
   {% if album.subalbums.all %}
     <div class="ui container subalbums">
-      <h2 class="ui header centered">Alialbumit</h2>
-      <div class="ui centered cards">
+      <h1 class="ui header">Alialbumit</h1>
+      <div class="ui four stackable cards">
         {% for album in album.subalbums.all %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
             <div class="image">
@@ -51,12 +51,12 @@
 
   {% if photos %}
     <div class="ui container" id="album-header">
-      <h2 class="ui header">
+      <h1 class="ui header">
         <div class="content">
           {{ album.title }}
           <div class="sub header">{{ album.description }}</div>
         </div>
-      </h2>
+      </h1>
     </div>
 
     <div class="ui container">
