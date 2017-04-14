@@ -43,16 +43,22 @@
     {% endif %}
   </div>
 </div>
-<div class="ui container">
-  {% block content %} {% endblock %}
-</div>
+
+
+{% block content %} {% endblock %}
+
+
 
 <script src="{% static 'gallery/js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'gallery/semantic/semantic.min.js' %}"></script>
 {% block modals %}{% endblock %}
-<script>
-  $('.ui.dropdown').dropdown();
-</script>
-{% block scripts %}{% endblock %}
+
+{% block scripts %}
+  {% if user.is_authenticated %}
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+  {% endif %}
+{% endblock %}
 </body>
 </html>

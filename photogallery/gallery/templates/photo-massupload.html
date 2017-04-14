@@ -3,26 +3,33 @@
 
 {% block content %}
   <div class="ui container">
-    <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-massupload' %}"
-          method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="required field {% if form.album.errors %}error{% endif %}">
-        <label>{{ form.album.label }}</label>
-        {{ form.album }}
+    <div class="ui centered stackable grid">
+      <div class="eight wide column">
+        <h1 class="ui header">Lisää useampi kuva</h1>
+        <div class="ui raised segment">
+          <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-massupload' %}"
+                method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="required field {% if form.album.errors %}error{% endif %}">
+              <label>{{ form.album.label }}</label>
+              {{ form.album }}
+            </div>
+            <div class="required field {% if form.image.errors %}error{% endif %}">
+              <label>{{ form.image.label }}</label>
+              {{ form.image }}
+            </div>
+            <input class="ui primary big button" type="submit" value="Lähetä"/>
+          </form>
+        </div>
       </div>
-      <div class="required field {% if form.image.errors %}error{% endif %}">
-        <label>{{ form.image.label }}</label>
-        {{ form.image }}
-      </div>
-      <input class="ui primary big button" type="submit" value="Lähetä"/>
-    </form>
+    </div>
   </div>
 {% endblock %}
 
 {% block scripts %}
   <script>
-    $('#select')
-      .dropdown()
-    ;
+      $('#select')
+          .dropdown()
+      ;
   </script>
 {% endblock %}

@@ -4680,7 +4680,7 @@ input::selection {
 
 /* Small Monitor */
 
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1399px) {
   .ui.container {
     width: 933px;
     margin-left: auto !important;
@@ -4702,23 +4702,23 @@ input::selection {
 
 /* Large Monitor */
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
   .ui.container {
-    width: 1127px;
+    width: 1327px;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
   .ui.grid.container {
-    width: calc( 1127px  +  2rem ) !important;
+    width: calc( 1327px  +  2rem ) !important;
   }
 
   .ui.relaxed.grid.container {
-    width: calc( 1127px  +  3rem ) !important;
+    width: calc( 1327px  +  3rem ) !important;
   }
 
   .ui.very.relaxed.grid.container {
-    width: calc( 1127px  +  5rem ) !important;
+    width: calc( 1327px  +  5rem ) !important;
   }
 }
 
@@ -15426,7 +15426,7 @@ ol.ui.horizontal.list li:before,
 
 .ui.segment {
   position: relative;
-  background: #FFFFFF;
+  background: #323232;
   box-shadow: 0px 1px 2px 0 #141414;
   margin: 1rem 0em;
   padding: 1em 1em;
@@ -15508,7 +15508,7 @@ ol.ui.horizontal.list li:before,
 /* Table */
 
 .ui.basic.table.segment {
-  background: #FFFFFF;
+  background: #323232;
   border: 1px solid #141414;
   box-shadow: 0px 1px 2px 0 #141414;
 }
@@ -15796,7 +15796,7 @@ ol.ui.horizontal.list li:before,
   background-color: transparent;
   border-radius: 0px;
   padding: 0em;
-  background-color: #FFFFFF;
+  background-color: #323232;
   box-shadow: 0px 1px 2px 0 #141414;
   margin: 1rem 0em;
   border-radius: 0.28571429rem;
@@ -18474,7 +18474,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1399px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -18484,7 +18484,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1400px) and (max-width: 1919px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -19141,7 +19141,7 @@ ol.ui.horizontal.list li:before,
 
 /* Large Monitor Sizing Combinations */
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1400px) and (max-width: 1919px) {
   .ui.grid > .row > [class*="one wide large screen"].column,
   .ui.grid > .column.row > [class*="one wide large screen"].column,
   .ui.grid > [class*="one wide large screen"].column,
@@ -20467,7 +20467,7 @@ ol.ui.horizontal.list li:before,
 
 /* Computer Only Hide */
 
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1399px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.computer),
@@ -20499,7 +20499,7 @@ ol.ui.horizontal.list li:before,
 
 /* Large Screen Only Hide */
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1400px) and (max-width: 1919px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.computer),
@@ -30813,7 +30813,7 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
   .ui.modal {
     width: 900px;
     margin: 0em 0em 0em -450px;
@@ -31081,7 +31081,7 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
   .ui.small.modal {
     width: 720px;
     margin: 0em 0em 0em -360px;
@@ -31122,7 +31122,7 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
   .ui.large.modal {
     width: 1080px;
     margin: 0em 0em 0em -540px;

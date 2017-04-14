@@ -3,25 +3,35 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <h2 class="ui header">Olet kirjautunut sisään käyttäjänä {{ user.username }}</h2>
-    <a class="ui large button" href="{% url 'gallery:logout' %}">Kirjaudu ulos</a>
+    <div class="ui container">
+      <h2 class="ui header">Olet kirjautunut sisään käyttäjänä {{ user.username }}</h2>
+      <a class="ui large button" href="{% url 'gallery:logout' %}">Kirjaudu ulos</a>
+    </div>
   {% else %}
-    <div class="ui stackable grid centered">
-      <div class="six wide column">
-        <h2 class="ui header">Kirjaudu sisään</h2>
-        <div class="ui hidden divider"></div>
-        <form class="ui big form" action="{% url 'gallery:login' %}" method="post">
-          {% csrf_token %}
-          <div class="field">
-            <label>Käyttäjätunnus</label>
-            <input type="text" name="username" placeholder="käyttäjätunnus">
+    <div class="ui container">
+      <div class="ui centered stackable grid">
+        <div class="eight wide column">
+          <h1 class="ui header">Kirjaudu sisään</h1>
+          <div class="ui hidden divider"></div>
+          <div class="ui raised segment">
+            <form class="ui big form" action="{% url 'gallery:login' %}" method="post">
+              {% csrf_token %}
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="user icon"></i>
+                  <input type="text" name="username" placeholder="käyttäjätunnus">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input type="password" name="password" placeholder="salasana">
+                </div>
+              </div>
+              <button class="ui primary fluid large submit button" type="submit">Kirjaudu</button>
+            </form>
           </div>
-          <div class="field">
-            <label>Salasana</label>
-            <input type="password" name="password" placeholder="salasana">
-          </div>
-          <button class="ui primary button" type="submit">Kirjaudu</button>
-        </form>
+        </div>
       </div>
     </div>
   {% endif %}

@@ -3,26 +3,34 @@
 
 {% block content %}
   <div class="ui container">
-    <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-edit' form.instance.directory %}"
-          method="post">
-      {% csrf_token %}
-      {% include 'album-form.html' %}
-      <input class="ui primary big button" type="submit" value="Tallenna"/>
-    </form>
+    <div class="ui centered stackable grid">
+      <div class="eight wide column">
+        <h1 class="ui header">Muokkaa albumia</h1>
+        <div class="ui raised segment">
+          <form class="ui large form {% if form.errors %}error{% endif %}"
+                action="{% url 'gallery:album-edit' form.instance.directory %}"
+                method="post">
+            {% csrf_token %}
+            {% include 'album-form.html' %}
+            <input class="ui primary big button" type="submit" value="Tallenna"/>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
 
 {% block scripts %}
   <script>
-    $('.ui.checkbox')
-      .checkbox()
-    ;
+      $('.ui.checkbox')
+          .checkbox()
+      ;
   </script>
   <script>
-    $('#select')
-      .dropdown({
-        placeholder: false
-      })
-    ;
+      $('#select')
+          .dropdown({
+              placeholder: false
+          })
+      ;
   </script>
 {% endblock %}

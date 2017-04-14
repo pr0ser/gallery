@@ -29,40 +29,46 @@
 {% endif %}
 
 {% block content %}
-  <div id="photonav" class="ui basic clearing segment">
-    {% if photo.next_photo %}
-      <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
-        <button class="ui right floated right labeled icon button">Next
-          <i class="right chevron icon"></i>
-        </button>
-      </a>
-    {% endif %}
-    {% if photo.previous_photo %}
-      <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-        <button class="ui left floated left labeled icon button">Previous
-          <i class="left chevron icon"></i>
-        </button>
-      </a>
+  <div class="ui container">
+    <div class="ui centered stackable grid">
+      <div class="nine wide column">
+        <div id="photonav" class="ui basic clearing segment">
+          {% if photo.next_photo %}
+            <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
+              <button class="ui right floated right labeled icon button">Next
+                <i class="right chevron icon"></i>
+              </button>
+            </a>
+          {% endif %}
+          {% if photo.previous_photo %}
+            <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+              <button class="ui left floated left labeled icon button">Previous
+                <i class="left chevron icon"></i>
+              </button>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div id="photo" class="ui basic segment">
+      {% if photo.preview_img %}
+        <img class="ui fluid image centered" src="{{ photo.preview_img.url }}"
+                {% if photo.hidpi_preview_img %}
+             srcset="{{ photo.hidpi_preview_img.url }} 2x"
+                {% endif %}
+             alt="{{ photo.title }}">
+      {% else %}
+        <img class="ui image centered" src="{{ photo.image.url }}"
+             alt="{{ photo.title }}">
+      {% endif %}
+    </div>
+
+    <div class="ui small header">{{ photo.title }}</div>
+    {% if photo.description %}
+      <p>{{ photo.description }}</p>
     {% endif %}
   </div>
-
-  <div id="photo" class="ui basic segment photo">
-    {% if photo.preview_img %}
-      <img class="ui image centered" src="{{ photo.preview_img.url }}"
-              {% if photo.hidpi_preview_img %}
-           srcset="{{ photo.hidpi_preview_img.url }} 2x"
-              {% endif %}
-           alt="{{ photo.title }}">
-    {% else %}
-      <img class="ui image centered" src="{{ photo.image.url }}"
-           alt="{{ photo.title }}">
-    {% endif %}
-  </div>
-
-  <div class="ui small header">{{ photo.title }}</div>
-  {% if photo.description %}
-    <p>{{ photo.description }}</p>
-  {% endif %}
 {% endblock %}
 
 {% block modals %}

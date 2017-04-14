@@ -4,33 +4,35 @@
 {% block title %}Galleria{% endblock %}
 
 {% block content %}
-  <div class="ui four stackable cards">
-    {% for album in albums %}
-      <a class="ui card" href="{% url 'gallery:album' album.directory %}">
-        <div class="image">
-          {% if album.album_cover.thumbnail_img.url %}
-            <img src="{{ album.album_cover.thumbnail_img.url }}"
-                 srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
-          {% else %}
-            <img src="{% static 'gallery/images/no_image.png' %}">
-          {% endif %}
-        </div>
-        <div class="content">
-          <div class="header">{{ album.title }}</div>
-          <div class="description">
-            {{ album.description }}
+  <div class="ui container">
+    <div class="ui four stackable cards">
+      {% for album in albums %}
+        <a class="ui card" href="{% url 'gallery:album' album.directory %}">
+          <div class="image">
+            {% if album.album_cover.thumbnail_img.url %}
+              <img src="{{ album.album_cover.thumbnail_img.url }}"
+                   srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
+            {% else %}
+              <img src="{% static 'gallery/images/no_image.png' %}">
+            {% endif %}
           </div>
-        </div>
-        <div class="extra content">
+          <div class="content">
+            <div class="header">{{ album.title }}</div>
+            <div class="description">
+              {{ album.description }}
+            </div>
+          </div>
+          <div class="extra content">
           <span class="right floated">
             {{ album.date|date:'j.n.Y' }}
           </span>
-          <span>
+            <span>
             <i class="image icon"></i>
             {{ album.photos.count }}
           </span>
-        </div>
-      </a>
-    {% endfor %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
