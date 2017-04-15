@@ -61,29 +61,30 @@
 
     <div class="ui container">
       <div class="ui grid">
-          {% for photo in photos %}
-            <div class="eight wide mobile four wide tablet four wide computer column">
-              <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
-                <img class="ui image" src="{{ photo.thumbnail_img.url }}"
-                     srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
-              </a>
-            </div>
-          {% endfor %}
+        {% for photo in photos %}
+          <div class="eight wide mobile four wide tablet four wide computer column">
+            <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
+              <img class="ui image" src="{{ photo.thumbnail_img.url }}"
+                   srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
+            </a>
+          </div>
+        {% endfor %}
 
-          {% if is_paginated %}
-            <div class="ui hidden divider"></div>
-            <div class="ui pagination menu">
-              {% for page in paginator.page_range %}
-                {% if page_obj.number == page %}
-                  <a class="active item" href="?page={{ page }}">{{ page }}</a>
-                {% else %}
-                  <a class="item" href="?page={{ page }}">{{ page }}</a>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="ui hidden divider"></div>
-          {% endif %}
+
       </div>
+      {% if is_paginated %}
+        <div class="ui hidden divider"></div>
+        <div class="ui pagination menu">
+          {% for page in paginator.page_range %}
+            {% if page_obj.number == page %}
+              <a class="active item" href="?page={{ page }}">{{ page }}</a>
+            {% else %}
+              <a class="item" href="?page={{ page }}">{{ page }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="ui hidden divider"></div>
+      {% endif %}
     </div>
 
   {% else %}
