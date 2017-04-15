@@ -64,9 +64,10 @@
       {% endif %}
     </div>
 
-    <div class="ui small header">{{ photo.title }}</div>
     {% if photo.description %}
-      <p>{{ photo.description }}</p>
+      <div class="ui center aligned basic segment">
+        <p>{{ photo.description }}</p>
+      </div>
     {% endif %}
   </div>
 {% endblock %}
