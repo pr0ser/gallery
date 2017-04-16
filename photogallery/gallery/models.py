@@ -149,6 +149,12 @@ class Photo(models.Model):
             os.makedirs(preview_dir)
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
+    def is_landscape(self):
+        if self.image.width > self.image.height:
+            return True
+        else:
+            return False
+
     def create_preview_image(self, size, quality, output_filename):
         if self.image.width < self.image.height:
             long_side = 'x{}'.format(size)

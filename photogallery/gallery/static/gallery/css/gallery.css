@@ -1,18 +1,22 @@
-#photonav {
-    padding: 0;
-    margin: 0;
-}
 #album-header {
     padding-top: 1em;
     padding-bottom: 1.5em;
 }
-#photo {
+#album-column {
+    padding: 0.5rem;
+}
+#landscape-photo {
+    padding: 0;
+}
+#portrait-photo {
+    padding: 0;
     max-height: 1200px;
 }
-#photo .ui.fluid.image.centered {
+#portrait-photo .ui.centered.fluid.image {
+    display: block;
     max-height: 100%;
     width: auto;
 }
-#album-column {
-    padding: 0.5rem;
+.next-photo {
+    display:none;
 }
