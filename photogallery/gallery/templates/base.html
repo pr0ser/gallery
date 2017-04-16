@@ -1,6 +1,7 @@
 {% load staticfiles %}
 <!doctype html>
 <html lang="fi">
+
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Galleria{% endblock %}</title>
@@ -8,10 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="{% static 'gallery/semantic/semantic.min.css' %}">
   <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
-
-  {% block header %}
-  {% endblock %}
+  <meta name="theme-color" content="#000000" />
+  {% block header %}{% endblock %}
 </head>
+
 <body>
 <div class="ui inverted menu">
   <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>

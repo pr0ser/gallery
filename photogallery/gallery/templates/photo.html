@@ -60,7 +60,6 @@
              alt="{{ photo.title }}">
       {% endif %}
 
-
     <div id="photo-nav" class="ui center aligned basic segment">
       {% if photo.previous_photo %}
         <a class="ui left labeled icon button" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
@@ -137,6 +136,25 @@
             .modal('setting', 'duration', 0)
             .modal('attach events', '#photo-delete', 'show')
         ;
+
+        $(document).keydown(function(e) {
+          switch(e.which) {
+            {% if photo.previous_photo %}
+            case 37: // left
+              window.location.href = "{% url 'gallery:photo' photo.previous_photo.slug %}";
+            break;
+            {% endif %}
+
+            {% if photo.next_photo %}
+            case 39: // right
+              window.location.href = "{% url 'gallery:photo' photo.next_photo.slug %}";
+            break;
+            {% endif %}
+
+            default: return;
+          }
+          e.preventDefault();
+        });
     </script>
   {% endif %}
 
