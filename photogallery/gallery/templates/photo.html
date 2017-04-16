@@ -6,6 +6,7 @@
   {% if photo.next_photo %}
     <link rel="next" href="{% url 'gallery:photo' photo.next_photo.slug %}">
     <link rel="prefetch" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+    <link rel="prerender" href="{% url 'gallery:photo' photo.next_photo.slug %}">
   {% endif %}
   {% if photo.previous_photo %}
     <link rel="prev" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
