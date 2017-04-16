@@ -60,9 +60,9 @@
     </div>
 
     <div class="ui container">
-      <div class="ui grid">
+      <div class="ui grid" id="album-grid">
         {% for photo in photos %}
-          <div class="eight wide mobile four wide tablet four wide computer column">
+          <div class="eight wide mobile four wide tablet four wide computer column" id="album-column">
             <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
               <img class="ui image" src="{{ photo.thumbnail_img.url }}"
                    srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
