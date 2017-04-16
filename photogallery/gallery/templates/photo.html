@@ -31,19 +31,33 @@
 
 {% block content %}
   <div class="ui container">
+
+    <div class="ui basic clearing segment">
+      <div class="ui breadcrumb">
+        <a class="section">Etusivu</a>
+        {% if photo.album.parent %}
+          <i class="grey right angle icon divider"></i>
+          <a class="section"
+             href="{% url 'gallery:album' photo.album.parent.directory %}">{{ photo.album.parent.title }}</a>
+        {% endif %}
+        <i class="grey right angle icon divider"></i>
+        <a class="section" href="{% url 'gallery:album' photo.album.directory %}">{{ photo.album.title }}</a>
+      </div>
+    </div>
+
     <div class="ui centered stackable grid">
       <div class="nine wide column">
         <div id="photonav" class="ui basic clearing segment">
           {% if photo.next_photo %}
             <a href="{% url 'gallery:photo' photo.next_photo.slug %}">
-              <div class="ui right floated right labeled icon button">Next
+              <div class="ui right floated right labeled icon button">Seuraava
                 <i class="right chevron icon"></i>
               </div>
             </a>
           {% endif %}
           {% if photo.previous_photo %}
             <a href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-              <div class="ui left floated left labeled icon button">Previous
+              <div class="ui left floated left labeled icon button">Edellinen
                 <i class="left chevron icon"></i>
               </div>
             </a>
@@ -75,7 +89,7 @@
 
 {% block modals %}
   {% if user.is_authenticated %}
-    <div class="ui small modal album-delete">
+    <div class="ui small modal album-delete" id="album-delete">
       <div class="header">
         Poista albumi
       </div>
@@ -93,7 +107,7 @@
       </div>
     </div>
 
-    <div class="ui small modal photo-delete">
+    <div class="ui small modal photo-delete" id="photo-delete">
       <div class="header">
         Poista kuva
       </div>
