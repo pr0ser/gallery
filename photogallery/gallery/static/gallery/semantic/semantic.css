@@ -606,12 +606,12 @@ p:last-child {
 --------------------*/
 
 a {
-  color: #4183C4;
+  color: #4eb0ff;
   text-decoration: none;
 }
 
 a:hover {
-  color: #1e70bf;
+  color: #1c9aff;
   text-decoration: none;
 }
 
@@ -13223,7 +13223,7 @@ a.ui.basic.black.label:hover {
 a.ui.basic.label:hover {
   text-decoration: none;
   background: none #FFFFFF;
-  color: #1e70bf;
+  color: #1c9aff;
   box-shadow: 1px solid #141414;
   box-shadow: none;
 }
@@ -13690,12 +13690,12 @@ ol.ui.list ol li,
 .ui.list .list > a.item,
 .ui.list > a.item {
   cursor: pointer;
-  color: #4183C4;
+  color: #4eb0ff;
 }
 
 .ui.list .list > a.item:hover,
 .ui.list > a.item:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /* Linked Item Icons */
@@ -13710,12 +13710,12 @@ ol.ui.list ol li,
 .ui.list .list > .item a.header,
 .ui.list > .item a.header {
   cursor: pointer;
-  color: #4183C4 !important;
+  color: #4eb0ff !important;
 }
 
 .ui.list .list > .item a.header:hover,
 .ui.list > .item a.header:hover {
-  color: #1e70bf !important;
+  color: #1c9aff !important;
 }
 
 /* Floated Content */
@@ -13891,7 +13891,7 @@ ol.ui.list ol li,
 
 .ui.inverted.list .list > a.item:hover,
 .ui.inverted.list > a.item:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /* Linking Content */
@@ -13901,7 +13901,7 @@ ol.ui.list ol li,
 }
 
 .ui.inverted.list .item a:not(.ui):hover {
-  color: #1e70bf !important;
+  color: #1c9aff !important;
 }
 
 /*-------------------
@@ -16683,7 +16683,7 @@ ol.ui.horizontal.list li:before,
 }
 
 .ui.steps .step.active .title {
-  color: #4183C4;
+  color: #4eb0ff;
 }
 
 .ui.ordered.steps .step.active:before,
@@ -17025,11 +17025,11 @@ ol.ui.horizontal.list li:before,
 /* Link */
 
 .ui.breadcrumb a {
-  color: #4183C4;
+  color: #4eb0ff;
 }
 
 .ui.breadcrumb a:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /* Icon Divider */
@@ -25215,7 +25215,7 @@ Floated Menu / Item
 
 .ui.cards > .card > .content > a.header:hover,
 .ui.card > .content > a.header:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /* Meta */
@@ -25334,7 +25334,7 @@ Floated Menu / Item
 
 .ui.cards > .card > .extra a:not(.ui):hover,
 .ui.card > .extra a:not(.ui):hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /*******************************
@@ -26079,7 +26079,7 @@ a.ui.card:hover,
 }
 
 .ui.comments .comment a.author:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /*--------------
@@ -26817,7 +26817,7 @@ a.ui.card:hover,
 }
 
 .ui.items > .item > .content > a.header:hover {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /* Meta */
@@ -27048,7 +27048,7 @@ a.ui.card:hover,
 
 .ui.items a.item:hover .content .header,
 .ui.link.items > .item:hover .content .header {
-  color: #1e70bf;
+  color: #1c9aff;
 }
 
 /*--------------
