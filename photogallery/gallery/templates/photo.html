@@ -122,6 +122,15 @@
       </div>
     </div>
   {% endif %}
+
+  {% if photo.next_photo %}
+    <img class="next-photo" src="{{ photo.next_photo.preview_img.url }}"
+            {% if photo.next_photo.hidpi_preview_img %}
+         srcset="{{ photo.next_photo.hidpi_preview_img.url }} 2x"
+            {% endif %}
+         alt="{{ photo.next_photo.title }}">
+  {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
@@ -136,8 +145,11 @@
             .modal('setting', 'duration', 0)
             .modal('attach events', '#photo-delete', 'show')
         ;
+    </script>
+  {% endif %}
 
-        $(document).keydown(function(e) {
+  <script>
+    $(document).keydown(function(e) {
           switch(e.which) {
             {% if photo.previous_photo %}
             case 37: // left
@@ -155,14 +167,5 @@
           }
           e.preventDefault();
         });
-    </script>
-  {% endif %}
-
-  {% if photo.next_photo %}
-    <img class="next-photo" src="{{ photo.next_photo.preview_img.url }}"
-            {% if photo.next_photo.hidpi_preview_img %}
-         srcset="{{ photo.next_photo.hidpi_preview_img.url }} 2x"
-            {% endif %}
-         alt="{{ photo.next_photo.title }}">
-  {% endif %}
+  </script>
 {% endblock %}
