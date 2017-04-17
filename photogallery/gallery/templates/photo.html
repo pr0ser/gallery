@@ -31,8 +31,6 @@
 
 {% block content %}
   <div class="ui container" id="photo-container">
-
-    <div class="ui basic segment">
       <div class="ui breadcrumb">
         <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
         {% if photo.album.parent %}
@@ -45,12 +43,12 @@
         <i class="grey right angle icon divider"></i>
         <div class="active section">{{ photo.title }}</div>
       </div>
-    </div>
+  </div>
 
     {% if photo.is_landscape %}
-      <div id="landscape-photo" class="ui basic segment">
+      <div id="landscape-photo" class="ui container">
       {% else %}
-      <div id="portrait-photo" class="ui basic segment">
+      <div id="portrait-photo" class="ui container">
     {% endif %}
       {% if photo.preview_img %}
         <img class="ui centered fluid image" src="{{ photo.preview_img.url }}"
@@ -84,7 +82,6 @@
         <p>{{ photo.description }}</p>
       </div>
     {% endif %}
-  </div>
 {% endblock %}
 
 {% block modals %}

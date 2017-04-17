@@ -13,6 +13,19 @@
 {% endif %}
 
 {% block content %}
+  <div class="ui container">
+      <div class="ui breadcrumb">
+        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+        {% if album.parent %}
+          <i class="grey right angle icon divider"></i>
+          <a class="section"
+             href="{% url 'gallery:album' album.parent.directory %}">{{ album.parent.title }}</a>
+        {% endif %}
+        <i class="grey right angle icon divider"></i>
+        <div class="active section">{{ album.title }}</div>
+      </div>
+  </div>
+
   {% if album.subalbums.all %}
     <div class="ui container subalbums">
       <h1 class="ui header">Alialbumit</h1>
@@ -62,7 +75,7 @@
     <div class="ui container">
       <div class="ui grid" id="album-grid">
         {% for photo in photos %}
-          <div class="eight wide mobile four wide tablet four wide computer column" id="album-column">
+          <div class="eight wide mobile four wide tablet four wide computer column">
             <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
               <img class="ui image" src="{{ photo.thumbnail_img.url }}"
                    srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">

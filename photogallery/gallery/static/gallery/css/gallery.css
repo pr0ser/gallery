@@ -1,8 +1,7 @@
 #album-header {
-    padding-top: 1em;
-    padding-bottom: 1.5em;
+    padding-bottom: 3em;
 }
-#album-column {
+.eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
 #landscape-photo {
@@ -19,4 +18,8 @@
 }
 .next-photo {
     display:none;
+}
+.ui.breadcrumb {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
