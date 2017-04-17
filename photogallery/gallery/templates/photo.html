@@ -34,7 +34,7 @@
 
     <div class="ui basic segment">
       <div class="ui breadcrumb">
-        <a class="section">Etusivu</a>
+        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
         {% if photo.album.parent %}
           <i class="grey right angle icon divider"></i>
           <a class="section"
@@ -42,6 +42,8 @@
         {% endif %}
         <i class="grey right angle icon divider"></i>
         <a class="section" href="{% url 'gallery:album' photo.album.directory %}">{{ photo.album.title }}</a>
+        <i class="grey right angle icon divider"></i>
+        <div class="active section">{{ photo.title }}</div>
       </div>
     </div>
 
