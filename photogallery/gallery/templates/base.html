@@ -22,9 +22,10 @@
         <i class="configure icon"></i>
         <i class="dropdown icon"></i>
         <div class="menu">
+          <div class="header">Lisää</div>
           <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
+          <a class="item" href="{% url 'gallery:photo-massupload' %}">Useampi kuva</a>
           <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
-          <a class="item" href="{% url 'gallery:photo-massupload' %}">Massalataus</a>
           {% block navbar %} {% endblock %}
         </div>
       </div>

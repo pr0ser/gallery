@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from wand.image import Image
 
 sort_order_choices = (
-    ('date', _('Date (ascending')),
+    ('date', _('Date (ascending)')),
     ('-date', _('Date (descending)')),
     ('title', _('Title (ascending)')),
     ('-title', _('Title (descending)')),
@@ -36,7 +36,7 @@ def validate_album_title(value):
 
 
 class Album(models.Model):
-    parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True)
+    parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True, verbose_name=_('Parent'))
     title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_album_title])
     date = models.DateField(_('Date'), auto_now_add=True)
     description = models.TextField(_('Description'), blank=True)
@@ -45,7 +45,8 @@ class Album(models.Model):
                                        related_name='Photo',
                                        null=True,
                                        blank=True,
-                                       on_delete=models.SET_NULL)
+                                       on_delete=models.SET_NULL,
+                                       verbose_name=_('Album cover'))
     sort_order = models.CharField(_('Sort order'),
                                   max_length=255,
                                   choices=sort_order_choices,
@@ -87,7 +88,7 @@ class Photo(models.Model):
     def upload_dir(instance, filename):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
     title = models.CharField(_('Title'), max_length=255, unique=True)
     slug = models.SlugField(_('Slug'), unique=True)
     date = models.DateTimeField(_('Date'), auto_now_add=True)

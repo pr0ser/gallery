@@ -1,0 +1,148 @@
+# Gallery finnish translations.
+# Copyright (C) 2017 Teemu Paananen
+# This file is distributed under the same license as the gallery package.
+# Teemu Paananen <teemu.paananen@gmail.com>, 2017.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-17 19:55+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\gallery\admin.py:17
+msgid "Parent album"
+msgstr "Ylempi albumi"
+
+#: .\gallery\admin.py:20
+msgid "Album details"
+msgstr "Albumin tiedot"
+
+#: .\gallery\admin.py:39 .\gallery\models.py:91
+msgid "Album"
+msgstr "Albumi"
+
+#: .\gallery\admin.py:42
+msgid "Photo"
+msgstr "Kuva"
+
+#: .\gallery\admin.py:45
+msgid "Photo metadata"
+msgstr "Kuvan metatiedot"
+
+#: .\gallery\apps.py:7
+msgid "Gallery"
+msgstr "Galleria"
+
+#: .\gallery\models.py:14
+msgid "Date (ascending)"
+msgstr "Päiväys (nouseva)"
+
+#: .\gallery\models.py:15
+msgid "Date (descending)"
+msgstr "Päiväys (laskeva)"
+
+#: .\gallery\models.py:16
+msgid "Title (ascending)"
+msgstr "Nimi (nouseva)"
+
+#: .\gallery\models.py:17
+msgid "Title (descending)"
+msgstr "Nimi (laskeva)"
+
+#: .\gallery\models.py:33
+#, python-format
+msgid "%(value)s is not allowed title name."
+msgstr "%(value)s ei ole salittu nimi albumille."
+
+#: .\gallery\models.py:39
+msgid "Parent"
+msgstr "Yläalbumi"
+
+#: .\gallery\models.py:40 .\gallery\models.py:92
+msgid "Title"
+msgstr "Nimi"
+
+#: .\gallery\models.py:41 .\gallery\models.py:94
+msgid "Date"
+msgstr "Päiväys"
+
+#: .\gallery\models.py:42 .\gallery\models.py:96
+msgid "Description"
+msgstr "Kuvaus"
+
+#: .\gallery\models.py:43
+msgid "Directory"
+msgstr "Hakemisto"
+
+#: .\gallery\models.py:49
+msgid "Album cover"
+msgstr "Albumin kansikuva"
+
+#: .\gallery\models.py:50
+msgid "Sort order"
+msgstr "Lajittelujärjestys"
+
+#: .\gallery\models.py:53
+msgid "Sort order of photos in this album"
+msgstr "Albumin kuvien lajittelujärjestys"
+
+#: .\gallery\models.py:55
+msgid "Public"
+msgstr "Julkinen"
+
+#: .\gallery\models.py:68
+msgid "Unable to delete album directories."
+msgstr "Albumin hakemistojen poisto epäonnistui."
+
+#: .\gallery\models.py:82
+msgid "album"
+msgstr "albumi"
+
+#: .\gallery\models.py:83
+msgid "albums"
+msgstr "albumit"
+
+#: .\gallery\models.py:93
+msgid "Slug"
+msgstr "Slug"
+
+#: .\gallery\models.py:95
+msgid "Image file"
+msgstr "Kuvatiedosto"
+
+#: .\gallery\models.py:97
+msgid "SHA-256"
+msgstr "SHA-256 -tiiviste"
+
+#: .\gallery\models.py:98
+msgid "Preview image"
+msgstr "Esikatselukuva"
+
+#: .\gallery\models.py:99
+msgid "High DPI preview image"
+msgstr "Korkearesoluutioinen pienoiskuva"
+
+#: .\gallery\models.py:100
+msgid "Thumbnail image"
+msgstr "Pienoiskuva"
+
+#: .\gallery\models.py:101
+msgid "High DPI thumbnail image"
+msgstr "Korkearesoluutioinen pienoiskuva"
+
+#: .\gallery\models.py:209
+msgid "photo"
+msgstr "kuva"
+
+#: .\gallery\models.py:210
+msgid "photos"
+msgstr "kuvat"
