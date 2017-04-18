@@ -12,7 +12,7 @@
 
 @dividerSpacing: @3px;
 @dividerOpacity: 0.7;
-@dividerColor: @lightTextColor;
+@dividerColor: @darkTextColor;
 
 @dividerSize: @relativeSmall;
 @dividerVerticalAlign: baseline;

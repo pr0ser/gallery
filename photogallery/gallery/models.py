@@ -79,6 +79,15 @@ class Album(models.Model):
         super(Album, self).delete(*args, **kwargs)
         self.delete_album_dirs()
 
+    def parent_albums(self):
+        albums = []
+        current_album = self.parent
+        while current_album is not None:
+            albums.append(current_album)
+            current_album = current_album.parent
+        return albums
+
+
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')

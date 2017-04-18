@@ -26,3 +26,9 @@
     padding-top: 1rem;
     padding-bottom: 2rem;
 }
+input[type=date]::-webkit-calendar-picker-indicator {
+    background: transparent;
+}
+input[type=date]::-webkit-inner-spin-button {
+    display: none;
+}

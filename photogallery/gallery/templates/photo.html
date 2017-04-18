@@ -31,18 +31,20 @@
 
 {% block content %}
   <div class="ui container" id="photo-container">
-      <div class="ui breadcrumb">
-        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
-        {% if photo.album.parent %}
-          <i class="grey right angle icon divider"></i>
+    <div class="ui breadcrumb">
+      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+      {% if photo.album.parent %}
+        {% for parent in photo.album.parent_albums reversed %}
+          <i class="right angle icon divider"></i>
           <a class="section"
-             href="{% url 'gallery:album' photo.album.parent.directory %}">{{ photo.album.parent.title }}</a>
-        {% endif %}
-        <i class="grey right angle icon divider"></i>
-        <a class="section" href="{% url 'gallery:album' photo.album.directory %}">{{ photo.album.title }}</a>
-        <i class="grey right angle icon divider"></i>
-        <div class="active section">{{ photo.title }}</div>
-      </div>
+             href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+        {% endfor %}
+      {% endif %}
+      <i class="right angle icon divider"></i>
+      <a class="section" href="{% url 'gallery:album' photo.album.directory %}">{{ photo.album.title }}</a>
+      <i class="right angle icon divider"></i>
+      <div class="active section">{{ photo.title }}</div>
+    </div>
   </div>
 
     {% if photo.is_landscape %}

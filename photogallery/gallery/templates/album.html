@@ -14,16 +14,18 @@
 
 {% block content %}
   <div class="ui container">
-      <div class="ui breadcrumb">
-        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
-        {% if album.parent %}
-          <i class="grey right angle icon divider"></i>
+    <div class="ui breadcrumb">
+      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+      {% if album.parent %}
+        {% for parent in album.parent_albums reversed %}
+          <i class="right angle icon divider"></i>
           <a class="section"
-             href="{% url 'gallery:album' album.parent.directory %}">{{ album.parent.title }}</a>
-        {% endif %}
-        <i class="grey right angle icon divider"></i>
-        <div class="active section">{{ album.title }}</div>
-      </div>
+             href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+        {% endfor %}
+      {% endif %}
+      <i class="right angle icon divider"></i>
+      <div class="active section">{{ album.title }}</div>
+    </div>
   </div>
 
   {% if album.subalbums.all %}
