@@ -87,7 +87,6 @@ class Album(models.Model):
             current_album = current_album.parent
         return albums
 
-
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')
