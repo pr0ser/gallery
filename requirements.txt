@@ -1,8 +1,6 @@
-Django
-Pillow
-Wand
-dj-static
-django-cleanup
-gunicorn
-psycopg2
-static3
+Django==1.11
+django-cleanup==0.4.2
+gunicorn==19.7.1
+Pillow==4.1.0
+psycopg2==2.7.1
+Wand==0.4.4
