@@ -1,26 +1,33 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import widgets
 
 from .models import Album, Photo
 
 blank_choice = (('', '---------'),)
 
 
+class CustomDateInput(widgets.TextInput):
+    input_type = 'date'
+
+
 class NewAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'parent', 'public']
+        fields = ['title', 'description', 'date', 'parent', 'public']
         widgets = {
             'parent': forms.Select(attrs={'id': 'select'}),
+            'date': CustomDateInput,
         }
 
 
 class EditAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'parent', 'public']
+        fields = ['title', 'description', 'date', 'parent', 'public']
         widgets = {
             'parent': forms.Select(attrs={'id': 'select'}),
+            'date': CustomDateInput,
         }
 
 

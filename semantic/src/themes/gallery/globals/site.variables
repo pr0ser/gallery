@@ -191,7 +191,7 @@
 --------------------*/
 
 /*---  Colors  ---*/
-@red              : #DB2828;
+@red              : #db494a;
 @orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
@@ -327,10 +327,10 @@
 
 /* Negative */
 @negativeColor           : @red;
-@negativeBackgroundColor : #FFF6F6;
-@negativeBorderColor     : #E0B4B4;
-@negativeHeaderColor     : #912D2B;
-@negativeTextColor       : #9F3A38;
+@negativeBackgroundColor : #652f2f;
+@negativeBorderColor     : #5f2526;
+@negativeHeaderColor     : #e19594;
+@negativeTextColor       : #e1d1d1;
 
 /* Info */
 @infoColor              : #31CCEC;

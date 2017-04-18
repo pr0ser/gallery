@@ -11,6 +11,10 @@
   <label>{{ form.description.label }}</label>
   {{ form.description }}
 </div>
+<div class="field {% if form.date.errors %}error{% endif %}">
+  <label>{{ form.date.label }}</label>
+  {{ form.date }}
+</div>
 {% if form.description.errors %}
   <div class="ui error message">
     {{ form.description.errors }}

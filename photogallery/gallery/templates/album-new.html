@@ -7,7 +7,7 @@
       <div class="eight wide column">
         <h1 class="ui header">Luo uusi albumi</h1>
         <div class="ui raised segment">
-          <form class="ui large form{% if form.errors %}error{% endif %}" action="{% url 'gallery:album-new' %}"
+          <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-new' %}"
                 method="post">
             {% csrf_token %}
             {% include 'album-form.html' %}

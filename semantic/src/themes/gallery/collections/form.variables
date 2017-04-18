@@ -105,12 +105,12 @@
 @formErrorBackground: @negativeBackgroundColor;
 
 /* AutoFill */
-@inputAutoFillBackground: #FFFFF0;
-@inputAutoFillBorder: #E5DFA1;
+@inputAutoFillBackground: #7d7d74;
+@inputAutoFillBorder: #7d7d74;
 @inputAutoFillFocusBackground: @inputAutoFillBackground;
-@inputAutoFillFocusBorder: #D5C315;
-@inputAutoFillErrorBackground: #FFFAF0;
-@inputAutoFillErrorBorder: #E0B4B4;
+@inputAutoFillFocusBorder: #929289;
+@inputAutoFillErrorBackground: #7d786f;
+@inputAutoFillErrorBorder: #7d6060;
 
 
 /* Input Error */
@@ -118,10 +118,10 @@
 @inputErrorBoxShadow: none;
 
 /* Dropdown Error */
-@dropdownErrorHoverBackground: #FBE7E7;
+@dropdownErrorHoverBackground: #86262a;
 @dropdownErrorSelectedBackground: @dropdownErrorHoverBackground;
-@dropdownErrorActiveBackground: #FDCFCF;
-@dropdownErrorLabelBackground: #EACBCB;
+@dropdownErrorActiveBackground: #67120b;
+@dropdownErrorLabelBackground: #41110b;
 @dropdownErrorLabelColor: @errorTextColor;
 
 /* Focused Error */

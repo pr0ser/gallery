@@ -1,6 +1,7 @@
 import hashlib
 import os
 import shutil
+from datetime import date
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -38,7 +39,7 @@ def validate_album_title(value):
 class Album(models.Model):
     parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True, verbose_name=_('Parent'))
     title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_album_title])
-    date = models.DateField(_('Date'), auto_now_add=True)
+    date = models.DateField(_('Date'), default=date.today)
     description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'), unique=True)
     album_cover = models.OneToOneField('Photo',
