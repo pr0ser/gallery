@@ -189,17 +189,17 @@ class Photo(models.Model):
             img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), image_filename))
 
     def create_previews(self):
-        if self.image.height > 1170 or self.image.width > 1170:
-            self.create_preview_image(size='1170', quality=85, output_filename=self.preview_filename())
+        if self.image.height > 1327 or self.image.width > 1327:
+            self.create_preview_image(size='1327', quality=85, output_filename=self.preview_filename())
             self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
         if self.image.height > 2340 or self.image.width > 2340:
             self.create_preview_image(size='2340', quality=85, output_filename=self.hidpi_preview_filename())
             self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
 
     def create_thumbnails(self):
-        self.create_thumbnail(size=250, quality=75, image_filename=self.thumbnail_img_filename())
+        self.create_thumbnail(size=330, quality=75, image_filename=self.thumbnail_img_filename())
         self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename())
-        self.create_thumbnail(size=500, quality=75, image_filename=self.hidpi_thumbnail_img_filename())
+        self.create_thumbnail(size=600, quality=75, image_filename=self.hidpi_thumbnail_img_filename())
         self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename())
 
     def __str__(self):
