@@ -17,7 +17,7 @@
 }
 #portrait-photo {
     padding: 0;
-    max-height: 1200px;
+    max-height: 1000px;
 }
 #portrait-photo .ui.centered.fluid.image {
     display: block;
