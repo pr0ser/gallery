@@ -14,12 +14,12 @@
 </head>
 
 <body>
-<div class="ui inverted menu" id="main-menu">
+<div class="ui inverted borderless menu" id="main-menu">
   <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
   <div class="right menu">
     {% if user.is_authenticated %}
       <div class="ui top right dropdown link item">
-        <i class="configure icon"></i>
+        <i class="setting icon"></i>
         <i class="dropdown icon"></i>
         <div class="menu">
           <div class="header">Lisää</div>

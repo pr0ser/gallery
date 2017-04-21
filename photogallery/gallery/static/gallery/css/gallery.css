@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
+
 #main-menu {
     background-color: black;
+}
+#main-menu h1 {
+    font-family: 'Playfair Display SC', serif;
 }
 #album-header {
     padding-bottom: 3em;
