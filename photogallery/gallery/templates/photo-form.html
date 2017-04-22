@@ -7,6 +7,7 @@
     {{ form.title.errors }}
   </div>
 {% endif %}
+
 <div class="field {% if form.description.errors %}error{% endif %}">
   <label>{{ form.description.label }}</label>
   {{ form.description }}
@@ -16,6 +17,7 @@
     {{ form.description.errors }}
   </div>
 {% endif %}
+
 <div class="required field {% if form.album.errors %}error{% endif %}">
   <label>{{ form.album.label }}</label>
   {{ form.album }}
@@ -25,6 +27,7 @@
     {{ form.album.errors }}
   </div>
 {% endif %}
+
 <div class="required field {% if form.image.errors %}error{% endif %}">
   <label>{{ form.image.label }}</label>
   {{ form.image }}

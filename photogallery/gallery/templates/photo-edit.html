@@ -12,7 +12,8 @@
                 method="post">
             {% csrf_token %}
             {% include 'photo-form.html' %}
-            <input class="ui primary big button" type="submit" value="Tallenna"/>
+            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
+            <div class="ui hidden clearing divider"></div>
           </form>
         </div>
       </div>
@@ -22,7 +23,7 @@
 
 {% block scripts %}
   <script>
-      $('#select')
+      $('#album')
           .dropdown({
               placeholder: false
           })

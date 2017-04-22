@@ -4,7 +4,7 @@ from django.forms import widgets
 
 from .models import Album, Photo
 
-blank_choice = (('', '---------'),)
+blank_choice = (('', ''),)
 
 
 class CustomDateInput(widgets.TextInput):
@@ -14,9 +14,10 @@ class CustomDateInput(widgets.TextInput):
 class NewAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'date', 'parent', 'public']
+        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public']
         widgets = {
-            'parent': forms.Select(attrs={'id': 'select'}),
+            'parent': forms.Select(attrs={'id': 'parent'}),
+            'sort_order': forms.Select(attrs={'id': 'sort_order'}),
             'date': CustomDateInput,
         }
 
@@ -24,9 +25,10 @@ class NewAlbumForm(ModelForm):
 class EditAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'date', 'parent', 'public']
+        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public']
         widgets = {
-            'parent': forms.Select(attrs={'id': 'select'}),
+            'parent': forms.Select(attrs={'id': 'parent'}),
+            'sort_order': forms.Select(attrs={'id': 'sort_order'}),
             'date': CustomDateInput,
         }
 
@@ -45,7 +47,7 @@ class EditPhotoForm(ModelForm):
         model = Photo
         fields = ['title', 'description', 'album', 'image']
         widgets = {
-            'album': forms.Select(attrs={'id': 'select'}),
+            'album': forms.Select(attrs={'id': 'album'}),
         }
 
 

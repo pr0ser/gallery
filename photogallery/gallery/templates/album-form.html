@@ -7,6 +7,7 @@
     {{ form.title.errors }}
   </div>
 {% endif %}
+
 <div class="field {% if form.description.errors %}error{% endif %}">
   <label>{{ form.description.label }}</label>
   {{ form.description }}
@@ -20,6 +21,7 @@
     {{ form.description.errors }}
   </div>
 {% endif %}
+
 <div class="field {% if form.parent.errors %}error{% endif %}">
   <label>{{ form.parent.label }}</label>
   {{ form.parent }}
@@ -29,12 +31,24 @@
     {{ form.parent.errors }}
   </div>
 {% endif %}
+
+<div class="field {% if form.sort_order.errors %}error{% endif %}">
+  <label>{{ form.sort_order.label }}</label>
+  {{ form.sort_order }}
+</div>
+{% if form.sort_order.errors %}
+  <div class="ui error message">
+    {{ form.sort_order.errors }}
+  </div>
+{% endif %}
+
 <div class="inline field {% if form.public.errors %}error{% endif %}">
   <div class="ui toggle checkbox">
     <label>{{ form.public.label }}</label>
     {{ form.public }}
   </div>
 </div>
+
 {% if form.public.errors %}
   <div class="ui error message">
     {{ form.public.errors }}
