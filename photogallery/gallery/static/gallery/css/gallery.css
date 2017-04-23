@@ -24,6 +24,10 @@
     max-height: 100%;
     width: auto;
 }
+#photo-description {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
 .next-photo {
     display:none;
 }

@@ -61,7 +61,18 @@
       {% else %}
         <img class="ui centered fluid image" src="{{ photo.image.url }}"
              alt="{{ photo.title }}">
-      {% endif %}
+    {% endif %}
+
+    {% if photo.description %}
+      <div class="ui container" id="photo-description">
+        <div class="ui centered stackable grid">
+          <div class="ten wide column">
+            <h4 class="ui horizontal divider header">Kuvaus</h4>
+            <p>{{ photo.description }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
     <div id="photo-nav" class="ui center aligned basic segment">
       {% if photo.previous_photo %}
@@ -79,11 +90,7 @@
     </div>
   </div>
 
-    {% if photo.description %}
-      <div class="ui center aligned basic segment">
-        <p>{{ photo.description }}</p>
-      </div>
-    {% endif %}
+
 {% endblock %}
 
 {% block modals %}
