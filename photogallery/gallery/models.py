@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from wand.image import Image
+from PIL import Image, ImageOps
 
 sort_order_choices = (
     ('date', _('Date (ascending)')),
@@ -165,41 +165,46 @@ class Photo(models.Model):
         else:
             return False
 
-    def create_preview_image(self, size, quality, output_filename):
-        if self.image.width < self.image.height:
-            long_side = 'x{}'.format(size)
-        else:
-            long_side = '{}x'.format(size)
-        with Image(filename=self.image.path) as img:
-            img.transform(resize=long_side)
-            if img.format == 'JPEG':
-                img.compression_quality = quality
-            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_filename))
+    def create_preview_image(self, size, quality, output_file):
+        image = Image.open(self.image.path)
+        max_size = (size, size)
+        image.thumbnail(size=max_size, resample=Image.LANCZOS)
+        image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+                   format='JPEG',
+                   quality=quality,
+                   icc_profile=image.info.get('icc_profile'),
+                   optimize=True,
+                   progressive=True)
 
-    def create_thumbnail(self, size, quality, image_filename):
-        if self.image.width > self.image.height:
-            long_side = 'x{}'.format(size)
-        else:
-            long_side = '{}x'.format(size)
-        with Image(filename=self.image.path) as img:
-            img.transform(resize=long_side)
-            img.crop(width=size, height=size, gravity='center')
-            if img.format == 'JPEG':
-                img.compression_quality = quality
-            img.save(filename=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), image_filename))
+    def create_thumbnail(self, size, quality, output_file):
+        image = Image.open(self.image.path)
+        width = size
+        height = size
+        image = ImageOps.fit(image=image,
+                             size=(width, height),
+                             method=Image.ANTIALIAS,
+                             bleed=0,
+                             centering=(0.5, 0.5))
+
+        image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+                   format='JPEG',
+                   quality=quality,
+                   icc_profile=image.info.get('icc_profile'),
+                   optimize=True,
+                   progressive=True)
 
     def create_previews(self):
         if self.image.height > 1327 or self.image.width > 1327:
-            self.create_preview_image(size='1327', quality=85, output_filename=self.preview_filename())
+            self.create_preview_image(size=1327, quality=90, output_file=self.preview_filename())
             self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
         if self.image.height > 2340 or self.image.width > 2340:
-            self.create_preview_image(size='2340', quality=85, output_filename=self.hidpi_preview_filename())
+            self.create_preview_image(size=2340, quality=90, output_file=self.hidpi_preview_filename())
             self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
 
     def create_thumbnails(self):
-        self.create_thumbnail(size=330, quality=75, image_filename=self.thumbnail_img_filename())
+        self.create_thumbnail(size=330, quality=80, output_file=self.thumbnail_img_filename())
         self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename())
-        self.create_thumbnail(size=600, quality=75, image_filename=self.hidpi_thumbnail_img_filename())
+        self.create_thumbnail(size=600, quality=80, output_file=self.hidpi_thumbnail_img_filename())
         self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename())
 
     def __str__(self):

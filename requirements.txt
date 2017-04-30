@@ -1,6 +1,5 @@
 Django==1.11
 django-cleanup==0.4.2
 gunicorn==19.7.1
-Pillow==4.1.0
+Pillow==4.1.1
 psycopg2==2.7.1
-Wand==0.4.4

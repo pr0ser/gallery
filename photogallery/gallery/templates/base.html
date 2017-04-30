@@ -9,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="{% static 'gallery/semantic/semantic.min.css' %}">
   <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000"/>
   {% block header %}{% endblock %}
 </head>
 
@@ -40,18 +40,15 @@
   </div>
 </div>
 
-
 {% block content %} {% endblock %}
-
-
 
 <script src="{% static 'gallery/js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'gallery/semantic/semantic.min.js' %}"></script>
 {% if user.is_authenticated %}
-    <script>
-        $('.ui.dropdown').dropdown();
-    </script>
-  {% endif %}
+  <script>
+      $('.ui.dropdown').dropdown();
+  </script>
+{% endif %}
 {% block modals %}{% endblock %}
 {% block scripts %}{% endblock %}
 
