@@ -3,13 +3,13 @@ import os
 import shutil
 from datetime import date
 
+from PIL import Image, ImageOps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from PIL import Image, ImageOps
 
 sort_order_choices = (
     ('date', _('Date (ascending)')),
@@ -182,10 +182,9 @@ class Photo(models.Model):
         height = size
         image = ImageOps.fit(image=image,
                              size=(width, height),
-                             method=Image.ANTIALIAS,
+                             method=Image.LANCZOS,
                              bleed=0,
                              centering=(0.5, 0.5))
-
         image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
                    format='JPEG',
                    quality=quality,
