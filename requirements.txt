@@ -1,4 +1,4 @@
-Django==1.11.1
+Django==1.11.2
 django-cleanup==0.4.2
 gunicorn==19.7.1
 Pillow==4.1.1
