@@ -8,7 +8,7 @@ services:
      - "5432:5432"
   django:
     build: ./photogallery
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "/code/start.sh"
     volumes:
       - ./photogallery/:/code
     ports:
