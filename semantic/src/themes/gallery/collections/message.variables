@@ -12,12 +12,12 @@
 @verticalPadding: 1em;
 @horizontalPadding: 1.5em;
 @padding: @verticalPadding @horizontalPadding;
-@background: #F8F8F9;
+@background: #3e3e3e;
 @lineHeightOffset: ((@lineHeight - 1em) / 2);
 
 @borderRadius: @defaultBorderRadius;
 @borderWidth: 1px;
-@borderShadow: 0px 0px 0px @borderWidth @strongBorderColor inset;
+@borderShadow: 0px 0px 0px @borderWidth rgba(215, 215, 215, 0.22) inset;
 @shadowShadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
 @boxShadow:
   @borderShadow,

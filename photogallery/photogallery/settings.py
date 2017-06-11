@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup',
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login/'
+
+BACKGROUND_TASK_RUN_ASYNC = True

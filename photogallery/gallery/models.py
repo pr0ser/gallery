@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from background_task import background
 
 sort_order_choices = (
     ('date', _('Date (ascending)')),
@@ -17,6 +18,15 @@ sort_order_choices = (
     ('title', _('Title (ascending)')),
     ('-title', _('Title (descending)')),
 )
+
+
+@background(schedule=0)
+def async_create_images(photo_id):
+    image = Photo.objects.get(id=photo_id)
+    image.create_thumbnails()
+    image.create_previews()
+    image.ready = True
+    image.save()
 
 
 def calc_hash(filename):
@@ -87,6 +97,10 @@ class Album(models.Model):
             current_album = current_album.parent
         return albums
 
+    def pending_photos(self):
+        pending = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
+        return pending
+
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')
@@ -104,6 +118,7 @@ class Photo(models.Model):
     image = models.ImageField(_('Image file'), upload_to=upload_dir)
     description = models.TextField(_('Description'), blank=True)
     file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
+    ready = models.BooleanField(_('Ready'), default=True)
     preview_img = models.ImageField(_('Preview image'), blank=True)
     hidpi_preview_img = models.ImageField(_('High DPI preview image'), blank=True)
     thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True)
@@ -214,8 +229,11 @@ class Photo(models.Model):
         super(Photo, self).save(*args, **kwargs)
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
-            self.create_previews()
-            self.create_thumbnails()
+            if not self.ready:
+                async_create_images(self.id)
+            else:
+                self.create_previews()
+                self.create_thumbnails()
             super(Photo, self).save(*args, **kwargs)
 
     class Meta:

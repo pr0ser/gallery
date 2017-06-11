@@ -74,6 +74,26 @@
       </h1>
     </div>
 
+    {% if user.is_authenticated %}
+      {% if album.pending_photos %}
+        <div class="ui container" id="pending-photos">
+          <div class="ui centered stackable grid ">
+            <div class="six wide column">
+              <div class="ui icon message">
+                <i class="hourglass start icon"></i>
+                <div class="content">
+                  <div class="header">
+                    Kuvien käsittely kesken
+                  </div>
+                  <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+
     <div class="ui container">
       <div class="ui grid" id="album-grid">
         {% for photo in photos %}

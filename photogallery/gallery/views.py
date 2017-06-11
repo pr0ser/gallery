@@ -8,8 +8,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
-from .forms import *
-from .models import Album, Photo
+from gallery.forms import *
+from gallery.models import Album, Photo
 
 
 class IndexView(ListView):
@@ -31,7 +31,7 @@ class AlbumView(ListView):
 
     def get_queryset(self):
         album = get_object_or_404(Album, directory=self.kwargs['slug'])
-        queryset = Photo.objects.filter(album_id=album.id).order_by(album.sort_order)
+        queryset = Photo.objects.filter(album_id=album.id).filter(ready=True).order_by(album.sort_order)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -109,6 +109,7 @@ class MassUploadView(LoginRequiredMixin, FormView):
             for file in files:
                 instance = Photo(title=path.splitext(file.name)[0],
                                  album_id=form.instance.album.id,
+                                 ready=False,
                                  image=file)
                 instance.save()
             return redirect('gallery:index')

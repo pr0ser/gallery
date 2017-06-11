@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.forms import widgets
 
-from .models import Album, Photo
+from gallery.models import Album, Photo
 
 blank_choice = (('', ''),)
 
