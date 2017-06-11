@@ -8,4 +8,4 @@ RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
-ADD . /code/
+ADD photogallery/ gallery/ locale/ manage.py start.sh /code/
