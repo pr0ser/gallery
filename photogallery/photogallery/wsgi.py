@@ -14,7 +14,7 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "photogallery.settings")
 
-if settings.DEBUG:
+if int(os.environ['DEBUG']):
     application = Cling(get_wsgi_application())
 else:
     application = get_wsgi_application()

@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'l&r5^o6u$o7e6xhoixllov_%h+_!p32e86-u#vbx2^f06_gog&'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ['DEBUG'])
 
 ALLOWED_HOSTS = ['*']
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup',
     'background_task',
+    'dj_static'
 ]
 
 MIDDLEWARE = [
@@ -82,12 +83,13 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':     os.environ['DB_NAME'],
-        'USER':     os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASS'],
-        'HOST':     os.environ['DB_HOST'],
-        'PORT':     os.environ['DB_PORT']
+        'ENGINE':       'django.db.backends.postgresql_psycopg2',
+        'NAME':         os.environ['DB_NAME'],
+        'USER':         os.environ['DB_USER'],
+        'PASSWORD':     os.environ['DB_PASS'],
+        'HOST':         os.environ['DB_HOST'],
+        'PORT':         os.environ['DB_PORT'],
+        'CONN_MAX_AGE': 600,
     }
 }
 

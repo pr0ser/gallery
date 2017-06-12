@@ -34,6 +34,7 @@ class PhotoAdmin(admin.ModelAdmin):
         'album',
         'image',
         'date',
+        'ready',
         )
     fieldsets = (
         (_('Album'),
@@ -49,7 +50,8 @@ class PhotoAdmin(admin.ModelAdmin):
                         'preview_img',
                         'hidpi_preview_img',
                         'thumbnail_img',
-                        'hidpi_thumbnail_img',)
+                        'hidpi_thumbnail_img',
+                        'ready')
              }
          ),
     )

@@ -12,6 +12,7 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from background_task import background
 
+
 sort_order_choices = (
     ('date', _('Date (ascending)')),
     ('-date', _('Date (descending)')),
@@ -20,7 +21,7 @@ sort_order_choices = (
 )
 
 
-@background(schedule=0)
+@background
 def async_create_images(photo_id):
     image = Photo.objects.get(id=photo_id)
     image.create_thumbnails()
