@@ -14,8 +14,6 @@ Django photo gallery app.
   * DEBUG (0 or 1)
   * SECRET_KEY (for Django settings)
   * ASYNC_THREADS
-  * UPLOAD_PERMISSION (for example 0o660)
-  * DIRECTORY_PERMISSIONS (for example 0o750)
 
 ### Build Docker images
 `docker-compose build`
