@@ -143,6 +143,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+FILE_UPLOAD_PERMISSIONS = int(os.environ['UPLOAD_PERMISSIONS'], 8)
+
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = int(os.environ['DIRECTORY_PERMISSIONS'], 8)
+
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login/'
