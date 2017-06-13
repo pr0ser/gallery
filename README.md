@@ -9,10 +9,11 @@ Django photo gallery app.
   * DB_NAME
   * DB_USER
   * DB_PASS
-  * DB_HOST
+  * DB_HOST=db
   * DB_PORT
   * DEBUG (0 or 1)
   * SECRET_KEY (for Django settings)
+  * ASYNC_THREADS
 
 ### Build Docker images
 `docker-compose build`

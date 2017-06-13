@@ -8,3 +8,4 @@ WORKDIR /gallery
 ADD requirements.txt /gallery/
 RUN pip install -r requirements.txt
 ADD . /gallery/
+RUN chmod +x *.sh
