@@ -1,13 +1,15 @@
 FROM python:3.6.1-alpine
 
-RUN apk update && apk add build-base zlib-dev libjpeg-turbo-dev postgresql-dev
-RUN addgroup -S -g 1001 gallery && adduser -S -u 1001 -G gallery gallery
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /gallery
 WORKDIR /gallery
 ADD requirements.txt /gallery/
-RUN pip install -r requirements.txt
+RUN apk add --update --no-cache libjpeg-turbo-dev postgresql-dev \
+    && apk add --update --no-cache --virtual .build-deps build-base zlib-dev \
+    && pip install -r requirements.txt \
+    && apk del .build-deps \
+    && addgroup -S -g 1001 gallery \
+    && adduser -S -u 1001 -G gallery gallery
 ADD . /gallery/
-RUN chmod +x *.sh
-RUN chown -R gallery:gallery /gallery/
+RUN chmod +x *.sh && chown -R gallery:gallery /gallery/
 USER gallery
