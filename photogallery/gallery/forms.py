@@ -1,6 +1,8 @@
 from django import forms
-from django.forms import ModelForm
+from django.core.exceptions import ValidationError
+from django.forms import Form, ModelForm
 from django.forms import widgets
+from django.utils.translation import ugettext_lazy as _
 
 from gallery.models import Album, Photo
 
@@ -59,3 +61,23 @@ class MassUploadForm(ModelForm):
             'album': forms.Select(attrs={'id': 'select'}),
             'image': forms.ClearableFileInput(attrs={'multiple': True})
         }
+
+
+class AlbumCoverPhotoForm(Form):
+    photo = forms.IntegerField(
+        widget=forms.HiddenInput()
+    )
+    album = forms.IntegerField(
+        widget=forms.Select(
+            choices=Album.objects.all().values_list('id', 'title'),
+            attrs={'id': 'album'}
+        )
+    )
+
+    def update_album_cover(self, photo_id):
+        if Photo.objects.filter(pk=photo_id).exists() and Album.objects.filter(pk=self.cleaned_data['album']).exists():
+            album = Album.objects.get(id=self.cleaned_data['album'])
+            album.album_cover_id = photo_id
+            album.save()
+        else:
+            raise ValidationError(_('Invalid data. Photo or the selected album doesn\’t exist.'))

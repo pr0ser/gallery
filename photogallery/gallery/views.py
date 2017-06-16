@@ -58,17 +58,26 @@ class DeleteAlbumView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('gallery:index')
 
 
-class UpdateAlbumCoverView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        album_id = kwargs.get('album_id')
-        photo_id = kwargs.get('photo_id')
-        if Album.objects.filter(pk=album_id).exists() and Photo.objects.filter(pk=photo_id).exists():
-            album = Album.objects.get(pk=album_id)
-            album.album_cover_id = photo_id
-            album.save()
-            return redirect('gallery:index')
-        else:
-            return HttpResponse(status=500)
+class UpdateAlbumCoverView(LoginRequiredMixin, FormView):
+    form_class = AlbumCoverPhotoForm
+    template_name = 'album-updatecover.html'
+    success_url = reverse_lazy('gallery:index')
+
+    def form_valid(self, form):
+        photo_id = self.request.POST.get('photo')
+        form.update_album_cover(photo_id)
+        return super(UpdateAlbumCoverView, self).form_valid(form)
+
+    def get_initial(self):
+        initial = super(UpdateAlbumCoverView, self).get_initial()
+        initial['photo'] = self.request.GET.get('photo_id')
+        initial['album'] = self.request.GET.get('album_id')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateAlbumCoverView, self).get_context_data(**kwargs)
+        context['photo'] = Photo.objects.get(pk=self.request.GET.get('photo_id'))
+        return context
 
 
 class PhotoView(DetailView):

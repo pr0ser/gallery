@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Aseta kansikuvaksi{% endblock %}
+
+{% block content %}
+  <div class="ui container">
+    <div class="ui centered stackable grid">
+      <div class="eight wide column">
+        <h1 class="ui header">Aseta albumin kansikuvaksi</h1>
+        <div class="ui raised segment">
+          <div class="ui items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
+              </div>
+              <div class="middle aligned content">
+                <a href="{{ photo.get_absolute_url }}">{{ photo.title }}</a>
+              </div>
+            </div>
+            <form class="ui large form {% if form.errors %}error{% endif %}"
+                  action="{% url 'gallery:set-as-cover-photo' %}" method="post">
+              {% csrf_token %}
+              {{ form.photo }}
+              <div class="field">
+                {{ form.album }}
+              </div>
+              <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
+              <div class="ui hidden clearing divider"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+      $('#album')
+          .dropdown({
+              placeholder: false
+          })
+      ;
+  </script>
+{% endblock %}
