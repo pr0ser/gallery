@@ -36,7 +36,13 @@ class AlbumView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AlbumView, self).get_context_data(**kwargs)
-        context['album'] = Album.objects.get(directory=self.kwargs['slug'])
+        album = Album.objects.get(directory=self.kwargs['slug'])
+        context['album'] = album
+        user = self.request.user
+        if user.is_authenticated:
+            context['sub_albums'] = Album.objects.filter(parent=album.id)
+        else:
+            context['sub_albums'] = Album.objects.filter(parent=album.id).filter(public=True)
         return context
 
 

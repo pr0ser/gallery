@@ -3,7 +3,7 @@ python manage.py migrate
 python manage.py collectstatic --noinput
 python manage.py process_tasks &
 touch /tmp/gunicorn.log
-tail -n 0 -f /tmp/*.log &
+tail -n 0 -f /tmp/gunicorn.log &
 gunicorn photogallery.wsgi:application \
 --workers 3 \
 --bind unix:/run/gallery/gallery.socket \

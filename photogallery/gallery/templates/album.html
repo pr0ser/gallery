@@ -28,11 +28,11 @@
     </div>
   </div>
 
-  {% if album.subalbums.all %}
+  {% if sub_albums %}
     <div class="ui container subalbums">
       <h1 class="ui header">Alialbumit</h1>
       <div class="ui four stackable cards">
-        {% for album in album.subalbums.all %}
+        {% for album in sub_albums %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
             <div class="image">
               {% if album.album_cover.thumbnail_img.url %}
