@@ -133,7 +133,12 @@
   {% endif %}
 
   {% if photo.next_photo %}
-    <img class="next-photo" src="{{ photo.next_photo.preview_img.url }}"
+    <img class="next-photo"
+         {% if photo.next_photo.preview_img %}
+            src="{{ photo.next_photo.preview_img.url }}"
+         {% else %}
+            src="{{ photo.next_photo.image.url }}"
+         {% endif %}
             {% if photo.next_photo.hidpi_preview_img %}
          srcset="{{ photo.next_photo.hidpi_preview_img.url }} 2x"
             {% endif %}
