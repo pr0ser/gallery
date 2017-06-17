@@ -63,20 +63,20 @@ class MassUploadForm(ModelForm):
 
 
 class AlbumCoverPhotoForm(Form):
-    photo = forms.IntegerField(
-        widget=forms.HiddenInput()
-    )
-    album = forms.IntegerField(
+    photo = forms.IntegerField(required=True, widget=forms.HiddenInput())
+    album = forms.ModelChoiceField(
+        required=True,
+        empty_label=None,
+        queryset=Album.objects.all(),
         widget=forms.Select(
-            choices=Album.objects.all().values_list('id', 'title'),
             attrs={'id': 'album'}
         )
     )
 
     def update_album_cover(self, photo_id):
-        if Photo.objects.filter(pk=photo_id).exists() and Album.objects.filter(pk=self.cleaned_data['album']).exists():
-            album = Album.objects.get(id=self.cleaned_data['album'])
+        try:
+            album = self.cleaned_data.get('album')
             album.album_cover_id = photo_id
             album.save()
-        else:
-            raise ValidationError(_('Invalid data. Photo or the selected album doesn\’t exist.'))
+        except:
+            raise ValidationError(_('Photo or the selected album doesn\’t exist.'))
