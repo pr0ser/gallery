@@ -36,6 +36,12 @@
     padding-top: 1rem;
     padding-bottom: 2rem;
 }
+.ui.inverted.menu .header.item {
+    background-color: #181818;
+}
+.ui.inverted.menu {
+    background-color: #0f0f0f;
+}
 input[type=date]::-webkit-calendar-picker-indicator {
     background: transparent;
 }

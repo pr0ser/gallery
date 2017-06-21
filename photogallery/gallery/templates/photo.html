@@ -14,16 +14,20 @@
 
 {% if user.is_authenticated %}
   {% block navbar %}
-    <div class="ui divider"></div>
-    <div class="header">Kuva</div>
+    <div class="item header">
+      Kuva
+      <i class="image icon"></i>
+    </div>
     <a class="item" href="{{ photo.image.url }}">Näytä alkuperäinen</a>
-    <a class="item" href="{% url 'gallery:set-as-cover-photo'%}?photo_id={{ photo.id }}&album_id={{ photo.album.id }}">
+    <a class="item" href="{% url 'gallery:set-as-cover-photo' %}?photo_id={{ photo.id }}&album_id={{ photo.album.id }}">
       Aseta oletuskuvaksi
     </a>
     <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
     <a class="item" href="#" id="photo-delete">Poista</a>
-    <div class="ui divider"></div>
-    <div class="header">Albumi</div>
+    <div class="item header">
+      Albumi
+      <i class="grid layout icon"></i>
+    </div>
     <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
     <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
@@ -47,48 +51,48 @@
     </div>
   </div>
 
-    {% if photo.is_landscape %}
-      <div id="landscape-photo" class="ui container">
-      {% else %}
-      <div id="portrait-photo" class="ui container">
-    {% endif %}
-      {% if photo.preview_img %}
-        <img class="ui centered fluid image" src="{{ photo.preview_img.url }}"
-                {% if photo.hidpi_preview_img %}
-             srcset="{{ photo.hidpi_preview_img.url }} 2x"
-                {% endif %}
-             alt="{{ photo.title }}">
-      {% else %}
-        <img class="ui centered fluid image" src="{{ photo.image.url }}"
-             alt="{{ photo.title }}">
-    {% endif %}
+  {% if photo.is_landscape %}
+    <div id="landscape-photo" class="ui container">
+  {% else %}
+    <div id="portrait-photo" class="ui container">
+  {% endif %}
+{% if photo.preview_img %}
+  <img class="ui centered fluid image" src="{{ photo.preview_img.url }}"
+          {% if photo.hidpi_preview_img %}
+       srcset="{{ photo.hidpi_preview_img.url }} 2x"
+          {% endif %}
+       alt="{{ photo.title }}">
+{% else %}
+  <img class="ui centered fluid image" src="{{ photo.image.url }}"
+       alt="{{ photo.title }}">
+{% endif %}
 
-    {% if photo.description %}
-      <div class="ui container" id="photo-description">
-        <div class="ui centered stackable grid">
-          <div class="ten wide column">
-            <h4 class="ui horizontal divider header">Kuvaus</h4>
-            <p>{{ photo.description }}</p>
-          </div>
-        </div>
+{% if photo.description %}
+  <div class="ui container" id="photo-description">
+    <div class="ui centered stackable grid">
+      <div class="ten wide column">
+        <h4 class="ui horizontal divider header">Kuvaus</h4>
+        <p>{{ photo.description }}</p>
       </div>
-    {% endif %}
-
-    <div id="photo-nav" class="ui center aligned basic segment">
-      {% if photo.previous_photo %}
-        <a class="ui left labeled icon button" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-          <i class="left chevron icon"></i>
-          edellinen
-        </a>
-      {% endif %}
-      {% if photo.next_photo %}
-        <a class="ui right labeled icon button" href="{% url 'gallery:photo' photo.next_photo.slug %}">
-          <i class="right chevron icon"></i>
-          seuraava
-        </a>
-      {% endif %}
     </div>
   </div>
+{% endif %}
+
+<div id="photo-nav" class="ui center aligned basic segment">
+  {% if photo.previous_photo %}
+    <a class="ui left labeled icon button" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+      <i class="left chevron icon"></i>
+      edellinen
+    </a>
+  {% endif %}
+  {% if photo.next_photo %}
+    <a class="ui right labeled icon button" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+      <i class="right chevron icon"></i>
+      seuraava
+    </a>
+  {% endif %}
+</div>
+</div>
 
 
 {% endblock %}
@@ -134,11 +138,11 @@
 
   {% if photo.next_photo %}
     <img class="next-photo"
-         {% if photo.next_photo.preview_img %}
-            src="{{ photo.next_photo.preview_img.url }}"
-         {% else %}
-            src="{{ photo.next_photo.image.url }}"
-         {% endif %}
+            {% if photo.next_photo.preview_img %}
+         src="{{ photo.next_photo.preview_img.url }}"
+            {% else %}
+         src="{{ photo.next_photo.image.url }}"
+            {% endif %}
             {% if photo.next_photo.hidpi_preview_img %}
          srcset="{{ photo.next_photo.hidpi_preview_img.url }} 2x"
             {% endif %}
@@ -163,23 +167,24 @@
   {% endif %}
 
   <script>
-    $(document).keydown(function(e) {
-          switch(e.which) {
-            {% if photo.previous_photo %}
-            case 37: // left
-              window.location.href = "{% url 'gallery:photo' photo.previous_photo.slug %}";
-            break;
-            {% endif %}
+      $(document).keydown(function (e) {
+          switch (e.which) {
+              {% if photo.previous_photo %}
+                  case 37: // left
+                      window.location.href = "{% url 'gallery:photo' photo.previous_photo.slug %}";
+                      break;
+              {% endif %}
 
-            {% if photo.next_photo %}
-            case 39: // right
-              window.location.href = "{% url 'gallery:photo' photo.next_photo.slug %}";
-            break;
-            {% endif %}
+              {% if photo.next_photo %}
+                  case 39: // right
+                      window.location.href = "{% url 'gallery:photo' photo.next_photo.slug %}";
+                      break;
+              {% endif %}
 
-            default: return;
+              default:
+                  return;
           }
           e.preventDefault();
-        });
+      });
   </script>
 {% endblock %}

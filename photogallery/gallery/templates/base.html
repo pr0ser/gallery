@@ -14,39 +14,54 @@
 </head>
 
 <body>
-<div class="ui inverted borderless menu" id="main-menu">
-  <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
-  <div class="right menu">
-    {% if user.is_authenticated %}
-      <div class="ui top right dropdown link item">
-        <i class="content icon"></i>
-        <div class="menu">
-          <div class="header">Lisää</div>
-          <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
-          <a class="item" href="{% url 'gallery:photo-massupload' %}">Useampi kuva</a>
-          <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
-          {% block navbar %} {% endblock %}
-          <div class="header">Käyttäjä</div>
-          <a class="item" href="{% url 'gallery:logout' %}">Kirjaudu ulos</a>
+
+{% if user.is_authenticated %}
+  <div class="ui right sidebar inverted vertical menu">
+    <div class="item header">
+      Lisää
+      <i class="add square icon"></i>
+    </div>
+    <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
+    <a class="item" href="{% url 'gallery:photo-massupload' %}">Useampi kuva</a>
+    <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
+    {% block navbar %} {% endblock %}
+    <div class="item header">
+      Käyttäjä
+      <i class="user icon"></i>
+    </div>
+    <a class="item" href="{% url 'gallery:logout' %}">Kirjaudu ulos</a>
+  </div>
+{% endif %}
+
+<div class="pusher">
+  <div class="ui inverted borderless menu" id="main-menu">
+    <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
+    <div class="right menu">
+      {% if user.is_authenticated %}
+        <div class="ui top right dropdown link item">
+          <i class="content icon"></i>
         </div>
-      </div>
-    {% else %}
-      <a class="item" href="{% url 'gallery:login' %}">
+      {% else %}
+        <a class="item" href="{% url 'gallery:login' %}">
         <span data-tooltip="Kirjaudu sisään" data-position="bottom right">
           <i class="sign in icon"></i>
         </span>
-      </a>
-    {% endif %}
+        </a>
+      {% endif %}
+    </div>
   </div>
+  {% block content %} {% endblock %}
 </div>
-
-{% block content %} {% endblock %}
 
 <script src="{% static 'gallery/js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'gallery/semantic/semantic.min.js' %}"></script>
 {% if user.is_authenticated %}
   <script>
-      $('.ui.dropdown').dropdown();
+      $('.ui.right.sidebar.inverted.vertical.menu')
+          .sidebar('setting', 'transition', 'overlay')
+          .sidebar('setting', 'dimPage', false)
+          .sidebar('attach events', '.ui.top.right.dropdown.link.item')
+      ;
   </script>
 {% endif %}
 {% block modals %}{% endblock %}

@@ -8,7 +8,7 @@
 
 /* Animation */
 @perspective: 1500px;
-@duration: 500ms;
+@duration: 250ms;
 @easing: @defaultEasing;
 
 /* Dimmer */

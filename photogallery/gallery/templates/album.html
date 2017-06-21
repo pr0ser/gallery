@@ -5,8 +5,10 @@
 
 {% if user.is_authenticated %}
   {% block navbar %}
-    <div class="ui divider"></div>
-    <div class="header">Albumi</div>
+    <div class="item header">
+      Albumi
+      <i class="grid layout icon"></i>
+    </div>
     <a class="item" href="{% url 'gallery:album-edit' album.directory %}">Muokkaa</a>
     <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
