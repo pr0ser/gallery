@@ -15,7 +15,7 @@
 }
 #portrait-photo .ui.centered.fluid.image {
     display: block;
-    max-height: 1100px;
+    max-height: 85vh;
     width: auto;
 }
 #photo-description {
