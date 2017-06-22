@@ -6,6 +6,7 @@
 {% block content %}
   {% if albums %}
     <div class="ui container">
+    <div class="ui hidden divider"></div>
       <div class="ui four stackable cards">
         {% for album in albums %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
@@ -35,6 +36,7 @@
           </a>
         {% endfor %}
       </div>
+      <div class="ui hidden divider"></div>
     </div>
   {% else %}
     <div class="ui container">
