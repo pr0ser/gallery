@@ -13,16 +13,9 @@
 .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
-#landscape-photo {
-    padding: 0;
-}
-#portrait-photo {
-    padding: 0;
-    max-height: 1000px;
-}
 #portrait-photo .ui.centered.fluid.image {
     display: block;
-    max-height: 100%;
+    max-height: 1100px;
     width: auto;
 }
 #photo-description {
