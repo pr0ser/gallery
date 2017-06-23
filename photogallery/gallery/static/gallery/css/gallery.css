@@ -13,10 +13,9 @@
 .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
-#portrait-photo .ui.centered.fluid.image {
-    display: block;
+#photo .ui.centered.fluid.image {
+    object-fit: contain;
     max-height: 85vh;
-    width: auto;
 }
 #photo-description {
     padding-top: 1.5rem;

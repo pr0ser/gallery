@@ -38,6 +38,30 @@ def calc_hash(filename):
     return hash_sha256.hexdigest()
 
 
+def auto_orient(image):
+    if hasattr(image, '_getexif'):
+        try:
+            exif = image._getexif()
+        except Exception:
+            exif = None
+        if exif is not None:
+            orientation = exif.get(0x0112, 1)
+            if 1 <= orientation <= 8:
+                operations = {
+                    1: (),
+                    2: (Image.FLIP_LEFT_RIGHT,),
+                    3: (Image.ROTATE_180,),
+                    4: (Image.ROTATE_180, Image.FLIP_LEFT_RIGHT),
+                    5: (Image.ROTATE_270, Image.FLIP_LEFT_RIGHT),
+                    6: (Image.ROTATE_270,),
+                    7: (Image.ROTATE_90, Image.FLIP_LEFT_RIGHT),
+                    8: (Image.ROTATE_90,),
+                }
+                for rotate in operations[orientation]:
+                    image = image.transpose(rotate)
+    return image
+
+
 def validate_album_title(value):
     invalid_names = ['new', 'edit', 'delete', 'updatecover']
     if value in invalid_names:
@@ -175,14 +199,8 @@ class Photo(models.Model):
             os.makedirs(preview_dir)
         return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
-    def is_landscape(self):
-        if self.image.width > self.image.height:
-            return True
-        else:
-            return False
-
     def create_preview_image(self, size, quality, output_file):
-        image = Image.open(self.image.path)
+        image = auto_orient(Image.open(self.image.path))
         max_size = (size, size)
         image.thumbnail(size=max_size, resample=Image.LANCZOS)
         image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
@@ -193,7 +211,7 @@ class Photo(models.Model):
                    progressive=True)
 
     def create_thumbnail(self, size, quality, output_file):
-        image = Image.open(self.image.path)
+        image = auto_orient(Image.open(self.image.path))
         width = size
         height = size
         image = ImageOps.fit(image=image,

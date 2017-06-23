@@ -51,11 +51,7 @@
     </div>
   </div>
 
-  {% if photo.is_landscape %}
-    <div id="landscape-photo" class="ui container">
-  {% else %}
-    <div id="portrait-photo" class="ui container">
-  {% endif %}
+    <div id="photo" class="ui container">
 {% if photo.preview_img %}
   <img class="ui centered fluid image" src="{{ photo.preview_img.url }}"
           {% if photo.hidpi_preview_img %}
