@@ -53,13 +53,13 @@
 
     <div id="photo" class="ui container">
 {% if photo.preview_img %}
-  <img class="ui centered fluid image" src="{{ photo.preview_img.url }}"
+  <img class="ui centered image" src="{{ photo.preview_img.url }}"
           {% if photo.hidpi_preview_img %}
-       srcset="{{ photo.hidpi_preview_img.url }} 2x"
+       srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
           {% endif %}
        alt="{{ photo.title }}">
 {% else %}
-  <img class="ui centered fluid image" src="{{ photo.image.url }}"
+  <img class="ui centered image" src="{{ photo.image.url }}"
        alt="{{ photo.title }}">
 {% endif %}
 
