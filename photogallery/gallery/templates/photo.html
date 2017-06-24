@@ -51,44 +51,44 @@
     </div>
   </div>
 
-    <div id="photo" class="ui container">
-{% if photo.preview_img %}
-  <img class="ui centered image" src="{{ photo.preview_img.url }}"
-          {% if photo.hidpi_preview_img %}
-       srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
-          {% endif %}
-       alt="{{ photo.title }}">
-{% else %}
-  <img class="ui centered image" src="{{ photo.image.url }}"
-       alt="{{ photo.title }}">
-{% endif %}
+  <div id="photo" class="ui container">
+    {% if photo.preview_img %}
+      <img class="ui centered image" src="{{ photo.preview_img.url }}"
+              {% if photo.hidpi_preview_img %}
+           srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
+              {% endif %}
+           alt="{{ photo.title }}">
+    {% else %}
+      <img class="ui centered image" src="{{ photo.image.url }}"
+           alt="{{ photo.title }}">
+    {% endif %}
 
-{% if photo.description %}
-  <div class="ui container" id="photo-description">
-    <div class="ui centered stackable grid">
-      <div class="ten wide column">
-        <h4 class="ui horizontal divider header">Kuvaus</h4>
-        <p>{{ photo.description }}</p>
+    {% if photo.description %}
+      <div class="ui container" id="photo-description">
+        <div class="ui centered stackable grid">
+          <div class="ten wide column">
+            <h4 class="ui horizontal divider header">Kuvaus</h4>
+            <p>{{ photo.description }}</p>
+          </div>
+        </div>
       </div>
+    {% endif %}
+
+    <div id="photo-nav" class="ui center aligned basic segment">
+      {% if photo.previous_photo %}
+        <a class="ui left labeled icon button" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
+          <i class="left chevron icon"></i>
+          edellinen
+        </a>
+      {% endif %}
+      {% if photo.next_photo %}
+        <a class="ui right labeled icon button" href="{% url 'gallery:photo' photo.next_photo.slug %}">
+          <i class="right chevron icon"></i>
+          seuraava
+        </a>
+      {% endif %}
     </div>
   </div>
-{% endif %}
-
-<div id="photo-nav" class="ui center aligned basic segment">
-  {% if photo.previous_photo %}
-    <a class="ui left labeled icon button" href="{% url 'gallery:photo' photo.previous_photo.slug %}">
-      <i class="left chevron icon"></i>
-      edellinen
-    </a>
-  {% endif %}
-  {% if photo.next_photo %}
-    <a class="ui right labeled icon button" href="{% url 'gallery:photo' photo.next_photo.slug %}">
-      <i class="right chevron icon"></i>
-      seuraava
-    </a>
-  {% endif %}
-</div>
-</div>
 
 
 {% endblock %}

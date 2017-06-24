@@ -57,8 +57,8 @@ def auto_orient(image):
                     7: (Image.ROTATE_90, Image.FLIP_LEFT_RIGHT),
                     8: (Image.ROTATE_90,),
                 }
-                for rotate in operations[orientation]:
-                    image = image.transpose(rotate)
+                for operation in operations[orientation]:
+                    image = image.transpose(operation)
     return image
 
 
@@ -77,17 +77,19 @@ class Album(models.Model):
     date = models.DateField(_('Date'), default=date.today)
     description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'), unique=True)
-    album_cover = models.OneToOneField('Photo',
-                                       related_name='Photo',
-                                       null=True,
-                                       blank=True,
-                                       on_delete=models.SET_NULL,
-                                       verbose_name=_('Album cover'))
-    sort_order = models.CharField(_('Sort order'),
-                                  max_length=255,
-                                  choices=sort_order_choices,
-                                  help_text=_('Sort order of photos in this album'),
-                                  default='title')
+    album_cover = models.OneToOneField(
+        'Photo',
+        related_name='Photo',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_('Album cover'))
+    sort_order = models.CharField(
+        _('Sort order'),
+        max_length=255,
+        choices=sort_order_choices,
+        help_text=_('Sort order of photos in this album'),
+        default='title')
     public = models.BooleanField(_('Public'), default=True)
 
     def get_absolute_url(self):
@@ -172,9 +174,10 @@ class Photo(models.Model):
         return 'hidpithumb_' + fname
 
     def next_photo(self):
-        photo_list = list(Photo.objects.filter(album_id=self.album_id)
-                          .order_by(self.album.sort_order)
-                          .values_list('id', flat=True))
+        photo_list = list(
+            Photo.objects.filter(album_id=self.album_id)
+            .order_by(self.album.sort_order)
+            .values_list('id', flat=True))
         current = photo_list.index(self.pk)
         try:
             next_item = photo_list[current + 1]
@@ -183,9 +186,10 @@ class Photo(models.Model):
             return None
 
     def previous_photo(self):
-        photo_list = list(Photo.objects.filter(album_id=self.album_id)
-                          .order_by(self.album.sort_order)
-                          .values_list('id', flat=True))
+        photo_list = list(
+            Photo.objects.filter(album_id=self.album_id)
+            .order_by(self.album.sort_order)
+            .values_list('id', flat=True))
         current = photo_list.index(self.pk)
         if current == 0:
             return None
@@ -203,28 +207,31 @@ class Photo(models.Model):
         image = auto_orient(Image.open(self.image.path))
         max_size = (size, size)
         image.thumbnail(size=max_size, resample=Image.LANCZOS)
-        image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
-                   format='JPEG',
-                   quality=quality,
-                   icc_profile=image.info.get('icc_profile'),
-                   optimize=True,
-                   progressive=True)
+        image.save(
+            fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+            format='JPEG',
+            quality=quality,
+            icc_profile=image.info.get('icc_profile'),
+            optimize=True,
+            progressive=True)
 
     def create_thumbnail(self, size, quality, output_file):
         image = auto_orient(Image.open(self.image.path))
         width = size
         height = size
-        image = ImageOps.fit(image=image,
-                             size=(width, height),
-                             method=Image.LANCZOS,
-                             bleed=0,
-                             centering=(0.5, 0.5))
-        image.save(fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
-                   format='JPEG',
-                   quality=quality,
-                   icc_profile=image.info.get('icc_profile'),
-                   optimize=True,
-                   progressive=True)
+        image = ImageOps.fit(
+            image=image,
+            size=(width, height),
+            method=Image.LANCZOS,
+            bleed=0,
+            centering=(0.5, 0.5))
+        image.save(
+            fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+            format='JPEG',
+            quality=quality,
+            icc_profile=image.info.get('icc_profile'),
+            optimize=True,
+            progressive=True)
 
     def create_previews(self):
         if self.image.height > 1327 or self.image.width > 1327:
