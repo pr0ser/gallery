@@ -7,10 +7,16 @@
 #main-menu h1 {
     font-family: 'Playfair Display SC', serif;
 }
+.indexcard {
+    overflow: hidden;
+}
+#index-grid.ui.grid>.column:not(.row) {
+    display: flex;
+}
 #album-header {
     padding-bottom: 3em;
 }
-.eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
+#album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
 #photo .ui.centered.image {
