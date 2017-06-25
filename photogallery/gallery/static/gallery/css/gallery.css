@@ -1,3 +1,4 @@
+/* Sitewide styles */
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 
 #main-menu {
@@ -7,12 +8,26 @@
 #main-menu h1 {
     font-family: 'Playfair Display SC', serif;
 }
+.ui.breadcrumb {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.ui.inverted.menu .header.item {
+    background-color: #000000;
+}
+.ui.inverted.menu {
+    background-color: #141414;
+}
+
+/* Index page */
 .indexcard {
     overflow: hidden;
 }
 #index-grid.ui.grid>.column:not(.row) {
     display: flex;
 }
+
+/* Album page */
 #album-header {
     padding-bottom: 2em;
 }
@@ -25,13 +40,18 @@
 #album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
-#photo .ui.centered.image {
-    max-height: 85vh;
-    padding-top: 1em;
-}
 .photo .ui.centered.image {
     max-height: 95vh;
     padding-bottom: 1.5em;
+}
+#pending-photos {
+    padding-bottom: 3rem;
+}
+
+/* Photo page */
+#photo .ui.centered.image {
+    max-height: 85vh;
+    padding-top: 1em;
 }
 #photo-description {
     padding-top: 1.5rem;
@@ -40,22 +60,11 @@
 .next-photo {
     display:none;
 }
-.ui.breadcrumb {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-.ui.inverted.menu .header.item {
-    background-color: #000000;
-}
-.ui.inverted.menu {
-    background-color: #141414;
-}
+
+/* Forms */
 input[type=date]::-webkit-calendar-picker-indicator {
     background: transparent;
 }
 input[type=date]::-webkit-inner-spin-button {
     display: none;
-}
-#pending-photos {
-    padding-bottom: 3rem;
 }
