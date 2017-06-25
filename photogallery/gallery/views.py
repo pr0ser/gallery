@@ -46,6 +46,23 @@ class AlbumView(ListView):
         return context
 
 
+class LargeAlbumView(ListView):
+    template_name = 'album-large.html'
+    context_object_name = 'photos'
+    paginate_by = 10
+
+    def get_queryset(self):
+        album = get_object_or_404(Album, directory=self.kwargs['slug'])
+        queryset = Photo.objects.filter(album_id=album.id).filter(ready=True).order_by(album.sort_order)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(LargeAlbumView, self).get_context_data(**kwargs)
+        album = Album.objects.get(directory=self.kwargs['slug'])
+        context['album'] = album
+        return context
+
+
 class NewAlbumView(LoginRequiredMixin, CreateView):
     form_class = NewAlbumForm
     template_name = 'album-new.html'

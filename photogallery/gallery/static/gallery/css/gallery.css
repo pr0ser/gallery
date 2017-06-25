@@ -14,13 +14,23 @@
     display: flex;
 }
 #album-header {
-    padding-bottom: 3em;
+    padding-bottom: 2em;
+}
+#album-description {
+    padding-left: 0;
+}
+#album-button {
+    padding: 0;
 }
 #album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
 #photo .ui.centered.image {
     max-height: 85vh;
+}
+.photo .ui.centered.image {
+    max-height: 95vh;
+    padding-bottom: 1.5em;
 }
 #photo-description {
     padding-top: 1.5rem;
@@ -31,7 +41,7 @@
 }
 .ui.breadcrumb {
     padding-top: 1rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 .ui.inverted.menu .header.item {
     background-color: #000000;

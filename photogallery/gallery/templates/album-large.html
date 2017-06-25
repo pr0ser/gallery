@@ -30,42 +30,6 @@
     </div>
   </div>
 
-  {% if sub_albums %}
-    <div class="ui container subalbums">
-      <h1 class="ui header">Alialbumit</h1>
-      <div class="ui four stackable cards">
-        {% for album in sub_albums %}
-          <a class="ui card" href="{% url 'gallery:album' album.directory %}">
-            <div class="image">
-              {% if album.album_cover.thumbnail_img.url %}
-                <img src="{{ album.album_cover.thumbnail_img.url }}"
-                     srcset="{{ album.album_cover.hidpi_thumbnail_img.url }} 2x" alt="{{ album.title }}">
-              {% else %}
-                <img src="{% static 'gallery/images/no_image.png' %}" alt="Ei kuvaa">
-              {% endif %}
-            </div>
-            <div class="content">
-              <div class="header">{{ album.title }}</div>
-              <div class="description">
-                {{ album.description }}
-              </div>
-            </div>
-            <div class="extra content">
-            <span class="right floated">
-              {{ album.date|date:'j.n.Y' }}
-            </span>
-              <span>
-              <i class="image icon"></i>
-              {{ album.photos.count }}
-            </span>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="ui divider"></div>
-  {% endif %}
-
   {% if photos %}
     <div class="ui container" id="album-header">
       <div class="ui two column middle aligned container padded grid">
@@ -79,8 +43,8 @@
 
         </div>
         <div class="right aligned five wide column" id="album-button">
-          <a class="ui button" data-tooltip="Listaa kaikki albumin kuvat suurempina" data-position="left center"
-             href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
+          <a class="ui button" data-tooltip="Listaa kaikki albumin esikatselukuvina" data-position="left center"
+             href="{% url 'gallery:album' album.directory %}">Näytä esikatselut</a>
         </div>
       </div>
     </div>
@@ -106,16 +70,22 @@
     {% endif %}
 
     <div class="ui container">
-      <div class="ui grid" id="album-grid">
-        {% for photo in photos %}
-          <div class="eight wide mobile four wide tablet four wide computer column">
-            <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
-              <img class="ui image" src="{{ photo.thumbnail_img.url }}"
-                   srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
+      {% for photo in photos %}
+        <div class="photo">
+          {% if photo.preview_img %}
+            <a href="{% url 'gallery:photo' photo.slug %}">
+              <img class="ui centered image" src="{{ photo.preview_img.url }}"
+                      {% if photo.hidpi_preview_img %}
+                   srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
+                      {% endif %}
+                   alt="{{ photo.title }}">
             </a>
-          </div>
-        {% endfor %}
-      </div>
+          {% else %}
+            <img class="ui centered image" src="{{ photo.image.url }}"
+                 alt="{{ photo.title }}">
+          {% endif %}
+        </div>
+      {% endfor %}
       <div class="ui hidden divider"></div>
 
       {% if is_paginated %}
