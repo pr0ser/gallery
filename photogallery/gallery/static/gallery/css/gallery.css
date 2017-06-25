@@ -27,6 +27,7 @@
 }
 #photo .ui.centered.image {
     max-height: 85vh;
+    padding-top: 1em;
 }
 .photo .ui.centered.image {
     max-height: 95vh;
