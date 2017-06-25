@@ -10,14 +10,24 @@
           <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-massupload' %}"
                 method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="required field {% if form.album.errors %}error{% endif %}">
+            <div class="required field">
               <label>{{ form.album.label }}</label>
               {{ form.album }}
             </div>
-            <div class="required field {% if form.image.errors %}error{% endif %}">
+            {% if form.album.errors %}
+              <div class="ui error message">
+                {{ form.album.errors }}
+              </div>
+            {% endif %}
+            <div class="required field">
               <label>{{ form.image.label }}</label>
               {{ form.image }}
             </div>
+            {% if form.image.errors %}
+              <div class="ui error message">
+                {{ form.image.errors }}
+              </div>
+            {% endif %}
             <input class="ui right floated primary big button" type="submit" value="Lähetä"/>
             <div class="ui hidden clearing divider"></div>
           </form>

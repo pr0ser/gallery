@@ -63,10 +63,20 @@ def auto_orient(image):
 
 
 def validate_album_title(value):
-    invalid_names = ['new', 'edit', 'delete', 'updatecover']
+    invalid_names = ['new', 'edit', 'delete', 'large']
     if value in invalid_names:
         raise ValidationError(
-            _('%(value)s is not allowed title name.'),
+            _('%(value)s is not allowed album name.'),
+            params={'value': value},
+        )
+
+
+def validate_photo_title(value):
+    invalid_names = ['new', 'edit', 'delete', 'massupload']
+    existing_name = Photo.objects.filter(title=value).exists()
+    if value in invalid_names or existing_name:
+        raise ValidationError(
+            _('%(value)s is not allowed photo title.'),
             params={'value': value},
         )
 
@@ -139,7 +149,7 @@ class Photo(models.Model):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
-    title = models.CharField(_('Title'), max_length=255, unique=True)
+    title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_photo_title])
     slug = models.SlugField(_('Slug'), unique=True)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
     image = models.ImageField(_('Image file'), upload_to=upload_dir)
