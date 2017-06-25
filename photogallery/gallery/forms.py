@@ -55,26 +55,26 @@ class EditPhotoForm(ModelForm):
 
 
 class MassUploadForm(ModelForm):
-        class Meta:
-            model = Photo
-            fields = ['album', 'image']
-            widgets = {
-                'album': forms.Select(attrs={'id': 'select'}),
-                'image': forms.ClearableFileInput(attrs={'multiple': True})
-            }
+    class Meta:
+        model = Photo
+        fields = ['album', 'image']
+        widgets = {
+            'album': forms.Select(attrs={'id': 'select'}),
+            'image': forms.ClearableFileInput(attrs={'multiple': True})
+        }
 
-        def clean_image(self):
-            files = self.files.getlist('image')
-            for file in files:
-                if file:
-                    existing_name = Photo.objects.filter(title=path.splitext(file.name)[0]).first()
-                    if existing_name:
-                        raise ValidationError(
-                            _('Photo title %(value)s already exists.'),
-                            params={'value': existing_name})
-                else:
-                    raise ValidationError(_('Could not read the uploaded file.'))
-            return files
+    def clean_image(self):
+        files = self.files.getlist('image')
+        for file in files:
+            if file:
+                existing_name = Photo.objects.filter(title=path.splitext(file.name)[0]).first()
+                if existing_name:
+                    raise ValidationError(
+                        _('Photo title %(value)s already exists.'),
+                        params={'value': existing_name})
+            else:
+                raise ValidationError(_('Could not read the uploaded file.'))
+        return files
 
 
 class AlbumCoverPhotoForm(Form):
