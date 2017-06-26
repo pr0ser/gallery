@@ -72,6 +72,12 @@ class MassUploadForm(ModelForm):
                     raise ValidationError(
                         _('Photo title %(value)s already exists.'),
                         params={'value': existing_name})
+                extension_name = path.splitext(file.name)[1]
+                valid_extensions = ['.jpg', '.jpeg', '.png']
+                if extension_name.lower() not in valid_extensions:
+                    raise ValidationError(
+                        _('%(value)s files are not supported.'),
+                        params={'value': extension_name})
             else:
                 raise ValidationError(_('Could not read the uploaded file.'))
         return files
