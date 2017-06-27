@@ -47,7 +47,7 @@
             <div class="content">
               <div class="header">{{ album.title }}</div>
               <div class="description">
-                {{ album.description }}
+                {{ album.description|striptags|truncatechars:160 }}
               </div>
             </div>
             <div class="extra content">
