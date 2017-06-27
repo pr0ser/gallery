@@ -22,7 +22,7 @@
               <div class="content">
                 <div class="header">{{ album.title }}</div>
                 <div class="description indexcard">
-                  {{ album.description }}
+                  {{ album.description|truncatechars:160 }}
                 </div>
               </div>
               <div class="extra content">
