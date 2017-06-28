@@ -9,7 +9,9 @@
           <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-massupload' %}"
                 method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">Lisää useampi kuva</h2>
+            <h2 class="ui dividing header" id="form-header">
+              <i class="image icon"></i>
+              Lisää useampi kuva</h2>
             <div class="required field">
               <label>{{ form.album.label }}</label>
               {{ form.album }}

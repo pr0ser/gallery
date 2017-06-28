@@ -9,7 +9,9 @@
           <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-new' %}"
                 method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">Lisää uusi kuva</h2>
+            <h2 class="ui dividing header" id="form-header">
+              <i class="image icon"></i>
+              Lisää uusi kuva</h2>
             {% include 'photo-form.html' %}
             <input class="ui right floated primary big button" type="submit" value="Lähetä"/>
             <div class="ui hidden clearing divider"></div>

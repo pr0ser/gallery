@@ -9,7 +9,9 @@
           <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-new' %}"
                 method="post">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">Luo uusi albumi</h2>
+            <h2 class="ui dividing header" id="form-header">
+              <i class="grid layout icon"></i>
+              Luo uusi albumi</h2>
             {% include 'album-form.html' %}
             <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
             <div class="ui hidden clearing divider"></div>
