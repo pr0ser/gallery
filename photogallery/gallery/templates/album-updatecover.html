@@ -5,8 +5,8 @@
   <div class="ui container">
     <div class="ui centered stackable grid">
       <div class="eight wide column">
-        <h1 class="ui header">Aseta albumin kansikuvaksi</h1>
         <div class="ui raised segment">
+        <h2 class="ui dividing header" id="form-header">Aseta albumin kansikuvaksi</h2>
           <div class="ui items">
             <div class="item">
               <div class="ui tiny image">
@@ -19,8 +19,11 @@
             <form class="ui large form {% if form.errors %}error{% endif %}"
                   action="{% url 'gallery:set-as-cover-photo' %}" method="post">
               {% csrf_token %}
+
               {{ form.photo }}
-              <div class="field">
+
+              <div class="required field">
+                <label>{{ form.album.label }}</label>
                 {{ form.album }}
               </div>
               <input class="ui right floated primary big button" type="submit" value="Tallenna"/>

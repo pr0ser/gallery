@@ -86,6 +86,7 @@ class MassUploadForm(ModelForm):
 class AlbumCoverPhotoForm(Form):
     photo = forms.IntegerField(required=True, widget=forms.HiddenInput())
     album = forms.ModelChoiceField(
+        label=_('Album'),
         required=True,
         empty_label=None,
         queryset=Album.objects.all(),
