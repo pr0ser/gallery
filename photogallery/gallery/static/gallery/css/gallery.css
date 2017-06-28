@@ -11,6 +11,7 @@
 .ui.breadcrumb {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    line-height: 1.4;
 }
 .ui.inverted.menu .header.item {
     background-color: #000000;
