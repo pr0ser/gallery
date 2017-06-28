@@ -10,7 +10,11 @@
                 action="{% url 'gallery:album-edit' form.instance.directory %}"
                 method="post">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">Muokkaa albumia</h2>
+            <h2 class="ui dividing header" id="form-header">
+              {% if album.album_cover %}
+              <img class="ui circular image" src="{{ album.album_cover.thumbnail_img.url }}" alt="{{ album.title }}">
+              {% endif %}
+              Muokkaa albumia</h2>
             {% include 'album-form.html' %}
             <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
             <div class="ui hidden clearing divider"></div>

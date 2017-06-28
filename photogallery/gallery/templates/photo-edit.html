@@ -10,7 +10,9 @@
                 action="{% url 'gallery:photo-edit' form.instance.slug %}"
                 method="post">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">Muokkaa kuvaa</h2>
+            <h2 class="ui dividing header" id="form-header">
+              <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
+              Muokkaa kuvaa</h2>
             {% include 'photo-form.html' %}
             <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
             <div class="ui hidden clearing divider"></div>

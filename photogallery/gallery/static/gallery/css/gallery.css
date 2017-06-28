@@ -65,6 +65,7 @@
 /* Forms */
 #form-header {
     margin-top: 0.2rem;
+    padding-bottom: 0.5rem;
 }
 input[type=date]::-webkit-calendar-picker-indicator {
     background: transparent;
