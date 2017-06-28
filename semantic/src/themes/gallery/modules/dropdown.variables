@@ -136,7 +136,7 @@
 @selectionPadding: @selectionVerticalPadding @selectionIconDistance @selectionVerticalPadding @selectionHorizontalPadding;
 @selectionZIndex: 10;
 
-@selectionItemDivider: 1px solid @solidInternalBorderColor;
+@selectionItemDivider: 1px solid @almostBlack;
 @selectionMessagePadding: @selectionItemPadding;
 
 /* <select> */
