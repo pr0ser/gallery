@@ -13,13 +13,14 @@
 {% endblock %}
 
 {% if user.is_authenticated %}
+  {% load l10n %}
   {% block navbar %}
     <div class="item header">
       Kuva
       <i class="image icon"></i>
     </div>
     <a class="item" href="{{ photo.image.url }}">Näytä alkuperäinen</a>
-    <a class="item" href="{% url 'gallery:set-as-cover-photo' %}?photo_id={{ photo.id }}&album_id={{ photo.album.id }}">
+    <a class="item" href="{% url 'gallery:set-as-cover-photo' %}?photo_id={{ photo.id|unlocalize }}&album_id={{ photo.album.id|unlocalize }}">
       Aseta oletuskuvaksi
     </a>
     <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
