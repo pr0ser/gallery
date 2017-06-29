@@ -48,6 +48,12 @@
 #pending-photos {
     padding-bottom: 3rem;
 }
+.ui.pagination.menu {
+   border-color: #1e1e1e;
+}
+.ui.menu .item:before {
+    background-color: rgba(20, 20, 20, 0.5);
+}
 
 /* Photo page */
 #photo .ui.centered.image {
