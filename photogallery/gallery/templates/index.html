@@ -28,6 +28,9 @@
               <div class="extra content">
                 <span class="right floated">
                   {{ album.date|date:'j.n.Y' }}
+                  {% if not album.public %}
+                    <i class="lock icon"></i>
+                  {% endif %}
                 </span>
                 <span>
                   <i class="image icon"></i>
