@@ -58,6 +58,10 @@ class MassUploadForm(ModelForm):
     class Meta:
         model = Photo
         fields = ['album', 'image']
+        labels = {
+            'album': _('Album'),
+            'image': _('Images')
+        }
         widgets = {
             'album': forms.Select(attrs={'id': 'select'}),
             'image': forms.ClearableFileInput(attrs={'multiple': True})

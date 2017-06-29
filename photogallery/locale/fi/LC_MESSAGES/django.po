@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-26 16:10+0300\n"
+"POT-Creation-Date: 2017-06-30 00:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,8 @@ msgstr "Ylempi albumi"
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: .\photogallery\gallery\admin.py:40 .\photogallery\gallery\models.py:151
+#: .\photogallery\gallery\admin.py:40 .\photogallery\gallery\forms.py:62
+#: .\photogallery\gallery\forms.py:93 .\photogallery\gallery\models.py:151
 msgid "Album"
 msgstr "Albumi"
 
@@ -42,22 +43,26 @@ msgstr "Kuvan metatiedot"
 msgid "Gallery"
 msgstr "Galleria"
 
-#: .\photogallery\gallery\forms.py:73
+#: .\photogallery\gallery\forms.py:63
+msgid "Images"
+msgstr "Kuvat"
+
+#: .\photogallery\gallery\forms.py:77
 #, python-format
 msgid "Photo title %(value)s already exists."
 msgstr "Kuvan nimi %(value)s on jo olemassa."
 
-#: .\photogallery\gallery\forms.py:79
+#: .\photogallery\gallery\forms.py:83
 #, fuzzy, python-format
 #| msgid "%(value)s is not allowed title name."
 msgid "%(value)s files are not supported."
 msgstr "%(value)s ei ole tuettu tiedostotyyppi."
 
-#: .\photogallery\gallery\forms.py:82
+#: .\photogallery\gallery\forms.py:86
 msgid "Could not read the uploaded file."
 msgstr "Tiedostoa ei voitu lukea."
 
-#: .\photogallery\gallery\forms.py:103
+#: .\photogallery\gallery\forms.py:108
 msgid "Photo or the selected album doesn\\’t exist."
 msgstr "Valittua kuvaa tai albumia ei ole olemassa."
 
