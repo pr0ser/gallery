@@ -149,7 +149,7 @@ class Photo(models.Model):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
-    title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_photo_title])
+    title = models.CharField(_('Title'), max_length=255, unique=True)
     slug = models.SlugField(_('Slug'), unique=True)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
     image = models.ImageField(_('Image file'), upload_to=upload_dir)

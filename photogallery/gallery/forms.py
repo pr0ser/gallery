@@ -44,6 +44,17 @@ class NewPhotoForm(ModelForm):
             'album': forms.Select(attrs={'id': 'select'}),
         }
 
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        invalid_names = ['new', 'edit', 'delete', 'massupload']
+        existing_name = Photo.objects.filter(title=title).exists()
+        if title in invalid_names or existing_name:
+            raise ValidationError(
+                _('%(value)s is not allowed photo title.'),
+                params={'value': title},
+            )
+        return title
+
 
 class EditPhotoForm(ModelForm):
     class Meta:
