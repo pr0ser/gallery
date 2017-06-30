@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-30 00:51+0300\n"
+"POT-Creation-Date: 2017-06-30 05:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,8 @@ msgstr "Ylempi albumi"
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: .\photogallery\gallery\admin.py:40 .\photogallery\gallery\forms.py:62
-#: .\photogallery\gallery\forms.py:93 .\photogallery\gallery\models.py:151
+#: .\photogallery\gallery\admin.py:40 .\photogallery\gallery\forms.py:73
+#: .\photogallery\gallery\forms.py:104 .\photogallery\gallery\models.py:151
 msgid "Album"
 msgstr "Albumi"
 
@@ -43,26 +43,27 @@ msgstr "Kuvan metatiedot"
 msgid "Gallery"
 msgstr "Galleria"
 
-#: .\photogallery\gallery\forms.py:63
+#: .\photogallery\gallery\forms.py:53 .\photogallery\gallery\models.py:79
+msgid "%(value)s is not allowed photo title."
+msgstr "%(value)s ei ole salittu kuvan nimi."
+
+#: .\photogallery\gallery\forms.py:74
 msgid "Images"
 msgstr "Kuvat"
 
-#: .\photogallery\gallery\forms.py:77
-#, python-format
+#: .\photogallery\gallery\forms.py:88
 msgid "Photo title %(value)s already exists."
 msgstr "Kuvan nimi %(value)s on jo olemassa."
 
-#: .\photogallery\gallery\forms.py:83
-#, fuzzy, python-format
-#| msgid "%(value)s is not allowed title name."
+#: .\photogallery\gallery\forms.py:94
 msgid "%(value)s files are not supported."
 msgstr "%(value)s ei ole tuettu tiedostotyyppi."
 
-#: .\photogallery\gallery\forms.py:86
+#: .\photogallery\gallery\forms.py:97
 msgid "Could not read the uploaded file."
 msgstr "Tiedostoa ei voitu lukea."
 
-#: .\photogallery\gallery\forms.py:108
+#: .\photogallery\gallery\forms.py:119
 msgid "Photo or the selected album doesn\\’t exist."
 msgstr "Valittua kuvaa tai albumia ei ole olemassa."
 
@@ -83,16 +84,8 @@ msgid "Title (descending)"
 msgstr "Nimi (laskeva)"
 
 #: .\photogallery\gallery\models.py:69
-#, fuzzy, python-format
-#| msgid "%(value)s is not allowed title name."
 msgid "%(value)s is not allowed album name."
 msgstr "%(value)s ei ole salittu albumin nimi."
-
-#: .\photogallery\gallery\models.py:79
-#, fuzzy, python-format
-#| msgid "%(value)s is not allowed title name."
-msgid "%(value)s is not allowed photo title."
-msgstr "%(value)s ei ole salittu kuvan nimi."
 
 #: .\photogallery\gallery\models.py:85
 msgid "Parent"
