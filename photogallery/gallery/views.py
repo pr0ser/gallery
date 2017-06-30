@@ -114,6 +114,11 @@ class NewPhotoView(LoginRequiredMixin, CreateView):
     form_class = NewPhotoForm
     template_name = 'photo-new.html'
 
+    def get_initial(self):
+        initial = super(NewPhotoView, self).get_initial()
+        initial['album'] = self.request.GET.get('album_id')
+        return initial
+
 
 class EditPhotoView(LoginRequiredMixin, UpdateView):
     model = Photo
@@ -147,6 +152,11 @@ class MassUploadView(LoginRequiredMixin, FormView):
             return redirect('gallery:index')
         else:
             return self.form_invalid(form)
+
+    def get_initial(self):
+        initial = super(MassUploadView, self).get_initial()
+        initial['album'] = self.request.GET.get('album_id')
+        return initial
 
 
 class LoginView(View):

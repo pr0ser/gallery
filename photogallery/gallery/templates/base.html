@@ -22,8 +22,14 @@
       Lisää
       <i class="add square icon"></i>
     </div>
-    <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
-    <a class="item" href="{% url 'gallery:photo-massupload' %}">Useampi kuva</a>
+    {% if album.id %}
+      {% load l10n %}
+      <a class="item" href="{% url 'gallery:photo-new' %}?album_id={{ album.id|unlocalize }}">Uusi kuva</a>
+      <a class="item" href="{% url 'gallery:photo-massupload' %}?album_id={{ album.id|unlocalize }}">Useampi kuva</a>
+    {% else %}
+      <a class="item" href="{% url 'gallery:photo-new' %}">Uusi kuva</a>
+      <a class="item" href="{% url 'gallery:photo-massupload' %}">Useampi kuva</a>
+    {% endif %}
     <a class="item" href="{% url 'gallery:album-new' %}">Uusi albumi</a>
     {% block navbar %} {% endblock %}
     <div class="item header">
