@@ -1,5 +1,5 @@
-Django==1.11.2
-django-cleanup==0.4.2
+Django==1.11.3
+django-cleanup==1.0.0
 dj-static==0.0.6
 gunicorn==19.7.1
 pillow-simd==4.1.1.post0
