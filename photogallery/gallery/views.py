@@ -7,9 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-
 from gallery.forms import *
-from gallery.models import Album, Photo
+from gallery.models import Album, Photo, scan_new_photos
 
 
 class IndexView(ListView):
@@ -157,6 +156,13 @@ class MassUploadView(LoginRequiredMixin, FormView):
         initial = super(MassUploadView, self).get_initial()
         initial['album'] = self.request.GET.get('album_id')
         return initial
+
+
+class ScanNewPhotosView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        album = get_object_or_404(Album, directory=kwargs.get('slug'))
+        scan_new_photos(album.id)
+        return redirect('gallery:album', slug=album.directory)
 
 
 class LoginView(View):

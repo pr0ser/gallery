@@ -30,6 +30,7 @@
       <i class="grid layout icon"></i>
     </div>
     <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
+    <a class="item" href="{% url 'gallery:album-scan' photo.album.directory %}">Skannaa hakemisto</a>
     <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
 {% endif %}

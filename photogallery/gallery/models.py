@@ -1,6 +1,7 @@
 import hashlib
 import os
 import shutil
+from glob import glob
 from datetime import date
 
 from PIL import Image, ImageOps
@@ -60,6 +61,24 @@ def auto_orient(image):
                 for operation in operations[orientation]:
                     image = image.transpose(operation)
     return image
+
+
+def scan_new_photos(album_id):
+    album = Album.objects.get(pk=album_id)
+    album_dir = os.path.join('photos', album.directory)
+    existing_photos = Photo.objects.all().filter(album_id=album_id).values_list('image', flat=True)
+    extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
+    os.chdir(settings.MEDIA_ROOT)
+    all_photos = glob(os.path.join(album_dir, '*'))
+    for photo in all_photos:
+        extension = os.path.splitext(photo)[1]
+        if photo not in existing_photos and extension in extensions:
+            new_photo = Photo(
+                title=os.path.splitext(os.path.basename(photo))[0],
+                album_id=album_id,
+                image=photo,
+                ready=False)
+            new_photo.save()
 
 
 def validate_album_title(value):

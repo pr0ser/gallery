@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'album/(?P<slug>[-\w]+)/large$', views.LargeAlbumView.as_view(), name='album-large'),
     url(r'album/new$', views.NewAlbumView.as_view(), name='album-new'),
     url(r'album/edit/(?P<slug>[-\w]+)/$', views.EditAlbumView.as_view(), name='album-edit'),
+    url(r'album/scan/(?P<slug>[-\w]+)/$', views.ScanNewPhotosView.as_view(), name='album-scan'),
     url(r'setascoverphoto/', views.UpdateAlbumCoverView.as_view(), name='set-as-cover-photo'),
     url(r'album/delete/(?P<slug>[-\w]+)/$', views.DeleteAlbumView.as_view(), name='album-delete'),
     url(r'^photo/(?P<slug>[-\w]+)/$', views.PhotoView.as_view(), name='photo'),
