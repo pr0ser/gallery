@@ -10,7 +10,8 @@
       <i class="grid layout icon"></i>
     </div>
     <a class="item" href="{% url 'gallery:album-edit' album.directory %}">Muokkaa</a>
-    <a class="item" href="{% url 'gallery:album-scan' album.directory %}">Skannaa hakemisto</a>
+    <a class="item" href="{% url 'gallery:album-scan' album.directory %}">Etsi uusia kuvia</a>
+    <a class="item" href="{% url 'gallery:album-refresh' album.directory %}">Päivitä kuvat</a>
     <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
 {% endif %}

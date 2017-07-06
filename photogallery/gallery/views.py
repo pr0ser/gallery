@@ -1,5 +1,3 @@
-from os import path
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
@@ -8,7 +6,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from gallery.forms import *
-from gallery.models import Album, Photo, scan_new_photos
+from gallery.models import Album, Photo, scan_new_photos, async_save_photo
 
 
 class IndexView(ListView):
@@ -162,6 +160,15 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         scan_new_photos(album.id)
+        return redirect('gallery:album', slug=album.directory)
+
+
+class RefreshPhotosView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        album = get_object_or_404(Album, directory=kwargs.get('slug'))
+        photos = Photo.objects.filter(album_id=album.id)
+        for photo in photos:
+            async_save_photo(photo.id)
         return redirect('gallery:album', slug=album.directory)
 
 

@@ -31,6 +31,12 @@ def async_create_images(photo_id):
     image.save()
 
 
+@background
+def async_save_photo(photo_id):
+    photo = Photo.objects.get(pk=photo_id)
+    photo.save()
+
+
 def calc_hash(filename):
     hash_sha256 = hashlib.sha256()
     with open(filename, "rb") as f:
@@ -73,12 +79,15 @@ def scan_new_photos(album_id):
     for photo in all_photos:
         extension = os.path.splitext(photo)[1]
         if photo not in existing_photos and extension in extensions:
-            new_photo = Photo(
-                title=os.path.splitext(os.path.basename(photo))[0],
-                album_id=album_id,
-                image=photo,
-                ready=False)
-            new_photo.save()
+            try:
+                new_photo = Photo(
+                    title=os.path.splitext(os.path.basename(photo))[0],
+                    album_id=album_id,
+                    image=photo,
+                    ready=False)
+                new_photo.save()
+            except Exception:
+                pass
 
 
 def validate_album_title(value):
