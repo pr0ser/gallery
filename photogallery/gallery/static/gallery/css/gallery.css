@@ -54,6 +54,10 @@
 .ui.menu .item:before {
     background-color: rgba(20, 20, 20, 0.5);
 }
+#subalbum-divider {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
 
 /* Photo page */
 #photo .ui.centered.image {

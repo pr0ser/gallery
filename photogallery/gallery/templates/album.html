@@ -32,9 +32,44 @@
     </div>
   </div>
 
+  <div class="ui container" id="album-header">
+    <div class="ui two column middle aligned container padded grid">
+      <div class="left aligned eleven wide column" id="album-description">
+        <h1 class="ui header">
+        <span class="content">
+          {{ album.title }}
+          <span class="sub header">{{ album.description|safe }}</span>
+        </span>
+        </h1>
+      </div>
+
+      {% if photos %}
+        <div class="right aligned five wide column" id="album-button">
+          <a class="ui small button" data-tooltip="Listaa kaikki albumin kuvat suurempina" data-position="bottom right"
+             href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if not photos and not sub_albums %}
+    <div class="ui stackable centered container grid">
+      <div class="six wide column column">
+        <div class="ui icon message">
+          <i class="image icon"></i>
+          <div class="content">
+            <div class="header">Ei kuvia</div>
+            <p>Albumiin ei ole vielä lisätty kuvia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
   {% if sub_albums %}
     <div class="ui container subalbums">
-      <h1 class="ui header">Alialbumit</h1>
+      <div class="ui divider"></div>
+      <h2 class="ui header">Alialbumit</h2>
       <div class="ui four stackable cards">
         {% for album in sub_albums %}
           <a class="ui card" href="{% url 'gallery:album' album.directory %}">
@@ -67,102 +102,71 @@
           </a>
         {% endfor %}
       </div>
+      <div class="ui divider" id="subalbum-divider"></div>
     </div>
-    <div class="ui divider"></div>
   {% endif %}
 
-  {% if photos %}
-    <div class="ui container" id="album-header">
-      <div class="ui two column middle aligned container padded grid">
-        <div class="left aligned eleven wide column" id="album-description">
-          <h1 class="ui header">
-        <span class="content">
-          {{ album.title }}
-          <span class="sub header">{{ album.description|safe }}</span>
-        </span>
-          </h1>
 
-        </div>
-        <div class="right aligned five wide column" id="album-button">
-          <a class="ui small button" data-tooltip="Listaa kaikki albumin kuvat suurempina" data-position="bottom right"
-             href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
-        </div>
-      </div>
-    </div>
-
-    {% if user.is_authenticated %}
-      {% if album.pending_photos %}
-        <div class="ui container" id="pending-photos">
-          <div class="ui centered stackable grid ">
-            <div class="six wide column">
-              <div class="ui icon message">
-                <i class="hourglass start icon"></i>
-                <div class="content">
-                  <div class="header">
-                    Kuvien käsittely kesken
-                  </div>
-                  <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
+  {% if user.is_authenticated %}
+    {% if album.pending_photos %}
+      <div class="ui container" id="pending-photos">
+        <div class="ui centered stackable grid ">
+          <div class="six wide column">
+            <div class="ui icon message">
+              <i class="hourglass start icon"></i>
+              <div class="content">
+                <div class="header">
+                  Kuvien käsittely kesken
                 </div>
+                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
               </div>
             </div>
           </div>
         </div>
-      {% endif %}
+      </div>
     {% endif %}
+  {% endif %}
 
-    <div class="ui container">
-      <div class="ui grid" id="album-grid">
-        {% for photo in photos %}
-          <div class="eight wide mobile four wide tablet four wide computer column">
-            <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
-              <img class="ui image" src="{{ photo.thumbnail_img.url }}"
-                   srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
-            </a>
-          </div>
+  <div class="ui container">
+    <div class="ui grid" id="album-grid">
+      {% for photo in photos %}
+        <div class="eight wide mobile four wide tablet four wide computer column">
+          <a href="{% url 'gallery:photo' photo.slug %}" class="ui fluid image">
+            <img class="ui image" src="{{ photo.thumbnail_img.url }}"
+                 srcset="{{ photo.hidpi_thumbnail_img.url }} 2x" alt="{{ photo.title }}">
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="ui hidden divider"></div>
+
+    {% if is_paginated %}
+      <div class="ui pagination menu">
+        {% for page in paginator.page_range %}
+          {% if page_obj.number == page %}
+            <a class="active item" href="?page={{ page }}">{{ page }}</a>
+          {% else %}
+            <a class="item" href="?page={{ page }}">{{ page }}</a>
+          {% endif %}
         {% endfor %}
       </div>
       <div class="ui hidden divider"></div>
+    {% endif %}
+  </div>
 
-      {% if is_paginated %}
-        <div class="ui pagination menu">
-          {% for page in paginator.page_range %}
-            {% if page_obj.number == page %}
-              <a class="active item" href="?page={{ page }}">{{ page }}</a>
-            {% else %}
-              <a class="item" href="?page={{ page }}">{{ page }}</a>
-            {% endif %}
-          {% endfor %}
-        </div>
-        <div class="ui hidden divider"></div>
-      {% endif %}
-    </div>
-
-  {% else %}
-    <h2 class="ui center aligned icon header">
-      <i class="image icon"></i>
-      <span class="content">
-        Ei kuvia
-        <span class="sub header">Albumiin ei ole vielä lisätty kuvia.</span>
-      </span>
-    </h2>
-  {% endif %}
 {% endblock %}
 
 {% block modals %}
   {% if user.is_authenticated %}
     <div class="ui small modal">
-      <div class="header">
-        Poista albumi
-      </div>
+      <div class="header">Poista albumi</div>
       <div class="content">
         <p>Poistetaanko albumi "{{ album.title }}" ja kaikki sen alla olevat kuvat?</p>
       </div>
       <div class="actions">
         <form action="{% url 'gallery:album-delete' album.directory %}" method="post">
           {% csrf_token %}
-          <div class="ui cancel button">
-            Peruuta
-          </div>
+          <div class="ui cancel button">Peruuta</div>
           <input class="ui negative button" type="submit" value="Poista"/>
         </form>
       </div>
