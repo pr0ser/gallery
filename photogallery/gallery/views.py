@@ -1,10 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+
 from gallery.forms import *
 from gallery.models import Album, Photo, scan_new_photos, async_save_photo
 
@@ -172,22 +173,8 @@ class RefreshPhotosView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class LoginView(View):
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('gallery:index')
-            else:
-                return HttpResponse("Inactive user.")
-        else:
-            return redirect('gallery:login')
-
-    def get(self, request):
-        return render(request, 'login.html')
+class UserLoginView(LoginView):
+    template_name = 'login.html'
 
 
 class LogoutView(View):

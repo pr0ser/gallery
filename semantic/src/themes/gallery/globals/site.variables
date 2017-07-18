@@ -327,8 +327,8 @@
 
 /* Negative */
 @negativeColor           : @red;
-@negativeBackgroundColor : #652f2f;
-@negativeBorderColor     : #5f2526;
+@negativeBackgroundColor : #4d2323;
+@negativeBorderColor     : #914041;
 @negativeHeaderColor     : #e19594;
 @negativeTextColor       : #e1d1d1;
 
@@ -495,8 +495,8 @@
 @errorBackgroundColor   : @negativeBackgroundColor;
 @errorColor             : @negativeColor;
 @errorBorderColor       : @negativeBorderColor;
-@errorHeaderColor       : @negativeHeaderColor;
-@errorTextColor         : @negativeTextColor;
+@errorHeaderColor       : @textColor;
+@errorTextColor         : @textColor;
 
 
 /* Responsive */
