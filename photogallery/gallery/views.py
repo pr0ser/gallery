@@ -154,7 +154,7 @@ class MassUploadView(LoginRequiredMixin, FormView):
                                  ready=False,
                                  image=file)
                 instance.save()
-            return redirect('gallery:index')
+            return redirect('gallery:album', slug=form.instance.album.directory)
         else:
             return self.form_invalid(form)
 
