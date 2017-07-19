@@ -7,7 +7,10 @@ services:
     ports:
      - "5432:5432"
   django:
-    build: ./photogallery
+    build:
+      context: "./photogallery"
+      args:
+        SIMD_LEVEL: "sse4"
     command: sh -c "/gallery/start.sh"
     volumes:
       - ./photogallery/:/gallery
