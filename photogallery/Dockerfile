@@ -4,9 +4,10 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /gallery
 WORKDIR /gallery
 ADD requirements.txt /gallery/
+ARG SIMD_LEVEL=avx2
 RUN apk add --update --no-cache libjpeg-turbo-dev postgresql-dev \
     && apk add --update --no-cache --virtual .build-deps build-base zlib-dev \
-    && pip install --no-cache-dir -r requirements.txt \
+    && CC="cc -m$SIMD_LEVEL" pip install --no-cache-dir -r requirements.txt \
     && apk del .build-deps \
     && addgroup -S -g 1001 gallery \
     && adduser -S -u 1001 -G gallery gallery
