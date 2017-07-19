@@ -130,6 +130,13 @@ class DeletePhotoView(LoginRequiredMixin, DeleteView):
     slug_field = 'slug'
     success_url = reverse_lazy('gallery:index')
 
+    def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        if next_url:
+            return next_url
+        else:
+            return super(DeletePhotoView, self).get_success_url()
+
 
 class MassUploadView(LoginRequiredMixin, FormView):
     form_class = MassUploadForm

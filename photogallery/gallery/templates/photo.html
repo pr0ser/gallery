@@ -140,6 +140,7 @@
           <div class="ui cancel button">
             Peruuta
           </div>
+          <input type="hidden" name="next" value="{{ photo.album.get_absolute_url }}" />
           <input class="ui negative button" type="submit" value="Poista"/>
         </form>
       </div>
