@@ -1,18 +1,18 @@
 import hashlib
 import os
 import shutil
-from glob import glob
 from datetime import date
+from glob import glob
 
 from PIL import Image, ImageOps
+from background_task import background
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from background_task import background
-
 
 sort_order_choices = (
     ('date', _('Date (ascending)')),
@@ -165,6 +165,7 @@ class Album(models.Model):
     def pending_photos(self):
         pending = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
         return pending
+    pending_photos.short_description = _("Pending photos")
 
     class Meta:
         verbose_name = _('album')
@@ -287,6 +288,15 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.title
+
+    def admin_thumbnail(self):
+        if self.ready:
+            url = self.thumbnail_img.url
+            link = self.get_absolute_url()
+            return mark_safe(f'<a href={link}><img src="{url}" width="100" height="100" alt="Thumbnail"/></a>')
+        else:
+            return None
+    admin_thumbnail.short_description = _("Thumbnail")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
