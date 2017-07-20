@@ -17,16 +17,9 @@ class IndexView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return (Album.objects.all()
-                    .filter(parent=None)
-                    .select_related('album_cover')
-                    .prefetch_related('photos'))
+            return Album.objects.all().filter(parent=None).select_related('album_cover')
         else:
-            return (Album.objects.all()
-                    .filter(parent=None)
-                    .filter(public=True)
-                    .select_related('album_cover')
-                    .prefetch_related('photos'))
+            return Album.objects.all().filter(parent=None).filter(public=True).select_related('album_cover')
 
 
 class AlbumView(ListView):
