@@ -50,7 +50,7 @@ class AlbumView(ListView):
         if user.is_authenticated:
             context['sub_albums'] = Album.objects.filter(parent=album.id)
         else:
-            context['sub_albums'] = Album.objects.filter(parent=album.id)
+            context['sub_albums'] = Album.objects.filter(parent=album.id).filter(public=True)
         return context
 
 
