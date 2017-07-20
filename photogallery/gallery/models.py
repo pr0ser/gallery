@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -162,6 +163,7 @@ class Album(models.Model):
             current_album = current_album.parent
         return albums
 
+    @cached_property
     def pending_photos(self):
         pending = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
         return pending
@@ -212,6 +214,7 @@ class Photo(models.Model):
         fname = os.path.basename(self.image.name)
         return 'hidpithumb_' + fname
 
+    @cached_property
     def next_photo(self):
         photo_list = list(
             Photo.objects.filter(album_id=self.album_id)
@@ -224,6 +227,7 @@ class Photo(models.Model):
         except IndexError:
             return None
 
+    @cached_property
     def previous_photo(self):
         photo_list = list(
             Photo.objects.filter(album_id=self.album_id)

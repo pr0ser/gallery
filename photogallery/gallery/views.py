@@ -17,9 +17,16 @@ class IndexView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return Album.objects.all().filter(parent=None)
+            return (Album.objects.all()
+                    .filter(parent=None)
+                    .select_related('album_cover')
+                    .prefetch_related('photos'))
         else:
-            return Album.objects.all().filter(parent=None).filter(public=True)
+            return (Album.objects.all()
+                    .filter(parent=None)
+                    .filter(public=True)
+                    .select_related('album_cover')
+                    .prefetch_related('photos'))
 
 
 class AlbumView(ListView):
@@ -29,7 +36,10 @@ class AlbumView(ListView):
 
     def get_queryset(self):
         album = get_object_or_404(Album, directory=self.kwargs['slug'])
-        queryset = Photo.objects.filter(album_id=album.id).filter(ready=True).order_by(album.sort_order)
+        queryset = (Photo.objects
+                    .filter(album_id=album.id)
+                    .filter(ready=True)
+                    .order_by(album.sort_order))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -40,7 +50,7 @@ class AlbumView(ListView):
         if user.is_authenticated:
             context['sub_albums'] = Album.objects.filter(parent=album.id)
         else:
-            context['sub_albums'] = Album.objects.filter(parent=album.id).filter(public=True)
+            context['sub_albums'] = Album.objects.filter(parent=album.id)
         return context
 
 
@@ -106,6 +116,7 @@ class PhotoView(DetailView):
     slug_field = 'slug'
     template_name = 'photo.html'
     context_object_name = 'photo'
+    queryset = Photo.objects.select_related('album')
 
 
 class NewPhotoView(LoginRequiredMixin, CreateView):
@@ -174,7 +185,7 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
 class RefreshPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        photos = Photo.objects.filter(album_id=album.id)
+        photos = Photo.objects.filter(album_id=album.id).iterator()
         for photo in photos:
             async_save_photo(photo.id)
         return redirect('gallery:album', slug=album.directory)
