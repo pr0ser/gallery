@@ -11,7 +11,7 @@ Django photo gallery app.
   * DB_PASS
   * DB_HOST=db
   * DB_PORT
-  * DEBUG (0 or 1)
+  * DEBUG (True or False)
   * SECRET_KEY (for Django settings)
   * ASYNC_THREADS
   * UPLOAD_PERMISSIONS=664
