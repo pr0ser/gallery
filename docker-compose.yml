@@ -10,7 +10,7 @@ services:
     build:
       context: "./photogallery"
       args:
-        SIMD_LEVEL: "sse4"
+        SIMD_LEVEL: "avx2"
     command: sh -c "/gallery/start.sh"
     volumes:
       - ./photogallery/:/gallery

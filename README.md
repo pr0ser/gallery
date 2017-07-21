@@ -17,7 +17,7 @@ Django photo gallery app.
   * UPLOAD_PERMISSIONS=664
   * DIRECTORY_PERMISSIONS=775
 
-Note that UPLOAD_PERMISSIONS and DIRECTORY_PERMISSIONS needs to be specified like 644, or 755 in the env file. Not as Django specifies it (0o664 or 0664).
+Note that UPLOAD_PERMISSIONS and DIRECTORY_PERMISSIONS needs to be specified like 644, or 755 in the env file. Not as Django specifies it (0o664 or 0664). If the host CPU doesn't support AVX2 instructions, change the SIMD_LEVEL arg to "sse4" in docker-compose.yml.
 
 ### Build Docker images
 `docker-compose build`
