@@ -16,7 +16,6 @@ from ast import literal_eval
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -28,9 +27,12 @@ DEBUG = literal_eval(os.environ['DEBUG'])
 
 ALLOWED_HOSTS = literal_eval(os.environ['ALLOWED_HOSTS'])
 
+# Use secure cookies if DEBUG is False
+if not literal_eval(os.environ['DEBUG']):
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # Application definition
-
 INSTALLED_APPS = [
     'gallery.apps.GalleryConfig',
     'django.contrib.admin',
@@ -77,13 +79,11 @@ TEMPLATES = [
 ]
 
 # WSGI configuration
-
 WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE':       'django.db.backends.postgresql',
@@ -99,7 +99,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -118,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
 LANGUAGE_CODE = 'fi'
 
 TIME_ZONE = 'Europe/Helsinki'
@@ -137,13 +135,11 @@ LOCALE_PATHS = (
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Other
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 FILE_UPLOAD_PERMISSIONS = int(os.environ['UPLOAD_PERMISSIONS'], 8)
