@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = literal_eval(os.environ['DEBUG'])
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = literal_eval(os.environ['ALLOWED_HOSTS'])
 
 
 # Application definition
@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django_cleanup',
     'background_task',
 ]
+
+if literal_eval(os.environ['DEBUG']):
+    INSTALLED_APPS += ['dj_static']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -156,6 +159,3 @@ LOGIN_REDIRECT_URL = '/'
 BACKGROUND_TASK_RUN_ASYNC = True
 
 BACKGROUND_TASK_ASYNC_THREADS = int(os.environ['ASYNC_THREADS'])
-
-if literal_eval(os.environ['DEBUG']):
-    INSTALLED_APPS += ['dj_static']

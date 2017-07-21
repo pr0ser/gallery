@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.http import is_safe_url
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
@@ -136,7 +137,7 @@ class DeletePhotoView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         next_url = self.request.POST.get('next')
-        if next_url:
+        if next_url and is_safe_url(next_url):
             return next_url
         else:
             return super(DeletePhotoView, self).get_success_url()
