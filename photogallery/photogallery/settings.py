@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = literal_eval(os.environ['DEBUG'])
 
 ALLOWED_HOSTS = ['*']
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup',
     'background_task',
-    'dj_static'
 ]
 
 MIDDLEWARE = [
@@ -158,3 +156,6 @@ LOGIN_REDIRECT_URL = '/'
 BACKGROUND_TASK_RUN_ASYNC = True
 
 BACKGROUND_TASK_ASYNC_THREADS = int(os.environ['ASYNC_THREADS'])
+
+if literal_eval(os.environ['DEBUG']):
+    INSTALLED_APPS += ['dj_static']
