@@ -118,7 +118,7 @@
                 <div class="header">
                   Kuvien käsittely kesken
                 </div>
-                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
+                <p>Albumissa on {{ album.pending_photos }} {{ album.pending_photos|pluralize:"kuva jonka, kuvaa joiden" }} käsittely on vielä kesken.</p>
               </div>
             </div>
           </div>
