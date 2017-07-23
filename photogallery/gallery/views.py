@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -172,7 +173,10 @@ class MassUploadView(LoginRequiredMixin, FormView):
 class ScanNewPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        scan_new_photos(album.id)
+        errors = scan_new_photos(album.id)
+        if errors:
+            for error in errors :
+                messages.error(request, error)
         return redirect('gallery:album', slug=album.directory)
 
 

@@ -23077,13 +23077,13 @@ Floated Menu / Item
 /* Positive */
 
 .ui.positive.message {
-  background-color: #FCFFF5;
+  background-color: #234D23;
   color: #2C662D;
 }
 
 .ui.positive.message,
 .ui.attached.positive.message {
-  box-shadow: 0px 0px 0px 1px #A3C293 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px 1px #409140 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
 .ui.positive.message .header {
@@ -23125,17 +23125,17 @@ Floated Menu / Item
 /* Warning */
 
 .ui.warning.message {
-  background-color: #FFFAF3;
-  color: #573A08;
+  background-color: #4D4D23;
+  color: #e1e1e1;
 }
 
 .ui.warning.message,
 .ui.attached.warning.message {
-  box-shadow: 0px 0px 0px 1px #C9BA9B inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px 1px #909140 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
 .ui.warning.message .header {
-  color: #794B02;
+  color: #e1e1e1;
 }
 
 /* Error */
@@ -23157,13 +23157,13 @@ Floated Menu / Item
 /* Success */
 
 .ui.success.message {
-  background-color: #FCFFF5;
-  color: #2C662D;
+  background-color: #234D23;
+  color: #e1e1e1;
 }
 
 .ui.success.message,
 .ui.attached.success.message {
-  box-shadow: 0px 0px 0px 1px #A3C293 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px 1px #409140 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
 }
 
 .ui.success.message .header {
@@ -23660,12 +23660,12 @@ Floated Menu / Item
 
 .ui.table tr.positive,
 .ui.table td.positive {
-  box-shadow: 0px 0px 0px #A3C293 inset;
+  box-shadow: 0px 0px 0px #409140 inset;
 }
 
 .ui.table tr.positive,
 .ui.table td.positive {
-  background: #FCFFF5 !important;
+  background: #234D23 !important;
   color: #2C662D !important;
 }
 
@@ -23705,13 +23705,13 @@ Floated Menu / Item
 
 .ui.table tr.warning,
 .ui.table td.warning {
-  box-shadow: 0px 0px 0px #C9BA9B inset;
+  box-shadow: 0px 0px 0px #909140 inset;
 }
 
 .ui.table tr.warning,
 .ui.table td.warning {
-  background: #FFFAF3 !important;
-  color: #573A08 !important;
+  background: #4D4D23 !important;
+  color: #e1e1e1 !important;
 }
 
 /*--------------
@@ -23894,8 +23894,8 @@ Floated Menu / Item
 .ui.selectable.table tr.warning:hover,
 .ui.table tr td.selectable.warning:hover,
 .ui.selectable.table tr:hover td.warning {
-  background: #fff4e4 !important;
-  color: #493107 !important;
+  background: #42421e !important;
+  color: #d9d9d9 !important;
 }
 
 .ui.selectable.table tr.active:hover,
@@ -23908,7 +23908,7 @@ Floated Menu / Item
 .ui.selectable.table tr.positive:hover,
 .ui.table tr td.selectable.positive:hover,
 .ui.selectable.table tr:hover td.positive {
-  background: #f7ffe6 !important;
+  background: #1e421e !important;
   color: #275b28 !important;
 }
 
@@ -32321,7 +32321,7 @@ a.ui.nag {
 }
 
 .ui.progress.warning > .label {
-  color: #794B02;
+  color: #e1e1e1;
 }
 
 /*--------------

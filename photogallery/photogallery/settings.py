@@ -155,3 +155,5 @@ LOGIN_REDIRECT_URL = '/'
 BACKGROUND_TASK_RUN_ASYNC = True
 
 BACKGROUND_TASK_ASYNC_THREADS = int(os.environ['ASYNC_THREADS'])
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

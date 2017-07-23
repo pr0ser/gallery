@@ -38,6 +38,30 @@ def async_save_photo(photo_id):
     photo.save()
 
 
+def scan_new_photos(album_id):
+    album = Album.objects.get(pk=album_id)
+    album_dir = os.path.join('photos', album.directory)
+    existing_photos = Photo.objects.all().filter(album_id=album_id).values_list('image', flat=True)
+    extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
+    os.chdir(settings.MEDIA_ROOT)
+    all_photos = glob(os.path.join(album_dir, '*'))
+    errors = []
+    for photo in all_photos:
+        extension = os.path.splitext(photo)[1]
+        if photo not in existing_photos and extension in extensions:
+            try:
+                new_photo = Photo(
+                    title=os.path.splitext(os.path.basename(photo))[0],
+                    album_id=album_id,
+                    image=photo,
+                    ready=False)
+                new_photo.save()
+            except Exception as e:
+                errors.append(_('Unable to add photo %(photo_name)s to album: %(error_message)s')
+                              % {'photo_name': photo, 'error_message': e})
+    return errors
+
+
 def calc_hash(filename):
     hash_sha256 = hashlib.sha256()
     with open(filename, "rb") as f:
@@ -68,27 +92,6 @@ def auto_orient(image):
                 for operation in operations[orientation]:
                     image = image.transpose(operation)
     return image
-
-
-def scan_new_photos(album_id):
-    album = Album.objects.get(pk=album_id)
-    album_dir = os.path.join('photos', album.directory)
-    existing_photos = Photo.objects.all().filter(album_id=album_id).values_list('image', flat=True)
-    extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
-    os.chdir(settings.MEDIA_ROOT)
-    all_photos = glob(os.path.join(album_dir, '*'))
-    for photo in all_photos:
-        extension = os.path.splitext(photo)[1]
-        if photo not in existing_photos and extension in extensions:
-            try:
-                new_photo = Photo(
-                    title=os.path.splitext(os.path.basename(photo))[0],
-                    album_id=album_id,
-                    image=photo,
-                    ready=False)
-                new_photo.save()
-            except Exception:
-                pass
 
 
 def validate_album_title(value):

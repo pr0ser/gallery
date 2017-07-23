@@ -56,6 +56,21 @@
       {% endif %}
     </div>
   </div>
+
+  {% for message in messages %}
+    <div class="ui container">
+      <div class="ui center aligned stackable grid ">
+        <div class="six wide column">
+          <div class="ui center aligned compact {{ message.tags }} message">
+            <div class="content">
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
   {% block content %} {% endblock %}
 </div>
 

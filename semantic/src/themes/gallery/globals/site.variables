@@ -320,8 +320,8 @@
 
 /* Positive */
 @positiveColor           : @green;
-@positiveBackgroundColor : #FCFFF5;
-@positiveBorderColor     : #A3C293;
+@positiveBackgroundColor : #234D23;
+@positiveBorderColor     : #409140;
 @positiveHeaderColor     : #1A531B;
 @positiveTextColor       : #2C662D;
 
@@ -341,10 +341,10 @@
 
 /* Warning */
 @warningColor           : #F2C037;
-@warningBorderColor     : #C9BA9B;
-@warningBackgroundColor : #FFFAF3;
-@warningHeaderColor     : #794B02;
-@warningTextColor       : #573A08;
+@warningBorderColor     : #909140;
+@warningBackgroundColor : #4D4D23;
+@warningHeaderColor     : @textColor;
+@warningTextColor       : @textColor;
 
 /*-------------------
         Paths
@@ -490,7 +490,7 @@
 @successColor           : @positiveColor;
 @successBorderColor     : @positiveBorderColor;
 @successHeaderColor     : @positiveHeaderColor;
-@successTextColor       : @positiveTextColor;
+@successTextColor       : @textColor;
 
 @errorBackgroundColor   : @negativeBackgroundColor;
 @errorColor             : @negativeColor;
