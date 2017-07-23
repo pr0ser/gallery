@@ -58,7 +58,7 @@ def scan_new_photos(album_id):
                 new_photo.save()
             except Exception as e:
                 errors.append(_('Unable to add photo %(photo_name)s to album: %(error_message)s')
-                              % {'photo_name': photo, 'error_message': e})
+                              % {'photo_name': os.path.basename(photo), 'error_message': e})
     return errors
 
 
