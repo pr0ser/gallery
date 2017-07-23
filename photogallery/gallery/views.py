@@ -175,7 +175,7 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         errors = scan_new_photos(album.id)
         if errors:
-            for error in errors :
+            for error in errors:
                 messages.error(request, error)
         return redirect('gallery:album', slug=album.directory)
 
