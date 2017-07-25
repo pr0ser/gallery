@@ -13,19 +13,18 @@ class AlbumAdmin(admin.ModelAdmin):
         'parent',
         'pending_photos',
         'public',
-        )
+    )
     fieldsets = (
-        (_('Parent album'),
-            {'fields': ('parent',)}
-         ),
-        (_('Album details'),
-            {'fields': ('title',
-                        'description',
-                        'album_cover',
-                        'public',
-                        'sort_order',)
-             }
-         ),
+        (_('Parent album'), {
+            'fields': ('parent',)
+        }),
+        (_('Album details'), {
+            'fields': ('title',
+                       'description',
+                       'album_cover',
+                       'public',
+                       'sort_order',)
+        })
     )
     list_filter = ('public',)
 
@@ -38,25 +37,20 @@ class PhotoAdmin(admin.ModelAdmin):
         'date',
         'admin_thumbnail',
         'ready',
-        )
+    )
     fieldsets = (
-        (_('Album'),
-            {'fields': ('album',)}
-         ),
-        (_('Photo'),
-            {'fields': ('image',)}
-         ),
-        (_('Photo metadata'),
-            {'fields': ('title',
-                        'description',
-                        'file_hash',
-                        'preview_img',
-                        'hidpi_preview_img',
-                        'thumbnail_img',
-                        'hidpi_thumbnail_img',
-                        'ready')
-             }
-         ),
+        (_('Photo metadata'), {
+            'fields': ('title',
+                       'description',
+                       'file_hash',
+                       'ready')
+        }),
+        (_('Album'), {
+            'fields': ('album',)
+        }),
+        (_('Photo'), {
+            'fields': ('image',)
+        })
     )
     readonly_fields = ('file_hash',)
     list_filter = ('album', 'ready')
