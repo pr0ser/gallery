@@ -3,5 +3,5 @@ django-cleanup==1.0.1
 dj-static==0.0.6
 gunicorn==19.7.1
 pillow-simd==4.1.1.post0
-psycopg2==2.7.1
+psycopg2==2.7.3
 django-background-tasks==1.1.10

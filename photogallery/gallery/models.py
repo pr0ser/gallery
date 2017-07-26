@@ -298,9 +298,9 @@ class Photo(models.Model):
 
     def admin_thumbnail(self):
         if self.ready:
-            url = self.thumbnail_img.url
+            img_url = self.thumbnail_img.url
             link = self.get_absolute_url()
-            return mark_safe(f'<a href={link}><img src="{url}" width="100" height="100" alt="Thumbnail"/></a>')
+            return mark_safe(f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>')
         else:
             return None
     admin_thumbnail.short_description = _("Thumbnail")
