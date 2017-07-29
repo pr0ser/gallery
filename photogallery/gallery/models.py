@@ -46,7 +46,7 @@ def scan_new_photos(album_id):
     os.chdir(settings.MEDIA_ROOT)
     all_photos = glob(os.path.join(album_dir, '*'))
     new_photos = 0
-    errors = []
+    errors = ''
     for photo in all_photos:
         extension = os.path.splitext(photo)[1]
         if photo not in existing_photos and extension in extensions:
@@ -59,7 +59,7 @@ def scan_new_photos(album_id):
                 new_photo.save()
                 new_photos += 1
             except Exception as e:
-                errors.append(_('Unable to add photo %(photo_name)s to album: %(error_message)s')
+                errors += (_('Unable to add photo %(photo_name)s to album: %(error_message)s')
                               % {'photo_name': os.path.basename(photo), 'error_message': e})
     return new_photos, errors
 

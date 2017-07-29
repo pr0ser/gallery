@@ -178,8 +178,7 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         if new_photos == 0:
             messages.info(request, _('No new photos found in the album directory.'))
         if errors:
-            for error in errors:
-                messages.error(request, error)
+            messages.error(request, errors)
         return redirect('gallery:album', slug=album.directory)
 
 
