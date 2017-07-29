@@ -333,11 +333,11 @@
 @negativeTextColor       : #e1d1d1;
 
 /* Info */
-@infoColor              : #31CCEC;
-@infoBackgroundColor    : #F8FFFF;
-@infoBorderColor        : #A9D5DE;
-@infoHeaderColor        : #0E566C;
-@infoTextColor          : #276F86;
+@infoColor              : #E1E1E1;
+@infoBackgroundColor    : #3E3E3E;
+@infoBorderColor        : #5F5F5F;
+@infoHeaderColor        : #E1E1E1;
+@infoTextColor          : #C8C8C8;
 
 /* Warning */
 @warningColor           : #F2C037;

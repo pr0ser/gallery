@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.http import is_safe_url
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
@@ -173,7 +174,9 @@ class MassUploadView(LoginRequiredMixin, FormView):
 class ScanNewPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        errors = scan_new_photos(album.id)
+        new_photos, errors = scan_new_photos(album.id)
+        if new_photos == 0:
+            messages.info(request, _('No new photos found in the album directory.'))
         if errors:
             for error in errors:
                 messages.error(request, error)
