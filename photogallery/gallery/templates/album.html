@@ -141,16 +141,50 @@
     <div class="ui hidden divider"></div>
 
     {% if is_paginated %}
-      <div class="ui pagination menu">
-        {% for page in paginator.page_range %}
-          {% if page_obj.number == page %}
-            <a class="active item" href="?page={{ page }}">{{ page }}</a>
-          {% else %}
-            <a class="item" href="?page={{ page }}">{{ page }}</a>
+      {% if paginator.count <= 320 %}
+        <div class="ui pagination menu">
+          {% for page in paginator.page_range %}
+            {% if page_obj.number == page %}
+              <a class="active item" href="?page={{ page }}">{{ page }}</a>
+            {% else %}
+              <a class="item" href="?page={{ page }}">{{ page }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="ui hidden divider"></div>
+
+      {% else %}
+
+        <div class="ui center aligned basic segment">
+          {% if page_obj.has_previous %}
+            <a class="ui left labeled icon button" href="?page={{ page_obj.previous_page_number }}">
+              <i class="left chevron icon"></i>
+              edellinen
+            </a>
           {% endif %}
-        {% endfor %}
-      </div>
-      <div class="ui hidden divider"></div>
+          {% if page_obj.has_next %}
+            <a class="ui right labeled icon button" href="?page={{ page_obj.next_page_number }}">
+              <i class="right chevron icon"></i>
+              seuraava
+            </a>
+          {% endif %}
+          <div class="ui hidden divider"></div>
+          <div class="ui scrolling dropdown" id="page-select">
+            Sivu {{ page_obj.number }} / {{ paginator.num_pages }}
+            <i class="caret up icon"></i>
+            <div class="menu">
+              {% for page in paginator.page_range %}
+                {% if page_obj.number == page %}
+                  <a class="active item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+                {% else %}
+                  <a class="item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
     {% endif %}
   </div>
 
@@ -183,4 +217,15 @@
         ;
     </script>
   {% endif %}
+
+  {% if paginator.count > 320 %}
+    <script>
+        $('#page-select')
+            .dropdown({
+                direction: 'upward'
+            })
+        ;
+    </script>
+  {% endif %}
+
 {% endblock %}
