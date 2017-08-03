@@ -18,14 +18,16 @@
   </div>
 {% endif %}
 
-<div class="required field {% if form.album.errors %}error{% endif %}">
-  <label>{{ form.album.label }}</label>
-  {{ form.album }}
-</div>
-{% if form.album.errors %}
-  <div class="ui error message">
-    {{ form.album.errors }}
+{% if form.album %}
+  <div class="required field {% if form.album.errors %}error{% endif %}">
+    <label>{{ form.album.label }}</label>
+    {{ form.album }}
   </div>
+  {% if form.album.errors %}
+    <div class="ui error message">
+      {{ form.album.errors }}
+    </div>
+  {% endif %}
 {% endif %}
 
 <div class="required field {% if form.image.errors %}error{% endif %}">

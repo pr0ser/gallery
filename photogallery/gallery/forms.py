@@ -59,7 +59,7 @@ class NewPhotoForm(ModelForm):
 class EditPhotoForm(ModelForm):
     class Meta:
         model = Photo
-        fields = ['title', 'description', 'album', 'image']
+        fields = ['title', 'description', 'image']
         widgets = {
             'album': forms.Select(attrs={'id': 'album'}),
         }
