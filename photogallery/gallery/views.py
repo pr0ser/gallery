@@ -188,6 +188,7 @@ class RefreshPhotosView(LoginRequiredMixin, View):
         photos = Photo.objects.filter(album_id=album.id).iterator()
         for photo in photos:
             async_save_photo(photo.id)
+        messages.info(request, _('Photos will be scanned for changes on the background. It might take a while.'))
         return redirect('gallery:album', slug=album.directory)
 
 
