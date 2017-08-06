@@ -177,7 +177,7 @@ class Album(models.Model):
     def admin_thumbnail(self):
         if self.album_cover_id:
             img_url = self.album_cover.thumbnail_img.url
-            link = self.album_cover.get_absolute_url()
+            link = self.get_absolute_url()
             return mark_safe(f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>')
         else:
             return None
