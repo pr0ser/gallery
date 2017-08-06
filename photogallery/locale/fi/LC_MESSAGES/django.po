@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-06 10:51+0000\n"
+"POT-Creation-Date: 2017-08-06 11:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,24 +18,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gallery/admin.py:19
+#: gallery/admin.py:9 gallery/admin.py:10
+msgid "Gallery administration"
+msgstr "Gallerian ylläpito"
+
+#: gallery/admin.py:25
 msgid "Parent album"
 msgstr "Ylempi albumi"
 
-#: gallery/admin.py:22
+#: gallery/admin.py:28
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: gallery/admin.py:43
+#: gallery/admin.py:49
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:49 gallery/forms.py:73 gallery/forms.py:104
+#: gallery/admin.py:55 gallery/forms.py:73 gallery/forms.py:104
 #: gallery/models.py:196
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:52
+#: gallery/admin.py:58
 msgid "Photo"
 msgstr "Kuva"
 
@@ -202,5 +206,4 @@ msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
 #: gallery/views.py:191
 msgid "Photos will be scanned for changes on the background. It might take a while."
-msgstr ""
-"Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."
+msgstr "Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."
