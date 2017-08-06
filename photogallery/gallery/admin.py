@@ -12,6 +12,7 @@ class AlbumAdmin(admin.ModelAdmin):
         'directory',
         'parent',
         'pending_photos',
+        'admin_thumbnail',
         'public',
     )
     fieldsets = (

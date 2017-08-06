@@ -174,6 +174,15 @@ class Album(models.Model):
         return pending
     pending_photos.short_description = _("Pending photos")
 
+    def admin_thumbnail(self):
+        if self.album_cover_id:
+            img_url = self.album_cover.thumbnail_img.url
+            link = self.album_cover.get_absolute_url()
+            return mark_safe(f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>')
+        else:
+            return None
+    admin_thumbnail.short_description = _("Cover photo")
+
     class Meta:
         verbose_name = _('album')
         verbose_name_plural = _('albums')

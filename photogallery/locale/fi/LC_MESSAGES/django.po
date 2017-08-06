@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 15:59+0000\n"
+"POT-Creation-Date: 2017-08-06 10:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,24 +18,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gallery/admin.py:18
+#: gallery/admin.py:19
 msgid "Parent album"
 msgstr "Ylempi albumi"
 
-#: gallery/admin.py:21
+#: gallery/admin.py:22
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: gallery/admin.py:42
+#: gallery/admin.py:43
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:48 gallery/forms.py:73 gallery/forms.py:104
-#: gallery/models.py:187
+#: gallery/admin.py:49 gallery/forms.py:73 gallery/forms.py:104
+#: gallery/models.py:196
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:51
+#: gallery/admin.py:52
 msgid "Photo"
 msgstr "Kuva"
 
@@ -89,8 +89,7 @@ msgstr "Nimi (laskeva)"
 #: gallery/models.py:62
 #, python-format
 msgid "Unable to add photo %(photo_name)s to album: %(error_message)s"
-msgstr ""
-"Kuvan %(photo_name)s lisääminen albumiin epäonnistui: %(error_message)s"
+msgstr "Kuvan %(photo_name)s lisääminen albumiin epäonnistui: %(error_message)s"
 
 #: gallery/models.py:103
 #, python-format
@@ -101,15 +100,15 @@ msgstr "%(value)s ei ole salittu albumin nimi."
 msgid "Parent"
 msgstr "Yläalbumi"
 
-#: gallery/models.py:120 gallery/models.py:188
+#: gallery/models.py:120 gallery/models.py:197
 msgid "Title"
 msgstr "Nimi"
 
-#: gallery/models.py:121 gallery/models.py:190
+#: gallery/models.py:121 gallery/models.py:199
 msgid "Date"
 msgstr "Päiväys"
 
-#: gallery/models.py:122 gallery/models.py:192
+#: gallery/models.py:122 gallery/models.py:201
 msgid "Description"
 msgstr "Kuvaus"
 
@@ -141,55 +140,59 @@ msgstr "Albumin hakemistojen poisto epäonnistui."
 msgid "Pending photos"
 msgstr "Keskeneräiset kuvat"
 
-#: gallery/models.py:178
+#: gallery/models.py:184
+msgid "Cover photo"
+msgstr "Kansikuva"
+
+#: gallery/models.py:187
 msgid "album"
 msgstr "albumi"
 
-#: gallery/models.py:179
+#: gallery/models.py:188
 msgid "albums"
 msgstr "albumit"
 
-#: gallery/models.py:189
+#: gallery/models.py:198
 msgid "Slug"
 msgstr "Slug"
 
-#: gallery/models.py:191
+#: gallery/models.py:200
 msgid "Image file"
 msgstr "Kuvatiedosto"
 
-#: gallery/models.py:193
+#: gallery/models.py:202
 msgid "SHA-256"
 msgstr "SHA-256 -tiiviste"
 
-#: gallery/models.py:194
+#: gallery/models.py:203
 msgid "Ready"
 msgstr "Valmis"
 
-#: gallery/models.py:195
+#: gallery/models.py:204
 msgid "Preview image"
 msgstr "Esikatselukuva"
 
-#: gallery/models.py:196
+#: gallery/models.py:205
 msgid "High DPI preview image"
 msgstr "Korkearesoluutioinen esikatselukuva"
 
-#: gallery/models.py:197
+#: gallery/models.py:206
 msgid "Thumbnail image"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:198
+#: gallery/models.py:207
 msgid "High DPI thumbnail image"
 msgstr "Korkearesoluutioinen pienoiskuva"
 
-#: gallery/models.py:308
+#: gallery/models.py:317
 msgid "Thumbnail"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:323
+#: gallery/models.py:332
 msgid "photo"
 msgstr "kuva"
 
-#: gallery/models.py:324
+#: gallery/models.py:333
 msgid "photos"
 msgstr "kuvat"
 
@@ -199,4 +202,5 @@ msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
 #: gallery/views.py:191
 msgid "Photos will be scanned for changes on the background. It might take a while."
-msgstr "Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."
+msgstr ""
+"Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."
