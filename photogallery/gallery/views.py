@@ -91,8 +91,8 @@ class UpdateAlbumCoverView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('gallery:index')
 
     def form_valid(self, form):
-        photo_id = self.request.POST.get('photo')
-        form.update_album_cover(photo_id)
+        photo = form.cleaned_data['photo']
+        form.update_album_cover(photo)
         return super(UpdateAlbumCoverView, self).form_valid(form)
 
     def get_initial(self):
