@@ -31,6 +31,9 @@ ALLOWED_HOSTS = literal_eval(os.environ['ALLOWED_HOSTS'])
 if not literal_eval(os.environ['DEBUG']):
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_BROWSER_XSS_FILTER = True
 
 # Application definition
 INSTALLED_APPS = [
