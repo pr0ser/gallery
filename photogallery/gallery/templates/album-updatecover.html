@@ -6,24 +6,21 @@
     <div class="ui centered stackable grid">
       <div class="eight wide column">
         <div class="ui raised segment">
-        <h2 class="ui dividing header" id="form-header">
-          <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
-          Aseta albumin kansikuvaksi
-        </h2>
-            <form class="ui large form {% if form.errors %}error{% endif %}"
-                  action="{% url 'gallery:set-as-cover-photo' %}" method="post">
-              {% csrf_token %}
-
-              {{ form.photo }}
-
-              <div class="required field">
-                <label>{{ form.album.label }}</label>
-                {{ form.album }}
-              </div>
-              <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
-              <div class="ui hidden clearing divider"></div>
-            </form>
-          </div>
+          <h2 class="ui dividing header" id="form-header">
+            <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
+            Aseta albumin kansikuvaksi
+          </h2>
+          <form class="ui large form {% if form.errors %}error{% endif %}"
+                action="{% url 'gallery:set-as-cover-photo' %}" method="post">
+            {% csrf_token %}
+            {{ form.photo }}
+            <div class="required field">
+              <label>{{ form.album.label }}</label>
+              {{ form.album }}
+            </div>
+            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
+            <div class="ui hidden clearing divider"></div>
+          </form>
         </div>
       </div>
     </div>
