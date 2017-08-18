@@ -1,5 +1,5 @@
 {
-  "base": "semantic\\",
+  "base": "semantic/",
   "paths": {
     "source": {
       "config": "src/theme.config",
@@ -8,10 +8,10 @@
       "themes": "src/themes/"
     },
     "output": {
-      "packaged": "..\\photogallery\\gallery\\static\\gallery\\semantic\\",
-      "uncompressed": "out\\components\\",
-      "compressed": "out\\components\\",
-      "themes": "..\\photogallery\\gallery\\static\\gallery\\semantic\\"
+      "packaged": "../photogallery/gallery/static/gallery/semantic/",
+      "uncompressed": "out/components/",
+      "compressed": "out/components/",
+      "themes": "../photogallery/gallery/static/gallery/semantic/"
     },
     "clean": "dist/"
   },
