@@ -28,7 +28,7 @@ DEBUG = literal_eval(os.environ['DEBUG'])
 ALLOWED_HOSTS = literal_eval(os.environ['ALLOWED_HOSTS'])
 
 # Use secure cookies if DEBUG is False
-if not literal_eval(os.environ['DEBUG']):
+if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'background_task',
 ]
 
-if literal_eval(os.environ['DEBUG']):
+if DEBUG:
     INSTALLED_APPS += ['dj_static']
 
 MIDDLEWARE = [
