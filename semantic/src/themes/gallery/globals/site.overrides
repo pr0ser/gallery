@@ -1,3 +1,89 @@
 /*******************************
         Global Overrides
 *******************************/
+/* Sitewide styles */
+
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
+
+#main-menu {
+    background-color: black;
+    border-radius: 0;
+}
+#main-menu h1 {
+    font-family: 'Playfair Display SC', serif;
+}
+.ui.breadcrumb {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    line-height: 1.4;
+}
+#sidebar .header.item {
+    background-color: black;
+}
+#sidebar {
+    background-color: #141414;
+}
+
+/* Index page */
+.indexcard {
+    overflow: hidden;
+}
+#index-grid.ui.grid>.column:not(.row) {
+    display: flex;
+}
+
+/* Album page */
+#album-header {
+    padding-bottom: 2em;
+}
+#album-description {
+    padding-left: 0;
+}
+#album-button {
+    padding: 0;
+}
+#album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
+    padding: 0.3rem;
+}
+.photo .ui.centered.image {
+    max-height: 95vh;
+    padding-bottom: 1.5em;
+}
+#pending-photos {
+    padding-bottom: 3rem;
+}
+.ui.pagination.menu {
+   border-color: #1e1e1e;
+}
+.ui.menu .item:before {
+    background-color: rgba(20, 20, 20, 0.5);
+}
+#subalbum-divider {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+/* Photo page */
+#photo .ui.centered.image {
+    max-height: 85vh;
+    padding-top: 1em;
+}
+#photo-description {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+.next-photo {
+    display:none;
+}
+
+/* Forms */
+#form-header {
+    margin-top: 0.2rem;
+    padding-bottom: 0.5rem;
+}
+input[type=date]::-webkit-calendar-picker-indicator {
+    background: transparent;
+}
+input[type=date]::-webkit-inner-spin-button {
+    display: none;
+}
