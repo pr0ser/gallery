@@ -115,5 +115,5 @@ class AlbumCoverPhotoForm(Form):
             album = self.cleaned_data.get('album')
             album.album_cover_id = photo_id
             album.save()
-        except:
+        except Exception:
             raise ValidationError(_('Photo or the selected album doesn\’t exist.'))

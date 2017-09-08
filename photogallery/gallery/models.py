@@ -209,21 +209,22 @@ class Photo(models.Model):
     def get_absolute_url(self):
         return reverse('gallery:photo', kwargs={'slug': self.slug})
 
-    def filename(self):
-        return os.path.basename(self.image.name)
-
+    @property
     def preview_filename(self):
         fname = os.path.basename(self.image.name)
         return 'preview_' + fname
 
+    @property
     def hidpi_preview_filename(self):
         fname = os.path.basename(self.image.name)
         return 'hidpipreview_' + fname
 
+    @property
     def thumbnail_img_filename(self):
         fname = os.path.basename(self.image.name)
         return 'thumb_' + fname
 
+    @property
     def hidpi_thumbnail_img_filename(self):
         fname = os.path.basename(self.image.name)
         return 'hidpithumb_' + fname
@@ -292,17 +293,17 @@ class Photo(models.Model):
 
     def create_previews(self):
         if self.image.height > 1327 or self.image.width > 1327:
-            self.create_preview_image(size=1327, quality=90, output_file=self.preview_filename())
-            self.preview_img = os.path.join(self.preview_dir(), self.preview_filename())
+            self.create_preview_image(size=1327, quality=90, output_file=self.preview_filename)
+            self.preview_img = os.path.join(self.preview_dir(), self.preview_filename)
         if self.image.height > 2340 or self.image.width > 2340:
-            self.create_preview_image(size=2340, quality=90, output_file=self.hidpi_preview_filename())
-            self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename())
+            self.create_preview_image(size=2340, quality=90, output_file=self.hidpi_preview_filename)
+            self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename)
 
     def create_thumbnails(self):
-        self.create_thumbnail(size=330, quality=80, output_file=self.thumbnail_img_filename())
-        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename())
-        self.create_thumbnail(size=600, quality=80, output_file=self.hidpi_thumbnail_img_filename())
-        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename())
+        self.create_thumbnail(size=330, quality=80, output_file=self.thumbnail_img_filename)
+        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename)
+        self.create_thumbnail(size=600, quality=80, output_file=self.hidpi_thumbnail_img_filename)
+        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename)
 
     def __str__(self):
         return self.title
