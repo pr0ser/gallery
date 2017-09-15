@@ -195,9 +195,9 @@ class Photo(models.Model):
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
     title = models.CharField(_('Title'), max_length=255, unique=True)
-    slug = models.SlugField(_('Slug'), unique=True)
+    slug = models.SlugField(_('Slug'), unique=True, max_length=100)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
-    image = models.ImageField(_('Image file'), upload_to=upload_dir)
+    image = models.ImageField(_('Image file'), upload_to=upload_dir, max_length=100)
     description = models.TextField(_('Description'), blank=True)
     file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
     ready = models.BooleanField(_('Ready'), default=True)
