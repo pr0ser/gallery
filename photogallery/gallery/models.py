@@ -194,17 +194,17 @@ class Photo(models.Model):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
-    title = models.CharField(_('Title'), max_length=255, unique=True)
+    title = models.CharField(_('Title'), max_length=100, unique=True)
     slug = models.SlugField(_('Slug'), unique=True, max_length=100)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
     image = models.ImageField(_('Image file'), upload_to=upload_dir, max_length=100)
     description = models.TextField(_('Description'), blank=True)
     file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
     ready = models.BooleanField(_('Ready'), default=True)
-    preview_img = models.ImageField(_('Preview image'), blank=True)
-    hidpi_preview_img = models.ImageField(_('High DPI preview image'), blank=True)
-    thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True)
-    hidpi_thumbnail_img = models.ImageField(_('High DPI thumbnail image'), blank=True)
+    preview_img = models.ImageField(_('Preview image'), blank=True, max_length=150)
+    hidpi_preview_img = models.ImageField(_('High DPI preview image'), blank=True, max_length=150)
+    thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True, max_length=150)
+    hidpi_thumbnail_img = models.ImageField(_('High DPI thumbnail image'), blank=True, max_length=150)
 
     def get_absolute_url(self):
         return reverse('gallery:photo', kwargs={'slug': self.slug})
