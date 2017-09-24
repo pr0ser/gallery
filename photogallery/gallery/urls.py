@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 
 from gallery.views import *
 
@@ -19,5 +20,6 @@ urlpatterns = [
     url(r'photo/delete/(?P<slug>[-\w]+)/$', DeletePhotoView.as_view(), name='photo-delete'),
     url(r'photo/massupload', MassUploadView.as_view(), name='photo-massupload'),
     url(r'login/', UserLoginView.as_view(), name='login'),
+    url(r'^admin/login/', RedirectView.as_view(url=reverse_lazy("login"))),
     url(r'logout/', LogoutView.as_view(), name='logout'),
 ]
