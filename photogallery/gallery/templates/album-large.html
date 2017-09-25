@@ -49,7 +49,7 @@
                data-position="bottom right" href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
           {% endif %}
           <a class="ui small button" id="large-button" data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina"
-             data-position="bottom right" href="{% url 'gallery:album-large' album.directory %}">Näytä esikatselut</a>
+             data-position="bottom right" href="{% url 'gallery:album' album.directory %}">Näytä esikatselut</a>
         </div>
       {% endif %}
     </div>
