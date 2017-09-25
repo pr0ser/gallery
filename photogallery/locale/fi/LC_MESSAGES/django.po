@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-06 11:31+0000\n"
+"POT-Creation-Date: 2017-09-25 17:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
 #: gallery/admin.py:55 gallery/forms.py:73 gallery/forms.py:104
-#: gallery/models.py:196
+#: gallery/models.py:197
 msgid "Album"
 msgstr "Albumi"
 
@@ -104,15 +104,15 @@ msgstr "%(value)s ei ole salittu albumin nimi."
 msgid "Parent"
 msgstr "Yläalbumi"
 
-#: gallery/models.py:120 gallery/models.py:197
+#: gallery/models.py:120 gallery/models.py:198
 msgid "Title"
 msgstr "Nimi"
 
-#: gallery/models.py:121 gallery/models.py:199
+#: gallery/models.py:121 gallery/models.py:200
 msgid "Date"
 msgstr "Päiväys"
 
-#: gallery/models.py:122 gallery/models.py:201
+#: gallery/models.py:122 gallery/models.py:202
 msgid "Description"
 msgstr "Kuvaus"
 
@@ -136,74 +136,79 @@ msgstr "Albumin kuvien lajittelujärjestys"
 msgid "Public"
 msgstr "Julkinen"
 
-#: gallery/models.py:150
+#: gallery/models.py:138
+#| msgid "Downloads allowed"
+msgid "ZIP downloads allowed"
+msgstr "ZIP-lataukset sallittu"
+
+#: gallery/models.py:151
 msgid "Unable to delete album directories."
 msgstr "Albumin hakemistojen poisto epäonnistui."
 
-#: gallery/models.py:175
+#: gallery/models.py:176
 msgid "Pending photos"
 msgstr "Keskeneräiset kuvat"
 
-#: gallery/models.py:184
+#: gallery/models.py:185
 msgid "Cover photo"
 msgstr "Kansikuva"
 
-#: gallery/models.py:187
+#: gallery/models.py:188
 msgid "album"
 msgstr "albumi"
 
-#: gallery/models.py:188
+#: gallery/models.py:189
 msgid "albums"
 msgstr "albumit"
 
-#: gallery/models.py:198
+#: gallery/models.py:199
 msgid "Slug"
 msgstr "Slug"
 
-#: gallery/models.py:200
+#: gallery/models.py:201
 msgid "Image file"
 msgstr "Kuvatiedosto"
 
-#: gallery/models.py:202
+#: gallery/models.py:203
 msgid "SHA-256"
 msgstr "SHA-256 -tiiviste"
 
-#: gallery/models.py:203
+#: gallery/models.py:204
 msgid "Ready"
 msgstr "Valmis"
 
-#: gallery/models.py:204
+#: gallery/models.py:205
 msgid "Preview image"
 msgstr "Esikatselukuva"
 
-#: gallery/models.py:205
+#: gallery/models.py:206
 msgid "High DPI preview image"
 msgstr "Korkearesoluutioinen esikatselukuva"
 
-#: gallery/models.py:206
+#: gallery/models.py:207
 msgid "Thumbnail image"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:207
+#: gallery/models.py:208
 msgid "High DPI thumbnail image"
 msgstr "Korkearesoluutioinen pienoiskuva"
 
-#: gallery/models.py:317
+#: gallery/models.py:319
 msgid "Thumbnail"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:332
+#: gallery/models.py:334
 msgid "photo"
 msgstr "kuva"
 
-#: gallery/models.py:333
+#: gallery/models.py:335
 msgid "photos"
 msgstr "kuvat"
 
-#: gallery/views.py:179
+#: gallery/views.py:200
 msgid "No new photos found in the album directory."
 msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
-#: gallery/views.py:191
+#: gallery/views.py:212
 msgid "Photos will be scanned for changes on the background. It might take a while."
 msgstr "Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."

@@ -42,6 +42,13 @@
 #album-button {
     padding: 0;
 }
+#zip-button  {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+}
+#large-button {
+    margin-bottom: 0.6em;
+}
 #album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
@@ -66,7 +73,7 @@
 /* Photo page */
 #photo .ui.centered.image {
     max-height: 85vh;
-    padding-top: 1em;
+    margin-top: 1em;
 }
 #photo-description {
     padding-top: 1.5rem;

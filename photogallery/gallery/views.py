@@ -1,13 +1,19 @@
+import os
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseForbidden
+from django.http import StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from zipstream import ZipFile, ZIP_STORED
 
 from gallery.forms import *
 from gallery.models import Album, Photo, scan_new_photos, async_save_photo
@@ -105,6 +111,21 @@ class UpdateAlbumCoverView(LoginRequiredMixin, FormView):
         context = super(UpdateAlbumCoverView, self).get_context_data(**kwargs)
         context['photo'] = Photo.objects.get(pk=self.request.GET.get('photo_id'))
         return context
+
+
+class DownloadZipView(View):
+    def get(self, request, *args, **kwargs):
+        album = get_object_or_404(Album, directory=kwargs.get('slug'))
+        if not album.downloadable:
+            return HttpResponseForbidden()
+        photos = Photo.objects.filter(album_id=album.id).filter(ready=True).values_list('image', flat=True).iterator()
+        file = ZipFile(mode='w', compression=ZIP_STORED)
+        os.chdir(settings.MEDIA_ROOT)
+        for photo in photos:
+            file.write(photo, os.path.basename(photo))
+        response = StreamingHttpResponse(file, content_type='application/zip')
+        response['Content-Disposition'] = f'attachment; filename={album.directory}.zip'
+        return response
 
 
 class PhotoView(DetailView):

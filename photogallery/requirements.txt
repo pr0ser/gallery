@@ -5,3 +5,4 @@ gunicorn>=19.7.1,<19.8.0
 pillow-simd==4.2.1.post0
 psycopg2>=2.7.3,<2.8.0
 django-background-tasks>=1.1.11,<1.2.0
+zipstream>=1.1.4,<1.2.0

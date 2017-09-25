@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'album/edit/(?P<slug>[-\w]+)/$', EditAlbumView.as_view(), name='album-edit'),
     url(r'album/scan/(?P<slug>[-\w]+)/$', ScanNewPhotosView.as_view(), name='album-scan'),
     url(r'album/refresh/(?P<slug>[-\w]+)/$', RefreshPhotosView.as_view(), name='album-refresh'),
+    url(r'album/download/(?P<slug>[-\w]+)/$', DownloadZipView.as_view(), name='album-download'),
     url(r'setascoverphoto/', UpdateAlbumCoverView.as_view(), name='set-as-cover-photo'),
     url(r'album/delete/(?P<slug>[-\w]+)/$', DeleteAlbumView.as_view(), name='album-delete'),
     url(r'photo/(?P<slug>[-\w]+)/$', PhotoView.as_view(), name='photo'),

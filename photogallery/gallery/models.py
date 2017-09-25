@@ -135,6 +135,7 @@ class Album(models.Model):
         help_text=_('Sort order of photos in this album'),
         default='title')
     public = models.BooleanField(_('Public'), default=True)
+    downloadable = models.BooleanField(_('ZIP downloads allowed'), default=False)
 
     def get_absolute_url(self):
         return reverse('gallery:album', kwargs={'slug': self.directory})

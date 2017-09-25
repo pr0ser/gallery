@@ -45,8 +45,12 @@
 
       {% if photos %}
         <div class="right aligned five wide column" id="album-button">
-          <a class="ui small button" data-tooltip="Listaa kaikki albumin kuvat suurempina" data-position="bottom right"
-             href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
+          {% if album.downloadable %}
+            <a class="ui small button" id="zip-button" data-tooltip="Lataa albumin kuvat zip-tiedostona"
+               data-position="bottom right" href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
+          {% endif %}
+          <a class="ui small button" id="large-button" data-tooltip="Listaa kaikki albumin kuvat suurempina"
+             data-position="bottom right" href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
         </div>
       {% endif %}
     </div>

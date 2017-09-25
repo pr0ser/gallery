@@ -29,8 +29,9 @@ class AlbumAdmin(admin.ModelAdmin):
             'fields': ('title',
                        'description',
                        'album_cover',
+                       'sort_order',
                        'public',
-                       'sort_order',)
+                       'downloadable')
         })
     )
     list_filter = ('public',)

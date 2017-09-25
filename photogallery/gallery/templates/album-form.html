@@ -49,6 +49,13 @@
   </div>
 </div>
 
+<div class="inline field {% if form.public.errors %}error{% endif %}">
+  <div class="ui toggle checkbox">
+    <label>{{ form.downloadable.label }}</label>
+    {{ form.downloadable }}
+  </div>
+</div>
+
 {% if form.public.errors %}
   <div class="ui error message">
     {{ form.public.errors }}
