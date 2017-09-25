@@ -17,7 +17,7 @@ class CustomDateInput(widgets.TextInput):
 class NewAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public']
+        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public', 'downloadable']
         widgets = {
             'parent': forms.Select(attrs={'id': 'parent'}),
             'sort_order': forms.Select(attrs={'id': 'sort_order'}),
