@@ -32,105 +32,114 @@
     </div>
   </div>
 
-  {% if photos %}
-    <div class="ui container" id="album-header">
-      <div class="ui two column middle aligned container padded grid">
-        <div class="left aligned eleven wide column" id="album-description">
-          <h1 class="ui header">
+  <div class="ui container" id="album-header">
+    <div class="ui two column middle aligned container padded grid">
+      <div class="left aligned eleven wide column" id="album-description">
+        <h1 class="ui header">
         <span class="content">
           {{ album.title }}
           <span class="sub header">{{ album.description|safe }}</span>
         </span>
-          </h1>
-
-        </div>
-        <div class="right aligned five wide column" id="album-button">
-          <a class="ui small button" data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina" data-position="bottom right"
-             href="{% url 'gallery:album' album.directory %}">Näytä esikatselut</a>
-        </div>
+        </h1>
       </div>
+      {% if photos %}
+        <div class="right aligned five wide column" id="album-button">
+          {% if album.downloadable %}
+            <a class="ui small button" id="zip-button" data-tooltip="Tallenna albumin kuvat zip-tiedostona"
+               data-position="bottom right" href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
+          {% endif %}
+          <a class="ui small button" id="large-button" data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina"
+             data-position="bottom right" href="{% url 'gallery:album-large' album.directory %}">Näytä esikatselut</a>
+        </div>
+      {% endif %}
     </div>
+  </div>
 
-    {% if user.is_authenticated %}
-      {% if album.pending_photos %}
-        <div class="ui container" id="pending-photos">
-          <div class="ui centered stackable grid ">
-            <div class="six wide column">
-              <div class="ui icon message">
-                <i class="hourglass start icon"></i>
-                <div class="content">
-                  <div class="header">
-                    Kuvien käsittely kesken
-                  </div>
-                  <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
+  {% if user.is_authenticated %}
+    {% if album.pending_photos %}
+      <div class="ui container" id="pending-photos">
+        <div class="ui centered stackable grid ">
+          <div class="six wide column">
+            <div class="ui icon message">
+              <i class="hourglass start icon"></i>
+              <div class="content">
+                <div class="header">
+                  Kuvien käsittely kesken
                 </div>
+                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
               </div>
             </div>
           </div>
         </div>
-      {% endif %}
+      </div>
     {% endif %}
+  {% endif %}
 
-    <div class="ui container">
-      {% for photo in photos %}
-        <div class="photo">
-          {% if photo.preview_img %}
-            <a href="{% url 'gallery:photo' photo.slug %}">
-              <img class="ui centered image" src="{{ photo.preview_img.url }}"
-                  {% if photo.hidpi_preview_img %}
-                   srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
-                  {% endif %}
-                   alt="{{ photo.title }}">
-            </a>
-          {% else %}
-            <img class="ui centered image" src="{{ photo.image.url }}"
+  <div class="ui container">
+    {% for photo in photos %}
+      <div class="photo">
+        {% if photo.preview_img %}
+          <a href="{% url 'gallery:photo' photo.slug %}">
+            <img class="ui centered image" src="{{ photo.preview_img.url }}"
+                    {% if photo.hidpi_preview_img %}
+                 srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
+                    {% endif %}
                  alt="{{ photo.title }}">
-          {% endif %}
-        </div>
-      {% endfor %}
+          </a>
+        {% else %}
+          <img class="ui centered image" src="{{ photo.image.url }}"
+               alt="{{ photo.title }}">
+        {% endif %}
+      </div>
+    {% endfor %}
 
-      {% if is_paginated %}
-        <div class="ui center aligned basic segment">
-          {% if page_obj.has_previous %}
-            <a class="ui left labeled icon button" href="?page={{ page_obj.previous_page_number }}">
-              <i class="left chevron icon"></i>
-              edellinen
-            </a>
-          {% endif %}
-          {% if page_obj.has_next %}
-            <a class="ui right labeled icon button" href="?page={{ page_obj.next_page_number }}">
-              <i class="right chevron icon"></i>
-              seuraava
-            </a>
-          {% endif %}
+    {% if is_paginated %}
+      <div class="ui center aligned basic segment">
+        {% if page_obj.has_previous %}
+          <a class="ui left labeled icon button" href="?page={{ page_obj.previous_page_number }}">
+            <i class="left chevron icon"></i>
+            edellinen
+          </a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a class="ui right labeled icon button" href="?page={{ page_obj.next_page_number }}">
+            <i class="right chevron icon"></i>
+            seuraava
+          </a>
+        {% endif %}
 
-          <div class="ui hidden divider"></div>
-          <div class="ui scrolling dropdown" id="page-select">
-            Sivu {{ page_obj.number }} / {{ paginator.num_pages }}
-            <i class="caret up icon"></i>
-            <div class="menu">
-              {% for page in paginator.page_range %}
-                {% if page_obj.number == page %}
-                  <a class="active item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
-                {% else %}
-                  <a class="item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
-                {% endif %}
-              {% endfor %}
-            </div>
+        <div class="ui hidden divider"></div>
+        <div class="ui scrolling dropdown" id="page-select">
+          Sivu {{ page_obj.number }} / {{ paginator.num_pages }}
+          <i class="caret up icon"></i>
+          <div class="menu">
+            {% for page in paginator.page_range %}
+              {% if page_obj.number == page %}
+                <a class="active item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+              {% else %}
+                <a class="item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
+  </div>
 
-  {% else %}
-    <h2 class="ui center aligned icon header">
-      <i class="image icon"></i>
-      <span class="content">
-        Ei kuvia
-        <span class="sub header">Albumiin ei ole vielä lisätty kuvia.</span>
-      </span>
-    </h2>
+  {% if not photos and not sub_albums %}
+    <div class="ui stackable centered container grid">
+      <div class="six wide column column">
+        <div class="ui icon message">
+          <i class="image icon"></i>
+          <div class="content">
+            <div class="header">Ei kuvia</div>
+            <p>Albumiin ei ole vielä lisätty kuvia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   {% endif %}
+
 {% endblock %}
 
 {% block modals %}
@@ -158,17 +167,17 @@
 {% block scripts %}
   {% if user.is_authenticated %}
     <script>
-      $('.ui.small.modal')
-          .modal('setting', 'duration', 0)
-          .modal('attach events', '#album-delete', 'show')
-      ;
+        $('.ui.small.modal')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#album-delete', 'show')
+        ;
     </script>
   {% endif %}
   <script>
-    $('#page-select')
-        .dropdown({
-            direction: 'upward'
-        })
-    ;
+      $('#page-select')
+          .dropdown({
+              direction: 'upward'
+          })
+      ;
   </script>
 {% endblock %}
