@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-25 17:34+0000\n"
+"POT-Creation-Date: 2017-09-25 18:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,16 +30,16 @@ msgstr "Ylempi albumi"
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: gallery/admin.py:49
+#: gallery/admin.py:50
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:55 gallery/forms.py:73 gallery/forms.py:104
+#: gallery/admin.py:56 gallery/forms.py:73 gallery/forms.py:104
 #: gallery/models.py:197
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:58
+#: gallery/admin.py:59
 msgid "Photo"
 msgstr "Kuva"
 
@@ -137,9 +137,8 @@ msgid "Public"
 msgstr "Julkinen"
 
 #: gallery/models.py:138
-#| msgid "Downloads allowed"
 msgid "ZIP downloads allowed"
-msgstr "ZIP-lataukset sallittu"
+msgstr "Lataukset sallittu"
 
 #: gallery/models.py:151
 msgid "Unable to delete album directories."
