@@ -34,7 +34,7 @@ class AlbumAdmin(admin.ModelAdmin):
                        'downloadable')
         })
     )
-    list_filter = ('public',)
+    list_filter = ('public', 'downloadable')
 
 
 class PhotoAdmin(admin.ModelAdmin):

@@ -8,7 +8,7 @@ from PIL import Image, ImageOps
 from background_task import background
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
@@ -60,7 +60,7 @@ def scan_new_photos(album_id):
                 new_photos += 1
             except Exception as e:
                 errors += (_('Unable to add photo %(photo_name)s to album: %(error_message)s')
-                              % {'photo_name': os.path.basename(photo), 'error_message': e})
+                           % {'photo_name': os.path.basename(photo), 'error_message': e})
     return new_photos, errors
 
 
@@ -116,7 +116,12 @@ def validate_photo_title(value):
 
 
 class Album(models.Model):
-    parent = models.ForeignKey('self', related_name='subalbums', null=True, blank=True, verbose_name=_('Parent'))
+    parent = models.ForeignKey(
+        'self', related_name='subalbums',
+        null=True,
+        blank=True,
+        verbose_name=_('Parent'),
+        on_delete=models.CASCADE)
     title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_album_title])
     date = models.DateField(_('Date'), default=date.today)
     description = models.TextField(_('Description'), blank=True)
