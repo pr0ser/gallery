@@ -91,28 +91,6 @@ class DeleteAlbumView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('gallery:index')
 
 
-class UpdateAlbumCoverView(LoginRequiredMixin, FormView):
-    form_class = AlbumCoverPhotoForm
-    template_name = 'album-updatecover.html'
-    success_url = reverse_lazy('gallery:index')
-
-    def form_valid(self, form):
-        photo = form.cleaned_data['photo']
-        form.update_album_cover(photo)
-        return super(UpdateAlbumCoverView, self).form_valid(form)
-
-    def get_initial(self):
-        initial = super(UpdateAlbumCoverView, self).get_initial()
-        initial['photo'] = self.request.GET.get('photo_id')
-        initial['album'] = Album.objects.get(directory=self.kwargs.get('slug'))
-        return initial
-
-    def get_context_data(self, **kwargs):
-        context = super(UpdateAlbumCoverView, self).get_context_data(**kwargs)
-        context['photo'] = Photo.objects.get(pk=self.request.GET.get('photo_id'))
-        return context
-
-
 class DownloadZipView(View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
@@ -164,6 +142,27 @@ class DeletePhotoView(LoginRequiredMixin, DeleteView):
             return next_url
         else:
             return super(DeletePhotoView, self).get_success_url()
+
+
+class SetCoverPhotoView(LoginRequiredMixin, FormView):
+    form_class = AlbumCoverPhotoForm
+    template_name = 'photo-cover.html'
+    success_url = reverse_lazy('gallery:index')
+
+    def form_valid(self, form):
+        photo = self.kwargs.get('slug')
+        form.update_album_cover(photo)
+        return super(SetCoverPhotoView, self).form_valid(form)
+
+    def get_initial(self):
+        initial = super(SetCoverPhotoView, self).get_initial()
+        initial['album'] = self.request.GET.get('album_id')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(SetCoverPhotoView, self).get_context_data(**kwargs)
+        context['photo'] = Photo.objects.get(slug=self.kwargs.get('slug'))
+        return context
 
 
 class MassUploadView(LoginRequiredMixin, FormView):

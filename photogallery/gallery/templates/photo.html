@@ -20,7 +20,7 @@
       <i class="image icon"></i>
     </div>
     <a class="item" href="{{ photo.image.url }}">Näytä alkuperäinen</a>
-    <a class="item" href="{% url 'gallery:album-coverphoto' photo.album.directory %}?photo_id={{ photo.id|unlocalize }}">
+    <a class="item" href="{% url 'gallery:photo-setascover' photo.slug %}?album_id={{ photo.album_id|unlocalize }}">
       Aseta oletuskuvaksi
     </a>
     <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
