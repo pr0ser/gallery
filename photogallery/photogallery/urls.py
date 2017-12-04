@@ -1,7 +1,8 @@
 from django.conf import settings
-from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import include
+from django.urls import path as url
 
 """photogallery URL Configuration
 
@@ -20,8 +21,8 @@ Including another URLconf
 """
 
 urlpatterns = [
-    url(r'', include('gallery.urls')),
-    url(r'^admin/', admin.site.urls),
+    url('', include('gallery.urls')),
+    url('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

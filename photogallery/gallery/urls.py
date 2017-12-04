@@ -1,26 +1,26 @@
-from django.conf.urls import url
+from django.urls import path as url
 from django.views.generic.base import RedirectView
 
 from gallery.views import *
 
 app_name = 'gallery'
 urlpatterns = [
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'album/(?P<slug>[-\w]+)/$', AlbumView.as_view(), name='album'),
-    url(r'album/(?P<slug>[-\w]+)/large$', LargeAlbumView.as_view(), name='album-large'),
-    url(r'album/new$', NewAlbumView.as_view(), name='album-new'),
-    url(r'album/edit/(?P<slug>[-\w]+)/$', EditAlbumView.as_view(), name='album-edit'),
-    url(r'album/scan/(?P<slug>[-\w]+)/$', ScanNewPhotosView.as_view(), name='album-scan'),
-    url(r'album/refresh/(?P<slug>[-\w]+)/$', RefreshPhotosView.as_view(), name='album-refresh'),
-    url(r'album/download/(?P<slug>[-\w]+)/$', DownloadZipView.as_view(), name='album-download'),
-    url(r'setascoverphoto/', UpdateAlbumCoverView.as_view(), name='set-as-cover-photo'),
-    url(r'album/delete/(?P<slug>[-\w]+)/$', DeleteAlbumView.as_view(), name='album-delete'),
-    url(r'photo/(?P<slug>[-\w]+)/$', PhotoView.as_view(), name='photo'),
-    url(r'photo/new$', NewPhotoView.as_view(), name='photo-new'),
-    url(r'photo/edit/(?P<slug>[-\w]+)/$', EditPhotoView.as_view(), name='photo-edit'),
-    url(r'photo/delete/(?P<slug>[-\w]+)/$', DeletePhotoView.as_view(), name='photo-delete'),
-    url(r'photo/massupload', MassUploadView.as_view(), name='photo-massupload'),
-    url(r'login/', UserLoginView.as_view(), name='login'),
-    url(r'^admin/login/', RedirectView.as_view(url=reverse_lazy("login"))),
-    url(r'logout/', LogoutView.as_view(), name='logout'),
+    url('', IndexView.as_view(), name='index'),
+    url('album/new', NewAlbumView.as_view(), name='album-new'),
+    url('album/<slug:slug>/', AlbumView.as_view(), name='album'),
+    url('album/<slug:slug>/large', LargeAlbumView.as_view(), name='album-large'),
+    url('album/<slug:slug>/edit/', EditAlbumView.as_view(), name='album-edit'),
+    url('album/<slug:slug>/scan/', ScanNewPhotosView.as_view(), name='album-scan'),
+    url('album/<slug:slug>/refresh/', RefreshPhotosView.as_view(), name='album-refresh'),
+    url('album/<slug:slug>/download/', DownloadZipView.as_view(), name='album-download'),
+    url('album/<slug:slug>/delete/', DeleteAlbumView.as_view(), name='album-delete'),
+    url('album/<slug:slug>/coverphoto/', UpdateAlbumCoverView.as_view(), name='album-coverphoto'),
+    url('photo/new', NewPhotoView.as_view(), name='photo-new'),
+    url('photo/<slug:slug>/', PhotoView.as_view(), name='photo'),
+    url('photo/<slug:slug>/edit/', EditPhotoView.as_view(), name='photo-edit'),
+    url('photo/<slug:slug>/delete/', DeletePhotoView.as_view(), name='photo-delete'),
+    url('upload', MassUploadView.as_view(), name='photo-massupload'),
+    url('login/', UserLoginView.as_view(), name='login'),
+    url('admin/login/', RedirectView.as_view(url=reverse_lazy('gallery:login'))),
+    url('logout/', LogoutView.as_view(), name='logout'),
 ]

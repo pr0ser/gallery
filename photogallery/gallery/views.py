@@ -104,7 +104,7 @@ class UpdateAlbumCoverView(LoginRequiredMixin, FormView):
     def get_initial(self):
         initial = super(UpdateAlbumCoverView, self).get_initial()
         initial['photo'] = self.request.GET.get('photo_id')
-        initial['album'] = self.request.GET.get('album_id')
+        initial['album'] = Album.objects.get(directory=self.kwargs.get('slug'))
         return initial
 
     def get_context_data(self, **kwargs):

@@ -11,7 +11,7 @@
             Aseta albumin kansikuvaksi
           </h2>
           <form class="ui large form {% if form.errors %}error{% endif %}"
-                action="{% url 'gallery:set-as-cover-photo' %}" method="post">
+                action="{% url 'gallery:album-coverphoto' photo.album.directory %}" method="post">
             {% csrf_token %}
             {{ form.photo }}
             <div class="required field">

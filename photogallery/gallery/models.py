@@ -97,7 +97,7 @@ def auto_orient(image):
 
 
 def validate_album_title(value):
-    invalid_names = ['new', 'edit', 'delete', 'large']
+    invalid_names = ['new']
     if value in invalid_names:
         raise ValidationError(
             _('%(value)s is not allowed album name.'),
@@ -106,7 +106,7 @@ def validate_album_title(value):
 
 
 def validate_photo_title(value):
-    invalid_names = ['new', 'edit', 'delete', 'massupload']
+    invalid_names = ['new']
     existing_name = Photo.objects.filter(title=value).exists()
     if value in invalid_names or existing_name:
         raise ValidationError(
