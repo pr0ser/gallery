@@ -8,8 +8,8 @@ from PIL import Image, ImageOps
 from background_task import background
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.urls import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
@@ -24,7 +24,7 @@ sort_order_choices = (
 
 
 @background
-def async_create_images(photo_id):
+def post_process_image(photo_id):
     image = Photo.objects.get(id=photo_id)
     image.create_thumbnails()
     image.create_previews()
@@ -329,7 +329,7 @@ class Photo(models.Model):
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
             if not self.ready:
-                async_create_images(self.id)
+                post_process_image(self.id)
             else:
                 self.create_previews()
                 self.create_thumbnails()
