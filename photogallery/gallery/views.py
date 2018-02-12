@@ -111,7 +111,7 @@ class PhotoView(DetailView):
     slug_field = 'slug'
     template_name = 'photo.html'
     context_object_name = 'photo'
-    queryset = Photo.objects.select_related('album')
+    queryset = Photo.objects.select_related('album', 'exifdata')
 
 
 class NewPhotoView(LoginRequiredMixin, CreateView):

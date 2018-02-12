@@ -14,6 +14,7 @@ from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from gallery.exif_reader import ExifInfo
 
 sort_order_choices = (
     ('date', _('Date (ascending)')),
@@ -121,8 +122,14 @@ class Album(models.Model):
         null=True,
         blank=True,
         verbose_name=_('Parent'),
-        on_delete=models.CASCADE)
-    title = models.CharField(_('Title'), max_length=255, unique=True, validators=[validate_album_title])
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(
+        _('Title'),
+        max_length=255,
+        unique=True,
+        validators=[validate_album_title]
+    )
     date = models.DateField(_('Date'), default=date.today)
     description = models.TextField(_('Description'), blank=True)
     directory = models.SlugField(_('Directory'), unique=True)
@@ -132,15 +139,22 @@ class Album(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=_('Album cover'))
+        verbose_name=_('Album cover')
+    )
     sort_order = models.CharField(
         _('Sort order'),
         max_length=255,
         choices=sort_order_choices,
         help_text=_('Sort order of photos in this album'),
-        default='title')
+        default='title'
+    )
     public = models.BooleanField(_('Public'), default=True)
     downloadable = models.BooleanField(_('ZIP downloads allowed'), default=False)
+
+    class Meta:
+        verbose_name = _('album')
+        verbose_name_plural = _('albums')
+        ordering = ('-date',)
 
     def get_absolute_url(self):
         return reverse('gallery:album', kwargs={'slug': self.directory})
@@ -184,22 +198,24 @@ class Album(models.Model):
         if self.album_cover_id:
             img_url = self.album_cover.thumbnail_img.url
             link = self.get_absolute_url()
-            return mark_safe(f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>')
+            return mark_safe(
+                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+            )
         else:
             return None
     admin_thumbnail.short_description = _("Cover photo")
-
-    class Meta:
-        verbose_name = _('album')
-        verbose_name_plural = _('albums')
-        ordering = ('-date',)
 
 
 class Photo(models.Model):
     def upload_dir(instance, filename):
         return 'photos/%s/%s' % (instance.album.directory, instance.image.name)
 
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='photos', verbose_name=_('Album'))
+    album = models.ForeignKey(
+        Album,
+        on_delete=models.CASCADE,
+        related_name='photos',
+        verbose_name=_('Album')
+    )
     title = models.CharField(_('Title'), max_length=100, unique=True)
     slug = models.SlugField(_('Slug'), unique=True, max_length=100)
     date = models.DateTimeField(_('Date'), auto_now_add=True)
@@ -208,9 +224,21 @@ class Photo(models.Model):
     file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
     ready = models.BooleanField(_('Ready'), default=True)
     preview_img = models.ImageField(_('Preview image'), blank=True, max_length=150)
-    hidpi_preview_img = models.ImageField(_('High DPI preview image'), blank=True, max_length=150)
+    hidpi_preview_img = models.ImageField(
+        _('High DPI preview image'),
+        blank=True,
+        max_length=150
+    )
     thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True, max_length=150)
-    hidpi_thumbnail_img = models.ImageField(_('High DPI thumbnail image'), blank=True, max_length=150)
+    hidpi_thumbnail_img = models.ImageField(
+        _('High DPI thumbnail image'),
+        blank=True,
+        max_length=150)
+
+    class Meta:
+        verbose_name = _('photo')
+        verbose_name_plural = _('photos')
+        ordering = ('-date',)
 
     def get_absolute_url(self):
         return reverse('gallery:photo', kwargs={'slug': self.slug})
@@ -299,17 +327,45 @@ class Photo(models.Model):
 
     def create_previews(self):
         if self.image.height > 1327 or self.image.width > 1327:
-            self.create_preview_image(size=1327, quality=90, output_file=self.preview_filename)
-            self.preview_img = os.path.join(self.preview_dir(), self.preview_filename)
+            self.create_preview_image(
+                size=1327,
+                quality=90,
+                output_file=self.preview_filename
+            )
+            self.preview_img = os.path.join(
+                self.preview_dir(),
+                self.preview_filename
+            )
         if self.image.height > 2340 or self.image.width > 2340:
-            self.create_preview_image(size=2340, quality=90, output_file=self.hidpi_preview_filename)
-            self.hidpi_preview_img = os.path.join(self.preview_dir(), self.hidpi_preview_filename)
+            self.create_preview_image(
+                size=2340,
+                quality=90,
+                output_file=self.hidpi_preview_filename
+            )
+            self.hidpi_preview_img = os.path.join(
+                self.preview_dir(),
+                self.hidpi_preview_filename
+            )
 
     def create_thumbnails(self):
-        self.create_thumbnail(size=330, quality=80, output_file=self.thumbnail_img_filename)
-        self.thumbnail_img = os.path.join(self.preview_dir(), self.thumbnail_img_filename)
-        self.create_thumbnail(size=600, quality=80, output_file=self.hidpi_thumbnail_img_filename)
-        self.hidpi_thumbnail_img = os.path.join(self.preview_dir(), self.hidpi_thumbnail_img_filename)
+        self.create_thumbnail(
+            size=330,
+            quality=80,
+            output_file=self.thumbnail_img_filename
+        )
+        self.thumbnail_img = os.path.join(
+            self.preview_dir(),
+            self.thumbnail_img_filename
+        )
+        self.create_thumbnail(
+            size=600,
+            quality=80,
+            output_file=self.hidpi_thumbnail_img_filename
+        )
+        self.hidpi_thumbnail_img = os.path.join(
+            self.preview_dir(),
+            self.hidpi_thumbnail_img_filename
+        )
 
     def __str__(self):
         return self.title
@@ -318,16 +374,44 @@ class Photo(models.Model):
         if self.ready:
             img_url = self.thumbnail_img.url
             link = self.get_absolute_url()
-            return mark_safe(f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>')
+            return mark_safe(
+                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+            )
         else:
             return None
     admin_thumbnail.short_description = _("Thumbnail")
+
+    def save_exif_data(self):
+        exif_data = ExifInfo(self.image.path)
+        try:
+            if exif_data.has_exif_data:
+                data = ExifData(
+                    photo=Photo.objects.get(pk=self.id),
+                    date_taken=exif_data.time_taken,
+                    make=exif_data.make,
+                    model=exif_data.model,
+                    iso=exif_data.iso,
+                    shutter_speed=exif_data.shutter_speed,
+                    aperture=exif_data.aperture,
+                    focal_length=exif_data.focal_length,
+                    lens=exif_data.lens
+                )
+
+                if exif_data.has_location:
+                    data.has_location = True
+                    data.latitude = exif_data.latitude
+                    data.longitude = exif_data.longitude
+                    data.altitude = exif_data.altitude
+                data.save()
+        except Exception as e:
+            print(f'Error saving EXIF data for file {self.image.path}: {e} ')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Photo, self).save(*args, **kwargs)
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
+            self.save_exif_data()
             if not self.ready:
                 post_process_image(self.id)
             else:
@@ -335,7 +419,59 @@ class Photo(models.Model):
                 self.create_thumbnails()
             super(Photo, self).save(*args, **kwargs)
 
-    class Meta:
-        verbose_name = _('photo')
-        verbose_name_plural = _('photos')
-        ordering = ('-date',)
+
+class ExifData(models.Model):
+    photo = models.OneToOneField(
+        Photo,
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    date_taken = models.DateTimeField(
+        _('Date/Time taken'),
+        auto_now_add=False,
+        blank=True,
+        null=True
+    )
+    has_location = models.BooleanField(default=False)
+    make = models.CharField(_('Manufacturer'), max_length=100, null=True)
+    model = models.CharField(_('Model'), max_length=100, null=True)
+    iso = models.PositiveIntegerField(_('ISO speed'), blank=True, null=True)
+    shutter_speed = models.CharField(
+        _('Shutter speed'),
+        max_length=50,
+        null=True
+    )
+    aperture = models.DecimalField(
+        _('Focal length'),
+        max_digits=3,
+        decimal_places=1,
+        blank=True,
+        null=True
+    )
+    focal_length = models.DecimalField(
+        _('Focal length'),
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
+    lens = models.CharField(_('Lens'), max_length=200, null=True)
+    latitude = models.DecimalField(
+        _('Latitude'),
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True
+    )
+    longitude = models.DecimalField(
+        _('Longitude'),
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True
+    )
+    altitude = models.PositiveIntegerField(
+        _('Altitude'),
+        blank=True,
+        null=True
+    )
