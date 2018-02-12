@@ -36,6 +36,7 @@ def post_process_image(photo_id):
 @background
 def async_save_photo(photo_id):
     photo = Photo.objects.get(pk=photo_id)
+    photo.save_exif_data()
     photo.save()
 
 
