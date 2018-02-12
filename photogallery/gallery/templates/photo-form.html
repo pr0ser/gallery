@@ -30,12 +30,14 @@
   {% endif %}
 {% endif %}
 
-<div class="required field {% if form.image.errors %}error{% endif %}">
-  <label>{{ form.image.label }}</label>
-  {{ form.image }}
-</div>
-{% if form.image.errors %}
-  <div class="ui error message">
-    {{ form.image.errors }}
+{% if form.image %}
+  <div class="required field {% if form.image.errors %}error{% endif %}">
+    <label>{{ form.image.label }}</label>
+    {{ form.image }}
   </div>
+  {% if form.image.errors %}
+    <div class="ui error message">
+      {{ form.image.errors }}
+    </div>
+  {% endif %}
 {% endif %}
