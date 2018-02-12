@@ -75,6 +75,13 @@
     max-height: 85vh;
     margin-top: 1em;
 }
+#photo-exifdata {
+    color: grey;
+    margin-top: 0.5em;
+}
+#photo-exifdata .ui.avatar.image {
+    border-radius: 0;
+}
 #photo-description {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
