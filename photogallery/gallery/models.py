@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
+from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
 
 from gallery.exif_reader import ExifInfo
@@ -374,9 +375,10 @@ class Photo(models.Model):
         exif_data = ExifInfo(self.image.path)
         try:
             if exif_data.has_exif_data:
+                tz_date = make_aware(exif_data.time_taken, get_current_timezone())
                 data = ExifData(
                     photo=Photo.objects.get(pk=self.id),
-                    date_taken=exif_data.time_taken,
+                    date_taken=tz_date,
                     make=exif_data.make,
                     model=exif_data.model,
                     iso=exif_data.iso,
