@@ -8,6 +8,7 @@ Simple dockerized Django photo gallery with Semantic UI styles.
   * Preview images and thumbnails are generated with Pillow SIMD
   * Mass uploaded photos are created asynchronously with django-background-tasks
   * Creates also HiDPI images and uses them with srcset
+* Display image EXIF data 
 * Edit albums and photos titles and descriptions
 * Delete albums and photos
 * Ability to scan album directories for new photos (if uploaded directly to server for example with SCP)
