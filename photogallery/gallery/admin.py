@@ -66,7 +66,6 @@ class PhotoAdmin(admin.ModelAdmin):
 
 class ExifAdmin(admin.ModelAdmin):
     list_display = (
-        'photo',
         'date_taken',
         'make',
         'model',
@@ -74,6 +73,7 @@ class ExifAdmin(admin.ModelAdmin):
         'shutter_speed',
         'aperture',
         'has_location',
+        'admin_thumbnail',
     )
     fieldsets = (
         (_('Camera and photo details'), {

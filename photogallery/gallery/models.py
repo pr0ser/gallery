@@ -462,3 +462,14 @@ class ExifData(models.Model):
 
     def __str__(self):
         return self.photo.title
+
+    def admin_thumbnail(self):
+        if self.photo.ready:
+            img_url = self.photo.thumbnail_img.url
+            link = self.photo.get_absolute_url()
+            return mark_safe(
+                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+            )
+        else:
+            return None
+    admin_thumbnail.short_description = _("Thumbnail")
