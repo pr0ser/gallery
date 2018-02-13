@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.utils.translation import ugettext_lazy as _
 
-from gallery.models import Album, Photo
+from gallery.models import Album, Photo, ExifData
 
 
 class GalleryAdminSite(AdminSite):
@@ -64,6 +64,39 @@ class PhotoAdmin(admin.ModelAdmin):
     list_filter = ('album', 'ready')
 
 
+class ExifAdmin(admin.ModelAdmin):
+    list_display = (
+        'photo',
+        'date_taken',
+        'make',
+        'model',
+        'iso',
+        'shutter_speed',
+        'aperture',
+        'has_location',
+    )
+    fieldsets = (
+        (_('Camera and photo details'), {
+            'fields': ('date_taken',
+                       'make',
+                       'model',
+                       'iso',
+                       'shutter_speed',
+                       'aperture',
+                       'focal_length',
+                       'lens',)
+        }),
+        (_('Location'), {
+            'fields': ('has_location',
+                       'latitude',
+                       'longitude',
+                       'altitude')
+        })
+    )
+    list_filter = ('has_location', 'make', 'model')
+
+
 admin.site = GalleryAdminSite()
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Photo, PhotoAdmin)
+admin.site.register(ExifData, ExifAdmin)
