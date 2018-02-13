@@ -80,7 +80,7 @@
                        src="{% static 'gallery/icons/calendar_alt_grey.svg' %}"
                        alt="Kuvan päiväys ja kellonaika">
                   <div class="content">
-                    {{ photo.exifdata.date_taken|date:'j.n.Y H:i' }}
+                    {{ photo.exifdata.date_taken|date:'j.n.Y G:i' }}
                   </div>
                 </div>
               {% endif %}
