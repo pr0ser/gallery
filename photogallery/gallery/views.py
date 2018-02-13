@@ -16,7 +16,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from zipstream import ZipFile, ZIP_STORED
 
 from gallery.forms import *
-from gallery.models import Album, Photo, scan_new_photos, async_save_photo
+from gallery.models import Album, Photo, async_save_photo
 
 
 class IndexView(ListView):
@@ -194,7 +194,7 @@ class MassUploadView(LoginRequiredMixin, FormView):
 class ScanNewPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        new_photos, errors = scan_new_photos(album.id)
+        new_photos, errors = album.scan_new_photos()
         if new_photos == 0:
             messages.info(request, _('No new photos found in the album directory.'))
         if errors:

@@ -1,4 +1,3 @@
-import hashlib
 import os
 import shutil
 from datetime import date
@@ -14,14 +13,9 @@ from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from gallery.exif_reader import ExifInfo
 
-sort_order_choices = (
-    ('date', _('Date (ascending)')),
-    ('-date', _('Date (descending)')),
-    ('title', _('Title (ascending)')),
-    ('-title', _('Title (descending)')),
-)
+from gallery.exif_reader import ExifInfo
+from gallery.utils import calc_hash, auto_orient
 
 
 @background
@@ -38,64 +32,6 @@ def async_save_photo(photo_id):
     photo = Photo.objects.get(pk=photo_id)
     photo.save_exif_data()
     photo.save()
-
-
-def scan_new_photos(album_id):
-    album = Album.objects.get(pk=album_id)
-    album_dir = os.path.join('photos', album.directory)
-    existing_photos = Photo.objects.all().filter(album_id=album_id).values_list('image', flat=True)
-    extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
-    os.chdir(settings.MEDIA_ROOT)
-    all_photos = glob(os.path.join(album_dir, '*'))
-    new_photos = 0
-    errors = ''
-    for photo in all_photos:
-        extension = os.path.splitext(photo)[1]
-        if photo not in existing_photos and extension in extensions:
-            try:
-                new_photo = Photo(
-                    title=os.path.splitext(os.path.basename(photo))[0],
-                    album_id=album_id,
-                    image=photo,
-                    ready=False)
-                new_photo.save()
-                new_photos += 1
-            except Exception as e:
-                errors += (_('Unable to add photo %(photo_name)s to album: %(error_message)s')
-                           % {'photo_name': os.path.basename(photo), 'error_message': e})
-    return new_photos, errors
-
-
-def calc_hash(filename):
-    hash_sha256 = hashlib.sha256()
-    with open(filename, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_sha256.update(chunk)
-    return hash_sha256.hexdigest()
-
-
-def auto_orient(image):
-    if hasattr(image, '_getexif'):
-        try:
-            exif = image._getexif()
-        except Exception:
-            exif = None
-        if exif is not None:
-            orientation = exif.get(0x0112, 1)
-            if 1 <= orientation <= 8:
-                operations = {
-                    1: (),
-                    2: (Image.FLIP_LEFT_RIGHT,),
-                    3: (Image.ROTATE_180,),
-                    4: (Image.ROTATE_180, Image.FLIP_LEFT_RIGHT),
-                    5: (Image.ROTATE_270, Image.FLIP_LEFT_RIGHT),
-                    6: (Image.ROTATE_270,),
-                    7: (Image.ROTATE_90, Image.FLIP_LEFT_RIGHT),
-                    8: (Image.ROTATE_90,),
-                }
-                for operation in operations[orientation]:
-                    image = image.transpose(operation)
-    return image
 
 
 def validate_album_title(value):
@@ -118,6 +54,12 @@ def validate_photo_title(value):
 
 
 class Album(models.Model):
+    sort_order_choices = (
+        ('date', _('Date (ascending)')),
+        ('-date', _('Date (descending)')),
+        ('title', _('Title (ascending)')),
+        ('-title', _('Title (descending)')),
+    )
     parent = models.ForeignKey(
         'self', related_name='subalbums',
         null=True,
@@ -157,6 +99,13 @@ class Album(models.Model):
         verbose_name_plural = _('albums')
         ordering = ('-date',)
 
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.directory = slugify(self.title)
+        super(Album, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('gallery:album', kwargs={'slug': self.directory})
 
@@ -169,13 +118,6 @@ class Album(models.Model):
                     shutil.rmtree(d)
                 except OSError:
                     raise ValidationError(_('Unable to delete album directories.'))
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        self.directory = slugify(self.title)
-        super(Album, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         super(Album, self).delete(*args, **kwargs)
@@ -194,6 +136,39 @@ class Album(models.Model):
         pending = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
         return pending
     pending_photos.short_description = _("Pending photos")
+
+    @property
+    def media_dir(self):
+        album_dir = os.path.join('photos', self.directory)
+        return album_dir
+
+    def scan_new_photos(self):
+        existing_photos = (
+            Photo.objects
+            .all()
+            .filter(album_id=self.pk)
+            .values_list('image', flat=True)
+        )
+        extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
+        os.chdir(settings.MEDIA_ROOT)
+        all_photos = glob(os.path.join(self.media_dir, '*'))
+        new_photos = 0
+        errors = ''
+        for photo in all_photos:
+            extension = os.path.splitext(photo)[1]
+            if photo not in existing_photos and extension in extensions:
+                try:
+                    new_photo = Photo(
+                        title=os.path.splitext(os.path.basename(photo))[0],
+                        album_id=self.pk,
+                        image=photo,
+                        ready=False)
+                    new_photo.save()
+                    new_photos += 1
+                except Exception as e:
+                    errors += (_('Unable to add photo %(photo_name)s to album: %(error_message)s')
+                               % {'photo_name': os.path.basename(photo), 'error_message': e})
+        return new_photos, errors
 
     def admin_thumbnail(self):
         if self.album_cover_id:
@@ -240,6 +215,22 @@ class Photo(models.Model):
         verbose_name = _('photo')
         verbose_name_plural = _('photos')
         ordering = ('-date',)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Photo, self).save(*args, **kwargs)
+        if calc_hash(self.image.path) != self.file_hash:
+            self.file_hash = calc_hash(self.image.path)
+            self.save_exif_data()
+            if not self.ready:
+                post_process_image(self.id)
+            else:
+                self.create_previews()
+                self.create_thumbnails()
+            super(Photo, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('gallery:photo', kwargs={'slug': self.slug})
@@ -368,9 +359,6 @@ class Photo(models.Model):
             self.hidpi_thumbnail_img_filename
         )
 
-    def __str__(self):
-        return self.title
-
     def admin_thumbnail(self):
         if self.ready:
             img_url = self.thumbnail_img.url
@@ -407,19 +395,6 @@ class Photo(models.Model):
         except Exception as e:
             print(f'Error saving EXIF data for file {self.image.path}: {e} ')
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Photo, self).save(*args, **kwargs)
-        if calc_hash(self.image.path) != self.file_hash:
-            self.file_hash = calc_hash(self.image.path)
-            self.save_exif_data()
-            if not self.ready:
-                post_process_image(self.id)
-            else:
-                self.create_previews()
-                self.create_thumbnails()
-            super(Photo, self).save(*args, **kwargs)
-
 
 class ExifData(models.Model):
     photo = models.OneToOneField(
@@ -433,7 +408,7 @@ class ExifData(models.Model):
         blank=True,
         null=True
     )
-    has_location = models.BooleanField(default=False)
+    has_location = models.BooleanField(_('Has location'), default=False)
     make = models.CharField(_('Manufacturer'), max_length=100, null=True)
     model = models.CharField(_('Model'), max_length=100, null=True)
     iso = models.PositiveIntegerField(_('ISO speed'), blank=True, null=True)
@@ -443,7 +418,7 @@ class ExifData(models.Model):
         null=True
     )
     aperture = models.DecimalField(
-        _('Focal length'),
+        _('Aperture'),
         max_digits=3,
         decimal_places=1,
         blank=True,
@@ -476,3 +451,11 @@ class ExifData(models.Model):
         blank=True,
         null=True
     )
+
+    class Meta:
+        verbose_name = _('EXIF data')
+        verbose_name_plural = _('EXIF data')
+        ordering = ('-date_taken',)
+
+    def __str__(self):
+        return self.photo.title
