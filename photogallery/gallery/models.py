@@ -400,7 +400,8 @@ class ExifData(models.Model):
     photo = models.OneToOneField(
         Photo,
         on_delete=models.CASCADE,
-        primary_key=True
+        primary_key=True,
+        verbose_name=_('Photo')
     )
     date_taken = models.DateTimeField(
         _('Date/Time taken'),
