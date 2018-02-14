@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
-from datetime import datetime
 
 
 class ExifInfo(object):
@@ -37,6 +38,9 @@ class ExifInfo(object):
 
         if not any(self.params):
             self.has_exif_data = False
+
+        if self.latitude == 0 and self.longitude == 0:
+            self.has_location = False
 
     def _get_exif_data(self):
         image = Image.open(self.filename)
@@ -121,6 +125,7 @@ class ExifInfo(object):
             time_taken = self.exif_data['DateTime']
             parsed_date = datetime.strptime(time_taken, '%Y:%m:%d %H:%M:%S')
             self.time_taken = parsed_date
+
         if 'DateTimeOriginal' in self.exif_data:
             time_taken = self.exif_data['DateTimeOriginal']
             parsed_date = datetime.strptime(time_taken, '%Y:%m:%d %H:%M:%S')
