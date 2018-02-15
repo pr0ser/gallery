@@ -86,14 +86,16 @@ class ExifAdmin(admin.ModelAdmin):
                        'focal_length',
                        'lens',)
         }),
-        (_('Location'), {
+        (_('Location details'), {
             'fields': ('has_location',
                        'latitude',
                        'longitude',
-                       'altitude')
-        })
+                       'altitude',
+                       'locality',
+                       'country')
+        }),
     )
-    list_filter = ('has_location', 'make', 'model')
+    list_filter = ('has_location', 'make', 'model', 'lens')
 
 
 admin.site = GalleryAdminSite()

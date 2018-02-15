@@ -16,7 +16,7 @@ from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
 
 from gallery.exif_reader import ExifInfo
-from gallery.utils import calc_hash, auto_orient
+from gallery.utils import calc_hash, auto_orient, get_locality_and_country
 
 
 @background
@@ -393,6 +393,9 @@ class Photo(models.Model):
                     data.latitude = exif_data.latitude
                     data.longitude = exif_data.longitude
                     data.altitude = exif_data.altitude
+                    data.locality, data.country = get_locality_and_country(
+                        data.latitude, data.longitude
+                    )
                 data.save()
         except Exception as e:
             print(f'Error saving EXIF data for file {self.image.path}: {e} ')
@@ -453,6 +456,12 @@ class ExifData(models.Model):
         _('Altitude'),
         blank=True,
         null=True
+    )
+    locality = models.CharField(
+        _('Locality'), max_length=200, null=True
+    )
+    country = models.CharField(
+        _('Country'), max_length=200, null=True
     )
 
     class Meta:

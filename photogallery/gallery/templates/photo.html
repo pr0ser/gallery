@@ -87,7 +87,8 @@
 
               {% if photo.exifdata.model %}
                 <div class="item">
-                  <img class="ui avatar image" src="{% static 'gallery/icons/camera_simple_grey.svg' %}"
+                  <img class="ui avatar image"
+                       src="{% static 'gallery/icons/camera_simple_grey.svg' %}"
                        alt="Kamera">
                   <div class="content">
                     {{ photo.exifdata.model }}
@@ -133,6 +134,17 @@
                        alt="ISO-arvo">
                   <div class="content">
                     {{ photo.exifdata.iso }}
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if photo.exifdata.locality and photo.exifdata.country %}
+                <div class="item">
+                  <img class="ui avatar image" src="{% static 'gallery/icons/location_grey.svg' %}"
+                       alt="Sijainti">
+                  <div class="content">
+                    {{ photo.exifdata.locality }} {% if photo.exifdata.country != 'Suomi' %},
+                    {{ photo.exifdata.country }}{% endif %}
                   </div>
                 </div>
               {% endif %}

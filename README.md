@@ -1,5 +1,5 @@
 # gallery
-Simple dockerized Django photo gallery with Semantic UI styles. 
+Dockerized Django photo gallery with Semantic UI styles. 
 
 ## Features
 
@@ -9,6 +9,8 @@ Simple dockerized Django photo gallery with Semantic UI styles.
   * Mass uploaded photos are created asynchronously with django-background-tasks
   * Creates also HiDPI images and uses them with srcset
 * Display image EXIF data 
+* Reverse geocodes locality and country based of EXIF data
+* Download albums as zip archives
 * Edit albums and photos titles and descriptions
 * Delete albums and photos
 * Ability to scan album directories for new photos (if uploaded directly to server for example with SCP)
@@ -35,6 +37,7 @@ ASYNC_THREADS | django-background-tasks thread count. For example "3"
 UPLOAD_PERMISSIONS | Django upload permissions. Specify like 644 or 660, not as Django specifies it (0o664 or 0664)
 DIRECTORY_PERMISSIONS | Django directory permissions Specify like 755 or 750, not as Django specifies it (0o755 or 0770)
 ALLOWED_HOSTS | Django allowed hosts, for example ['example.com', 'www.example.com'] or just ['localhost']
+GEOCODING_API_KEY | Google Geocoding API key
 
 As a default the docker-compose.yml file is configured to build Pillow SIMD with AVX2 instructions. **If the host CPU doesn't support AVX2 instructions, change _SIMD_LEVEL_ arg to _"sse4"_**.
 
