@@ -9,7 +9,7 @@ Dockerized Django photo gallery with Semantic UI styles.
   * Mass uploaded photos are created asynchronously with django-background-tasks
   * Creates also HiDPI images and uses them with srcset
 * Display image EXIF data 
-* Reverse geocodes locality and country based of EXIF data
+  * Reverse geocodes locality and country based of EXIF data
 * Download albums as zip archives
 * Edit albums and photos titles and descriptions
 * Delete albums and photos
