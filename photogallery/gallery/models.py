@@ -414,14 +414,29 @@ class ExifData(models.Model):
         blank=True,
         null=True
     )
-    has_location = models.BooleanField(_('Has location'), default=False)
-    make = models.CharField(_('Manufacturer'), max_length=100, null=True)
-    model = models.CharField(_('Model'), max_length=100, null=True)
-    iso = models.PositiveIntegerField(_('ISO speed'), blank=True, null=True)
+    has_location = models.BooleanField(
+        _('Has location'),
+        default=False
+    )
+    make = models.CharField(
+        _('Manufacturer'),
+        max_length=100,
+        blank=True
+    )
+    model = models.CharField(
+        _('Model'),
+        max_length=100,
+        blank=True
+    )
+    iso = models.PositiveIntegerField(
+        _('ISO speed'),
+        blank=True,
+        null=True
+    )
     shutter_speed = models.CharField(
         _('Shutter speed'),
         max_length=50,
-        null=True
+        blank=True
     )
     aperture = models.DecimalField(
         _('Aperture'),
@@ -437,7 +452,11 @@ class ExifData(models.Model):
         blank=True,
         null=True
     )
-    lens = models.CharField(_('Lens'), max_length=200, null=True)
+    lens = models.CharField(
+        _('Lens'),
+        max_length=200,
+        blank=True
+    )
     latitude = models.DecimalField(
         _('Latitude'),
         max_digits=9,
@@ -458,10 +477,14 @@ class ExifData(models.Model):
         null=True
     )
     locality = models.CharField(
-        _('Locality'), max_length=200, null=True
+        _('Locality'),
+        max_length=200,
+        blank=True
     )
     country = models.CharField(
-        _('Country'), max_length=200, null=True
+        _('Country'),
+        max_length=200,
+        blank=True
     )
 
     class Meta:
