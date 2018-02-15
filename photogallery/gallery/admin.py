@@ -95,7 +95,7 @@ class ExifAdmin(admin.ModelAdmin):
                        'country')
         }),
     )
-    list_filter = ('has_location', 'make', 'model', 'lens')
+    list_filter = ('has_location', 'make', 'model', 'lens', 'locality', 'country')
 
 
 admin.site = GalleryAdminSite()
