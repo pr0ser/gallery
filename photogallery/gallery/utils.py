@@ -38,7 +38,7 @@ def auto_orient(image):
     return image
 
 
-def rev_geocode_lookup(latitude, longitude):
+def google_geocode_lookup(latitude, longitude):
     coordinates = str(latitude) + ',' + str(longitude)
     base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
     params = parse.urlencode(
@@ -79,9 +79,9 @@ def get_country(geocode_lookup):
             return c['long_name']
 
 
-def get_locality_and_country(latitude, longitude):
+def get_geocoding(latitude, longitude):
     try:
-        lookup = rev_geocode_lookup(latitude, longitude)
+        lookup = google_geocode_lookup(latitude, longitude)
         locality = get_locality(lookup)
         country = get_country(lookup)
         return locality, country

@@ -16,7 +16,7 @@ from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
 
 from gallery.exif_reader import ExifInfo
-from gallery.utils import calc_hash, auto_orient, get_locality_and_country
+from gallery.utils import calc_hash, auto_orient, get_geocoding
 
 
 @background
@@ -393,7 +393,7 @@ class Photo(models.Model):
                     data.latitude = exif_data.latitude
                     data.longitude = exif_data.longitude
                     data.altitude = exif_data.altitude
-                    data.locality, data.country = get_locality_and_country(
+                    data.locality, data.country = get_geocoding(
                         data.latitude, data.longitude
                     )
                 data.save()
@@ -471,6 +471,22 @@ class ExifData(models.Model):
 
     def __str__(self):
         return self.photo.title
+
+    def update_geocoding(self, overwrite=False):
+        if overwrite:
+            if self.has_location:
+                try:
+                    self.locality, self.country = get_geocoding(self.latitude, self.longitude)
+                    self.save()
+                except Exception:
+                    pass
+        else:
+            if self.has_location and not self.locality and not self.country:
+                try:
+                    self.locality, self.country = get_geocoding(self.latitude, self.longitude)
+                    self.save()
+                except Exception:
+                    pass
 
     def admin_thumbnail(self):
         if self.photo.ready:
