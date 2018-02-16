@@ -68,7 +68,7 @@
            alt="{{ photo.title }}">
     {% endif %}
 
-    {% if photo.exifdata %}
+    {% if photo.exifdata and photo.album.show_metadata %}
       <div class="ui container" id="photo-exifdata">
         <div class="ui centered stackable grid">
           <div class="twelve wide center aligned computer tablet only column">
@@ -138,7 +138,7 @@
                 </div>
               {% endif %}
 
-              {% if photo.exifdata.locality and photo.exifdata.country %}
+              {% if photo.album.show_location and photo.exifdata.locality and photo.exifdata.country %}
                 <div class="item">
                   <img class="ui avatar image" src="{% static 'gallery/icons/location_grey.svg' %}"
                        alt="Sijainti">

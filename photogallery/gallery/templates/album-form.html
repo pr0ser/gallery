@@ -12,13 +12,19 @@
   <label>{{ form.description.label }}</label>
   {{ form.description }}
 </div>
+{% if form.description.errors %}
+  <div class="ui error message">
+    {{ form.description.errors }}
+  </div>
+{% endif %}
+
 <div class="field {% if form.date.errors %}error{% endif %}">
   <label>{{ form.date.label }}</label>
   {{ form.date }}
 </div>
-{% if form.description.errors %}
+{% if form.date.errors %}
   <div class="ui error message">
-    {{ form.description.errors }}
+    {{ form.date.errors }}
   </div>
 {% endif %}
 
@@ -48,16 +54,44 @@
     {{ form.public }}
   </div>
 </div>
+{% if form.public.errors %}
+  <div class="ui error message">
+    {{ form.public.errors }}
+  </div>
+{% endif %}
 
-<div class="inline field {% if form.public.errors %}error{% endif %}">
+<div class="inline field {% if form.show_metadata.errors %}error{% endif %}">
+  <div class="ui toggle checkbox">
+    <label>{{ form.show_metadata.label }}</label>
+    {{ form.show_metadata }}
+  </div>
+</div>
+{% if form.show_metadata.errors %}
+  <div class="ui error message">
+    {{ form.show_metadata.errors }}
+  </div>
+{% endif %}
+
+<div class="inline field {% if form.show_location.errors %}error{% endif %}">
+  <div class="ui toggle checkbox">
+    <label>{{ form.show_location.label }}</label>
+    {{ form.show_location }}
+  </div>
+</div>
+{% if form.show_location.errors %}
+  <div class="ui error message">
+    {{ form.show_location.errors }}
+  </div>
+{% endif %}
+
+<div class="inline field {% if form.downloadable.errors %}error{% endif %}">
   <div class="ui toggle checkbox">
     <label>{{ form.downloadable.label }}</label>
     {{ form.downloadable }}
   </div>
 </div>
-
-{% if form.public.errors %}
+{% if form.downloadable.errors %}
   <div class="ui error message">
-    {{ form.public.errors }}
+    {{ form.downloadable.errors }}
   </div>
 {% endif %}

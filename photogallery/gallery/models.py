@@ -93,7 +93,9 @@ class Album(models.Model):
         default='title'
     )
     public = models.BooleanField(_('Public'), default=True)
-    downloadable = models.BooleanField(_('ZIP downloads allowed'), default=False)
+    downloadable = models.BooleanField(_('Allow ZIP download'), default=False)
+    show_metadata = models.BooleanField(_('Show EXIF metadata'), default=True)
+    show_location = models.BooleanField(_('Show location information'), default=True)
 
     class Meta:
         verbose_name = _('album')

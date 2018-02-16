@@ -17,7 +17,17 @@ class CustomDateInput(widgets.TextInput):
 class NewAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public', 'downloadable']
+        fields = [
+            'title',
+            'description',
+            'date',
+            'parent',
+            'sort_order',
+            'public',
+            'downloadable',
+            'show_metadata',
+            'show_location'
+        ]
         widgets = {
             'parent': forms.Select(attrs={'id': 'parent'}),
             'sort_order': forms.Select(attrs={'id': 'sort_order'}),
@@ -28,7 +38,17 @@ class NewAlbumForm(ModelForm):
 class EditAlbumForm(ModelForm):
     class Meta:
         model = Album
-        fields = ['title', 'description', 'date', 'parent', 'sort_order', 'public', 'downloadable']
+        fields = [
+            'title',
+            'description',
+            'date',
+            'parent',
+            'sort_order',
+            'public',
+            'downloadable',
+            'show_metadata',
+            'show_location'
+        ]
         widgets = {
             'parent': forms.Select(attrs={'id': 'parent'}),
             'sort_order': forms.Select(attrs={'id': 'sort_order'}),
