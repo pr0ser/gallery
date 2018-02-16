@@ -395,9 +395,7 @@ class Photo(models.Model):
                     data.latitude = exif_data.latitude
                     data.longitude = exif_data.longitude
                     data.altitude = exif_data.altitude
-                    data.locality, data.country = get_geocoding(
-                        data.latitude, data.longitude
-                    )
+                    data.get_locality_and_country()
                 data.save()
         except Exception as e:
             print(f'Error saving EXIF data for file {self.image.path}: {e} ')
@@ -502,6 +500,9 @@ class ExifData(models.Model):
 
     def __str__(self):
         return self.photo.title
+
+    def get_locality_and_country(self):
+        self.locality, self.country = get_geocoding(self.latitude, self.longitude)
 
     def update_geocoding(self, overwrite=False):
         if overwrite:
