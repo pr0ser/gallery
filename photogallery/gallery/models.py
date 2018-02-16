@@ -421,12 +421,14 @@ class ExifData(models.Model):
     make = models.CharField(
         _('Manufacturer'),
         max_length=100,
-        blank=True
+        blank=True,
+        null=True
     )
     model = models.CharField(
         _('Model'),
         max_length=100,
-        blank=True
+        blank=True,
+        null=True
     )
     iso = models.PositiveIntegerField(
         _('ISO speed'),
@@ -436,7 +438,8 @@ class ExifData(models.Model):
     shutter_speed = models.CharField(
         _('Shutter speed'),
         max_length=50,
-        blank=True
+        blank=True,
+        null=True
     )
     aperture = models.DecimalField(
         _('Aperture'),
@@ -455,7 +458,8 @@ class ExifData(models.Model):
     lens = models.CharField(
         _('Lens'),
         max_length=200,
-        blank=True
+        blank=True,
+        null=True
     )
     latitude = models.DecimalField(
         _('Latitude'),
@@ -479,12 +483,14 @@ class ExifData(models.Model):
     locality = models.CharField(
         _('Locality'),
         max_length=200,
-        blank=True
+        blank=True,
+        null=True
     )
     country = models.CharField(
         _('Country'),
         max_length=200,
-        blank=True
+        blank=True,
+        null=True
     )
 
     class Meta:
