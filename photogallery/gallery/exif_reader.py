@@ -95,7 +95,7 @@ class ExifInfo(object):
             exposure_values = self.exif_data['ExposureTime']
             if exposure_values[0] < exposure_values[1]:
                 if exposure_values[0] / exposure_values[1] >= 0.3:
-                    self.shutter_speed = exposure_values[0] / exposure_values[1]
+                    self.shutter_speed = round(exposure_values[0] / exposure_values[1], 1)
                 else:
                     shutter_speed = round(1 / (exposure_values[0]/exposure_values[1]))
                     self.shutter_speed = '1/' + str(shutter_speed)
