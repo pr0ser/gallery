@@ -63,7 +63,7 @@ def google_geocode_lookup(latitude, longitude):
 
 def get_locality(geocode_lookup):
     for c in geocode_lookup:
-        if 'locality' and 'political' in c['types']:
+        if 'locality' in c['types'] and 'political' in c['types']:
             return c['long_name']
         if 'administrative_area_level_3' in c['types'] and 'political' in c['types']:
             return c['long_name']
