@@ -26,15 +26,24 @@ class AlbumAdmin(admin.ModelAdmin):
             'fields': ('parent',)
         }),
         (_('Album details'), {
-            'fields': ('title',
-                       'description',
-                       'album_cover',
-                       'sort_order',
-                       'public',
-                       'downloadable')
+            'fields': (
+                'title',
+                'description',
+                'album_cover',
+                'sort_order',
+                'public',
+                'show_metadata',
+                'show_location',
+                'downloadable'
+            )
         })
     )
-    list_filter = ('public', 'downloadable', 'show_metadata', 'show_location')
+    list_filter = (
+        'public',
+        'downloadable',
+        'show_metadata',
+        'show_location'
+    )
 
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -77,25 +86,36 @@ class ExifAdmin(admin.ModelAdmin):
     )
     fieldsets = (
         (_('Camera and photo details'), {
-            'fields': ('date_taken',
-                       'make',
-                       'model',
-                       'iso',
-                       'shutter_speed',
-                       'aperture',
-                       'focal_length',
-                       'lens',)
+            'fields': (
+                'date_taken',
+                'make',
+                'model',
+                'iso',
+                'shutter_speed',
+                'aperture',
+                'focal_length',
+                'lens'
+            )
         }),
         (_('Location details'), {
-            'fields': ('has_location',
-                       'latitude',
-                       'longitude',
-                       'altitude',
-                       'locality',
-                       'country')
+            'fields': (
+                'has_location',
+                'latitude',
+                'longitude',
+                'altitude',
+                'locality',
+                'country'
+            )
         }),
     )
-    list_filter = ('has_location', 'make', 'model', 'lens', 'locality', 'country')
+    list_filter = (
+        'has_location',
+        'make',
+        'model',
+        'lens',
+        'locality',
+        'country'
+    )
 
 
 admin.site = GalleryAdminSite()
