@@ -159,3 +159,9 @@ BACKGROUND_TASK_RUN_ASYNC = True
 BACKGROUND_TASK_ASYNC_THREADS = int(os.environ['ASYNC_THREADS'])
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# Load Django debug toolbar
+if DEBUG:
+    INTERNAL_IPS = ('127.0.0.1', '172.18.0.1')
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    INSTALLED_APPS += ['debug_toolbar']
