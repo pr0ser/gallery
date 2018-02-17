@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 from datetime import date
@@ -17,6 +18,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from gallery.exif_reader import ExifInfo
 from gallery.utils import calc_hash, auto_orient, get_geocoding
+
+log = logging.getLogger(__name__)
 
 
 @background
@@ -464,7 +467,7 @@ class Photo(models.Model):
                     data.get_locality_and_country()
                 data.save()
         except Exception as e:
-            print(f'Error saving EXIF data for file {self.image.path}: {e} ')
+            log.error(f'Failed to save EXIF data for file {self.image.path}: {e}')
 
 
 class ExifData(models.Model):

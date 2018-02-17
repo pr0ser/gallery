@@ -1,9 +1,12 @@
 import hashlib
 import json
+import logging
 from os import environ
 from urllib import parse, request
 
 from PIL import Image
+
+log = logging.getLogger(__name__)
 
 
 def calc_hash(filename):
@@ -58,7 +61,8 @@ def google_geocode_lookup(latitude, longitude):
         response = json.load(request.urlopen(base_url + params))
         address_comps = response['results'][0]['address_components']
     except Exception as e:
-        print(f'Error performing reverse geocode lookup: {e}')
+        log.error(f'Failed to perform Google Geocoding API lookup '
+                  f'for coordinates {latitude},{longitude}: {e}')
 
     if response['status'] == 'OK':
         return address_comps
@@ -88,5 +92,9 @@ def get_geocoding(latitude, longitude):
         locality = get_locality(lookup)
         country = get_country(lookup)
         return locality, country
-    except Exception:
+    except Exception as e:
+        log.error(
+            f'Failed to parse locality and countryinformation '
+            f'for coordinates {latitude},{longitude}: {e}'
+        )
         return None

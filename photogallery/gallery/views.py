@@ -26,9 +26,16 @@ class IndexView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return Album.objects.all().filter(parent=None).select_related('album_cover')
+            return (Album.objects
+                    .all().
+                    filter(parent=None)
+                    .select_related('album_cover'))
         else:
-            return Album.objects.all().filter(parent=None).filter(public=True).select_related('album_cover')
+            return (Album.objects
+                    .all()
+                    .filter(parent=None)
+                    .filter(public=True)
+                    .select_related('album_cover'))
 
 
 class AlbumView(ListView):
@@ -63,7 +70,10 @@ class LargeAlbumView(ListView):
 
     def get_queryset(self):
         album = get_object_or_404(Album, directory=self.kwargs['slug'])
-        queryset = Photo.objects.filter(album_id=album.id).filter(ready=True).order_by(album.sort_order)
+        queryset = (Photo.objects
+                    .filter(album_id=album.id)
+                    .filter(ready=True)
+                    .order_by(album.sort_order))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -96,7 +106,11 @@ class DownloadZipView(View):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         if not album.downloadable:
             return HttpResponseForbidden()
-        photos = Photo.objects.filter(album_id=album.id).filter(ready=True).values_list('image', flat=True).iterator()
+        photos = (Photo.objects
+                  .filter(album_id=album.id)
+                  .filter(ready=True)
+                  .values_list('image', flat=True)
+                  .iterator())
         file = ZipFile(mode='w', compression=ZIP_STORED)
         os.chdir(settings.MEDIA_ROOT)
         for photo in photos:
@@ -208,7 +222,9 @@ class RefreshPhotosView(LoginRequiredMixin, View):
         photos = Photo.objects.filter(album_id=album.id).iterator()
         for photo in photos:
             async_save_photo(photo.id)
-        messages.info(request, _('Photos will be scanned for changes on the background. It might take a while.'))
+        messages.info(
+            request, _('Photos will be scanned for changes '
+                       'on the background. It might take a while.'))
         return redirect('gallery:album', slug=album.directory)
 
 

@@ -1,7 +1,11 @@
+import logging
 from datetime import datetime
 
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
+from django.conf import settings
+
+log = logging.getLogger(__name__)
 
 
 class ExifInfo(object):
@@ -42,6 +46,11 @@ class ExifInfo(object):
         if self.latitude == 0 and self.longitude == 0:
             self.has_location = False
 
+        if any(self.params) and settings.DEBUG:
+            log.debug(f'Parsed following EXIF data for file {self.filename}: ')
+            for item in self.params:
+                log.debug(f'{item}')
+
     def _get_exif_data(self):
         image = Image.open(self.filename)
         exif_info = image._getexif()
@@ -60,7 +69,7 @@ class ExifInfo(object):
                         tags[decoded] = value
                 return tags
             except Exception as e:
-                print(f'Error reading EXIF data for file {self.filename}: {e}')
+                log.warning(f'Failed to read EXIF data for file {self.filename}: {e}')
                 return None
         else:
             return None
@@ -79,7 +88,7 @@ class ExifInfo(object):
                 self._parse_lens()
                 self._parse_location()
             except Exception as e:
-                print(f'Error parsing EXIF data for file {self.filename}: {e}')
+                log.error(f'Failed to parse EXIF data for file {self.filename}: {e}')
 
     def _parse_make(self):
         if 'Make' in self.exif_data:

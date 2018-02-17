@@ -141,6 +141,58 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'gallery.log'),
+            'maxBytes': 1024*1024*10,  # 10MB
+            'backupCount': 0,
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s [%(levelname)s] [%(module)s] %(message)s',
+            'datefmt': "%G-%m-%d %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s|%(message)s'
+        },
+    },
+    'loggers': {
+        'gallery.request': {
+            'handlers': ['console', 'logfile'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'gallery.models': {
+            'handlers': ['console', 'logfile'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'gallery.exif_reader': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'gallery.utils': {
+            'handlers': ['console', 'logfile'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
+}
+
 # Other
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
