@@ -57,14 +57,16 @@
   </div>
 
   {% if not photos and not sub_albums %}
+    {% load l10n %}
     <div class="ui stackable centered container grid">
-      <div class="six wide column column">
+      <div class="eight wide column column">
         <div class="ui icon message">
           <i class="image icon"></i>
           <div class="content">
             <div class="header">Ei kuvia</div>
             <p>Albumiin ei ole vielä lisätty kuvia.</p>
           </div>
+          <a class="ui right floated primary button" href="{% url 'gallery:photo-massupload' %}?album_id={{ album.id|unlocalize }}">Lisää kuvia</a>
         </div>
       </div>
     </div>
