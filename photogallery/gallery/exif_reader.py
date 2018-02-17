@@ -153,9 +153,10 @@ class ExifInfo(object):
                 if gps_info['GPSLongitudeRef'] != "E":
                     self.longitude = 0 - self.longitude
 
-                self.altitude = (
-                        self.exif_data['GPSInfo']['GPSAltitude'][0] /
-                        self.exif_data['GPSInfo']['GPSAltitude'][1])
+                if 'GPSAltitude' in gps_info:
+                    self.altitude = (
+                            self.exif_data['GPSInfo']['GPSAltitude'][0] /
+                            self.exif_data['GPSInfo']['GPSAltitude'][1])
                 self.has_location = True
 
     @staticmethod
