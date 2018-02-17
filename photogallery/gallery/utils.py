@@ -94,7 +94,7 @@ def get_geocoding(latitude, longitude):
         return locality, country
     except Exception as e:
         log.error(
-            f'Failed to parse locality and countryinformation '
+            f'Failed to parse locality and country information '
             f'for coordinates {latitude},{longitude}: {e}'
         )
         return None
