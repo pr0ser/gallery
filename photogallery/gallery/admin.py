@@ -57,10 +57,12 @@ class PhotoAdmin(admin.ModelAdmin):
     )
     fieldsets = (
         (_('Photo metadata'), {
-            'fields': ('title',
-                       'description',
-                       'file_hash',
-                       'ready')
+            'fields': (
+                'title',
+                'description',
+                'file_hash',
+                'ready'
+            )
         }),
         (_('Album'), {
             'fields': ('album',)

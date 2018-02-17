@@ -74,9 +74,18 @@ class Album(models.Model):
         unique=True,
         validators=[validate_album_title]
     )
-    date = models.DateField(_('Date'), default=date.today)
-    description = models.TextField(_('Description'), blank=True)
-    directory = models.SlugField(_('Directory'), unique=True)
+    date = models.DateField(
+        _('Date'),
+        default=date.today
+    )
+    description = models.TextField(
+        _('Description'),
+        blank=True
+    )
+    directory = models.SlugField(
+        _('Directory'),
+        unique=True
+    )
     album_cover = models.OneToOneField(
         'Photo',
         related_name='Photo',
@@ -92,10 +101,22 @@ class Album(models.Model):
         help_text=_('Sort order of photos in this album'),
         default='title'
     )
-    public = models.BooleanField(_('Public'), default=True)
-    downloadable = models.BooleanField(_('Allow ZIP download'), default=False)
-    show_metadata = models.BooleanField(_('Show EXIF metadata'), default=True)
-    show_location = models.BooleanField(_('Show location information'), default=True)
+    public = models.BooleanField(
+        _('Public'),
+        default=True
+    )
+    downloadable = models.BooleanField(
+        _('Allow ZIP download'),
+        default=False
+    )
+    show_metadata = models.BooleanField(
+        _('Show EXIF metadata'),
+        default=True
+    )
+    show_location = models.BooleanField(
+        _('Show location information'),
+        default=True
+    )
 
     class Meta:
         verbose_name = _('album')
@@ -169,8 +190,10 @@ class Album(models.Model):
                     new_photo.save()
                     new_photos += 1
                 except Exception as e:
-                    errors += (_('Unable to add photo %(photo_name)s to album: %(error_message)s')
-                               % {'photo_name': os.path.basename(photo), 'error_message': e})
+                    errors += (
+                        _('Unable to add photo %(photo_name)s'
+                          'to album: %(error_message)s')
+                        % {'photo_name': os.path.basename(photo), 'error_message': e})
         return new_photos, errors
 
     def admin_thumbnail(self):
@@ -178,7 +201,12 @@ class Album(models.Model):
             img_url = self.album_cover.thumbnail_img.url
             link = self.get_absolute_url()
             return mark_safe(
-                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+                f'<a href={link}>'
+                f'<img src="{img_url}"'
+                f'width="100"'
+                f'height="100"'
+                f'alt="Thumbnail"/>'
+                f'</a>'
             )
         else:
             return None
@@ -195,20 +223,53 @@ class Photo(models.Model):
         related_name='photos',
         verbose_name=_('Album')
     )
-    title = models.CharField(_('Title'), max_length=100, unique=True)
-    slug = models.SlugField(_('Slug'), unique=True, max_length=100)
-    date = models.DateTimeField(_('Date'), auto_now_add=True)
-    image = models.ImageField(_('Image file'), upload_to=upload_dir, max_length=100)
-    description = models.TextField(_('Description'), blank=True)
-    file_hash = models.CharField(_('SHA-256'), max_length=255, blank=True)
-    ready = models.BooleanField(_('Ready'), default=True)
-    preview_img = models.ImageField(_('Preview image'), blank=True, max_length=150)
+    title = models.CharField(
+        _('Title'),
+        max_length=100,
+        unique=True
+    )
+    slug = models.SlugField(
+        _('Slug'),
+        unique=True,
+        max_length=100
+    )
+    date = models.DateTimeField(
+        _('Date'),
+        auto_now_add=True
+    )
+    image = models.ImageField(
+        _('Image file'),
+        upload_to=upload_dir,
+        max_length=100
+    )
+    description = models.TextField(
+        _('Description'),
+        blank=True
+    )
+    file_hash = models.CharField(
+        _('SHA-256'),
+        max_length=255,
+        blank=True
+    )
+    ready = models.BooleanField(
+        _('Ready'),
+        default=True
+    )
+    preview_img = models.ImageField(
+        _('Preview image'),
+        blank=True,
+        max_length=150
+    )
     hidpi_preview_img = models.ImageField(
         _('High DPI preview image'),
         blank=True,
         max_length=150
     )
-    thumbnail_img = models.ImageField(_('Thumbnail image'), blank=True, max_length=150)
+    thumbnail_img = models.ImageField(
+        _('Thumbnail image'),
+        blank=True,
+        max_length=150
+    )
     hidpi_thumbnail_img = models.ImageField(
         _('High DPI thumbnail image'),
         blank=True,
@@ -367,7 +428,12 @@ class Photo(models.Model):
             img_url = self.thumbnail_img.url
             link = self.get_absolute_url()
             return mark_safe(
-                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+                f'<a href={link}>'
+                f'<img src="{img_url}"'
+                f'width="100"'
+                f'height="100"'
+                f'alt="Thumbnail"/>'
+                f'</a>'
             )
         else:
             return None
@@ -525,7 +591,12 @@ class ExifData(models.Model):
             img_url = self.photo.thumbnail_img.url
             link = self.photo.get_absolute_url()
             return mark_safe(
-                f'<a href={link}><img src="{img_url}" width="100" height="100" alt="Thumbnail"/></a>'
+                f'<a href={link}>'
+                f'<img src="{img_url}"'
+                f'width="100"'
+                f'height="100"'
+                f'alt="Thumbnail"/>'
+                f'</a>'
             )
         else:
             return None

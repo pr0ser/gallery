@@ -5,12 +5,13 @@ services:
     image: postgres:10.2-alpine
     env_file: gallery.env
     ports:
-     - "5432:5432"
+      - "5432:5432"
   django:
     build:
       context: "./photogallery"
       args:
         SIMD_LEVEL: "avx2"
+    restart: on-failure:5
     command: sh -c "/gallery/start.sh"
     volumes:
       - ./photogallery/:/gallery

@@ -45,7 +45,10 @@ def google_geocode_lookup(latitude, longitude):
         {
             'key': environ['GEOCODING_API_KEY'],
             'language': 'fi',
-            'result_type': 'locality|administrative_area_level_3|administrative_area_level_2|administrative_area_level_1',
+            'result_type': 'locality|'
+                           'administrative_area_level_3|'
+                           'administrative_area_level_2|'
+                           'administrative_area_level_1',
             'latlng': coordinates
         })
     response = None
