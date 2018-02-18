@@ -45,21 +45,17 @@ def google_geocode_lookup(latitude, longitude):
     coordinates = str(latitude) + ',' + str(longitude)
     base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
     params = parse.urlencode(
-        {
-            'key': environ['GEOCODING_API_KEY'],
-            'language': 'fi',
-            'result_type': 'locality|'
-                           'administrative_area_level_3|'
-                           'administrative_area_level_2|'
-                           'administrative_area_level_1',
-            'latlng': coordinates
-        })
+        {'key': environ['GEOCODING_API_KEY'],
+         'language': 'fi',
+         'latlng': coordinates
+         }
+    )
     response = None
     address_comps = None
 
     try:
         response = json.load(request.urlopen(base_url + params))
-        address_comps = response['results'][0]['address_components']
+        address_comps = response['results']
     except Exception as e:
         log.error(f'Failed to perform Google Geocoding API lookup '
                   f'for coordinates {latitude},{longitude}: {e}')
@@ -69,21 +65,23 @@ def google_geocode_lookup(latitude, longitude):
 
 
 def get_locality(geocode_lookup):
-    for c in geocode_lookup:
-        if 'locality' in c['types'] and 'political' in c['types']:
-            return c['long_name']
-        if 'administrative_area_level_3' in c['types'] and 'political' in c['types']:
-            return c['long_name']
-        if 'administrative_area_level_2' in c['types'] and 'political'in c['types']:
-            return c['long_name']
-        if 'administrative_area_level_1' in c['types'] and 'political' in c['types']:
-            return c['long_name']
+    for result in geocode_lookup:
+        for c in result['address_components']:
+            if 'locality' in c['types'] and 'political' in c['types']:
+                return c['long_name']
+            if 'administrative_area_level_3' in c['types'] and 'political' in c['types']:
+                return c['long_name']
+            if 'administrative_area_level_2' in c['types'] and 'political'in c['types']:
+                return c['long_name']
+            if 'administrative_area_level_1' in c['types'] and 'political' in c['types']:
+                return c['long_name']
 
 
 def get_country(geocode_lookup):
-    for c in geocode_lookup:
-        if 'country' in c['types'] and 'political' in c['types']:
-            return c['long_name']
+    for result in geocode_lookup:
+        for c in result['address_components']:
+            if 'country' in c['types'] and 'political' in c['types']:
+                return c['long_name']
 
 
 def get_geocoding(latitude, longitude):

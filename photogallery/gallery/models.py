@@ -571,7 +571,10 @@ class ExifData(models.Model):
         return self.photo.title
 
     def get_locality_and_country(self):
-        self.locality, self.country = get_geocoding(self.latitude, self.longitude)
+        try:
+            self.locality, self.country = get_geocoding(self.latitude, self.longitude)
+        except Exception:
+            pass
 
     def update_geocoding(self, overwrite=False):
         if overwrite:
