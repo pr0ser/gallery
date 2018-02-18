@@ -128,6 +128,20 @@ class PhotoView(DetailView):
     queryset = Photo.objects.select_related('album', 'exifdata')
 
 
+class PhotoMapView(LoginRequiredMixin, DetailView):
+    model = Photo
+    slug_field = 'slug'
+    template_name = 'photo-map.html'
+    context_object_name = 'photo'
+    queryset = Photo.objects.select_related('album')
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoMapView, self).get_context_data(**kwargs)
+        api_key = os.environ['MAPS_API_KEY']
+        context['api_key'] = api_key
+        return context
+
+
 class NewPhotoView(LoginRequiredMixin, CreateView):
     form_class = NewPhotoForm
     template_name = 'photo-new.html'

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}{{ photo.title }} | Sijainti{% endblock %}
+{% block header %}{% endblock %}
+
+{% if user.is_authenticated %}
+  {% load l10n %}
+  {% block navbar %}
+    <div class="item header">
+      Kuva
+      <i class="image icon"></i>
+    </div>
+    <a class="item" href="{{ photo.image.url }}">Näytä alkuperäinen</a>
+    <a class="item" href="{% url 'gallery:photo-setascover' photo.slug %}?album_id={{ photo.album_id|unlocalize }}">
+      Aseta oletuskuvaksi
+    </a>
+    <a class="item" href="{% url 'gallery:photo-edit' photo.slug %}">Muokkaa</a>
+    <a class="item" href="#" id="photo-delete">Poista</a>
+    <div class="item header">
+      Albumi
+      <i class="grid layout icon"></i>
+    </div>
+    <a class="item" href="{% url 'gallery:album-edit' photo.album.directory %}">Muokkaa</a>
+    <a class="item" href="{% url 'gallery:album-scan' photo.album.directory %}">Etsi uusia kuvia</a>
+    <a class="item" href="{% url 'gallery:album-refresh' photo.album.directory %}">Päivitä kuvat</a>
+    <a class="item" href="#" id="album-delete">Poista</a>
+  {% endblock %}
+{% endif %}
+
+{% block content %}
+
+  <div class="ui container" id="photo-container">
+    <div class="ui breadcrumb">
+      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+      {% if photo.album.parent %}
+        {% for parent in photo.album.parent_albums reversed %}
+          <i class="right angle icon divider"></i>
+          <a class="section" href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+        {% endfor %}
+      {% endif %}
+      <i class="right angle icon divider"></i>
+      <a class="section" href="{% url 'gallery:album' photo.album.directory %}">{{ photo.album.title }}</a>
+      <i class="right angle icon divider"></i>
+      <a class="section" href="{% url 'gallery:photo' photo.slug %}">{{ photo.title }}</a>
+      <i class="right angle icon divider"></i>
+      <div class="active section">
+        Sijainti
+      </div>
+    </div>
+  </div>
+
+  {% if photo.exifdata.has_location %}
+    <div class="ui container" id="location">
+      <div class="ui centered stackable grid">
+        <div class="sixteen wide column">
+          <div class="ui raised segment">
+            <h2 class="ui dividing header" id="location-header">
+              <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
+              Sijainti kartalla</h2>
+            <div class="ui hidden clearing divider"></div>
+            <div id="map">
+              <script>
+                  function initMap() {
+                      var location = {
+                          lat: {{ photo.exifdata.latitude|unlocalize }},
+                          lng: {{ photo.exifdata.longitude|unlocalize }}
+                      };
+                      var map = new google.maps.Map(document.getElementById('map'), {
+                          zoom: 15,
+                          center: location
+                      });
+                      var marker = new google.maps.Marker({
+                          position: location,
+                          map: map
+                      });
+                  }
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="ui stackable centered container grid">
+      <div class="eight wide column column">
+        <div class="ui icon message">
+          <i class="image icon"></i>
+          <div class="content">
+            <div class="header">Ei sijaintia</div>
+            <p>Kuvan metatietoihin ei ole tallennettu sijaintia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block modals %}
+  {% if user.is_authenticated %}
+    <div class="ui small modal album-delete">
+      <div class="header">
+        Poista albumi
+      </div>
+      <div class="content">
+        <p>Poistetaanko albumi "{{ photo.album.title }}" ja kaikki sen alla olevat kuvat?</p>
+      </div>
+      <div class="actions">
+        <form action="{% url 'gallery:album-delete' photo.album.directory %}" method="post">
+          {% csrf_token %}
+          <div class="ui cancel button">
+            Peruuta
+          </div>
+          <input class="ui negative button" type="submit" value="Poista"/>
+        </form>
+      </div>
+    </div>
+
+    <div class="ui small modal photo-delete">
+      <div class="header">
+        Poista kuva
+      </div>
+      <div class="content">
+        <p>Poistetaanko kuva "{{ photo.title }}"?</p>
+      </div>
+      <div class="actions">
+        <form action="{% url 'gallery:photo-delete' photo.slug %}" method="post">
+          {% csrf_token %}
+          <div class="ui cancel button">
+            Peruuta
+          </div>
+          <input type="hidden" name="next" value="{{ photo.album.get_absolute_url }}"/>
+          <input class="ui negative button" type="submit" value="Poista"/>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {% if user.is_authenticated %}
+    <script>
+        $('.ui.small.modal.album-delete')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#album-delete', 'show')
+        ;
+
+        $('.ui.small.modal.photo-delete')
+            .modal('setting', 'duration', 0)
+            .modal('attach events', '#photo-delete', 'show')
+        ;
+    </script>
+  {% endif %}
+
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap">
+  </script>
+
+{% endblock %}

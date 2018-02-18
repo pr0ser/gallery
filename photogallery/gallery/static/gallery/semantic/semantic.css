@@ -812,6 +812,10 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   margin-top: 0.5em;
 }
 
+#map-link {
+  color: grey;
+}
+
 #photo-exifdata .ui.avatar.image {
   border-radius: 0;
 }
@@ -823,6 +827,23 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 
 .next-photo {
   display: none;
+}
+
+/* Photo map page */
+
+#map {
+  height: 800px;
+  max-height: 60vh;
+  width: 100%;
+}
+
+#location-header {
+  margin-top: 0.2em;
+  padding-bottom: 0.7em;
+}
+
+#location {
+  margin-top: 1em;
 }
 
 /* Forms */

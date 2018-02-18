@@ -143,8 +143,15 @@
                   <img class="ui avatar image" src="{% static 'gallery/icons/location_grey.svg' %}"
                        alt="Sijainti">
                   <div class="content">
-                    {{ photo.exifdata.locality }}{% if photo.exifdata.country != 'Suomi' %},
-                    {{ photo.exifdata.country }}{% endif %}
+                  {% if user.is_authenticated %}
+                    <a id="map-link" href={% url 'gallery:photo-map' photo.slug %}>
+                      {{ photo.exifdata.locality }}{% if photo.exifdata.country != 'Suomi' %},
+                      {{ photo.exifdata.country }}{% endif %}
+                    </a>
+                    {% else %}
+                      {{ photo.exifdata.locality }}{% if photo.exifdata.country != 'Suomi' %},
+                      {{ photo.exifdata.country }}{% endif %}
+                    {% endif %}
                   </div>
                 </div>
               {% endif %}

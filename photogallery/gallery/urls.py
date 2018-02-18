@@ -16,6 +16,7 @@ urlpatterns = [
     url('album/<slug:slug>/delete', DeleteAlbumView.as_view(), name='album-delete'),
     url('photo/new', NewPhotoView.as_view(), name='photo-new'),
     url('photo/<slug:slug>', PhotoView.as_view(), name='photo'),
+    url('photo/<slug:slug>/map', PhotoMapView.as_view(), name='photo-map'),
     url('photo/<slug:slug>/edit', EditPhotoView.as_view(), name='photo-edit'),
     url('photo/<slug:slug>/cover', SetCoverPhotoView.as_view(), name='photo-setascover'),
     url('photo/<slug:slug>/delete', DeletePhotoView.as_view(), name='photo-delete'),
