@@ -182,7 +182,7 @@ LOGGING = {
         },
         'gallery.exif_reader': {
             'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'gallery.utils': {

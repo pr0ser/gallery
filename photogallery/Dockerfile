@@ -1,6 +1,6 @@
 FROM python:3.6-alpine
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 0
 RUN mkdir /gallery
 WORKDIR /gallery
 ADD requirements.txt /gallery/
