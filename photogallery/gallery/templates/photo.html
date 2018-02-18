@@ -20,6 +20,7 @@
       <i class="image icon"></i>
     </div>
     <a class="item" href="{{ photo.image.url }}">Näytä alkuperäinen</a>
+    <a class="item" href="{% url 'gallery:photo-map' photo.slug %}">Näytä sijainti</a>
     <a class="item"
        href="{% url 'gallery:photo-setascover' photo.slug %}?album_id={{ photo.album_id|unlocalize }}">
       Aseta oletuskuvaksi
