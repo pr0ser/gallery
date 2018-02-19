@@ -38,6 +38,14 @@ def async_save_photo(photo_id):
     photo.save()
 
 
+@background
+def update_album_localities(album_id):
+    photos = (Photo.objects.all().filter(album_id=album_id).iterator())
+    for photo in photos:
+        if hasattr(photo, 'exifdata'):
+            photo.exifdata.update_geocoding(overwrite=True)
+
+
 def validate_album_title(value):
     invalid_names = ['new']
     if value in invalid_names:
@@ -582,8 +590,8 @@ class ExifData(models.Model):
                 try:
                     self.locality, self.country = get_geocoding(self.latitude, self.longitude)
                     self.save()
-                except Exception:
-                    pass
+                except Exception as e:
+                    log.error(f'Failed to update geocoding for photo {self.photo.title}: {e}')
         else:
             if self.has_location and not self.locality and not self.country:
                 try:

@@ -16,7 +16,7 @@
             <form class="ui big form {% if form.errors %}error{% endif %}" action="{% url 'gallery:login' %}"
                   method="post">
               {% csrf_token %}
-              <h2 class="ui dividing header" id="form-header">
+              <h2 class="ui dividing header" id="segment-header">
                 <i class="sign in icon"></i>
                 Kirjaudu sisään</h2>
               <div class="required field">

@@ -9,7 +9,7 @@
           <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:album-new' %}"
                 method="post">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">
+            <h2 class="ui dividing header" id="segment-header">
               <i class="grid layout icon"></i>
               Luo uusi albumi</h2>
             {% include 'album-form.html' %}

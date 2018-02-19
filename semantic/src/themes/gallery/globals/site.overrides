@@ -23,6 +23,10 @@
 #sidebar {
     background-color: #141414;
 }
+#segment-header {
+    margin-top: 0.2em;
+    padding-bottom: 0.7em;
+}
 
 /* Index page */
 .indexcard {
@@ -99,19 +103,11 @@
     max-height: 60vh;
     width: 100%;
 }
-#location-header {
-    margin-top: 0.2em;
-    padding-bottom: 0.7em;
-}
 #location {
     margin-top: 1em;
 }
 
 /* Forms */
-#form-header {
-    margin-top: 0.2rem;
-    padding-bottom: 0.5rem;
-}
 input[type=date]::-webkit-calendar-picker-indicator {
     background: transparent;
 }

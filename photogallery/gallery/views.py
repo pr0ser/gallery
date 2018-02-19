@@ -16,7 +16,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from zipstream import ZipFile, ZIP_STORED
 
 from gallery.forms import *
-from gallery.models import Album, Photo, async_save_photo
+from gallery.models import Album, Photo, async_save_photo, update_album_localities
 
 
 class IndexView(ListView):
@@ -238,6 +238,16 @@ class RefreshPhotosView(LoginRequiredMixin, View):
             async_save_photo(photo.id)
         messages.info(
             request, _('Photos will be scanned for changes '
+                       'on the background. It might take a while.'))
+        return redirect('gallery:album', slug=album.directory)
+
+
+class UpdateAlbumLocalityView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        album = get_object_or_404(Album, directory=kwargs.get('slug'))
+        update_album_localities(album.id)
+        messages.info(
+            request, _('Geocoding information will be updated '
                        'on the background. It might take a while.'))
         return redirect('gallery:album', slug=album.directory)
 

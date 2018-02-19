@@ -12,6 +12,7 @@ urlpatterns = [
     url('album/<slug:slug>/edit', EditAlbumView.as_view(), name='album-edit'),
     url('album/<slug:slug>/scan', ScanNewPhotosView.as_view(), name='album-scan'),
     url('album/<slug:slug>/refresh', RefreshPhotosView.as_view(), name='album-refresh'),
+    url('album/<slug:slug>/update-gc', UpdateAlbumLocalityView.as_view(), name='album-update-gc'),
     url('album/<slug:slug>/download', DownloadZipView.as_view(), name='album-download'),
     url('album/<slug:slug>/delete', DeleteAlbumView.as_view(), name='album-delete'),
     url('photo/new', NewPhotoView.as_view(), name='photo-new'),
@@ -21,7 +22,7 @@ urlpatterns = [
     url('photo/<slug:slug>/cover', SetCoverPhotoView.as_view(), name='photo-setascover'),
     url('photo/<slug:slug>/delete', DeletePhotoView.as_view(), name='photo-delete'),
     url('upload', MassUploadView.as_view(), name='photo-massupload'),
-    url('login', UserLoginView.as_view(), name='login'),
-    url('admin/login', RedirectView.as_view(url=reverse_lazy('gallery:login'))),
+    url('login/', UserLoginView.as_view(), name='login'),
+    url('admin/login/', RedirectView.as_view(url=reverse_lazy('gallery:login'))),
     url('logout', LogoutView.as_view(), name='logout'),
 ]

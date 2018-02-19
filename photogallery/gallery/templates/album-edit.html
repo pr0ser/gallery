@@ -10,7 +10,7 @@
                 action="{% url 'gallery:album-edit' form.instance.directory %}"
                 method="post">
             {% csrf_token %}
-            <h2 class="ui dividing header" id="form-header">
+            <h2 class="ui dividing header" id="segment-header">
               {% if album.album_cover %}
               <img class="ui circular image" src="{{ album.album_cover.thumbnail_img.url }}" alt="{{ album.title }}">
               {% endif %}
