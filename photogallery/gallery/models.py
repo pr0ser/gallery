@@ -331,7 +331,7 @@ class Photo(models.Model):
         return 'hidpithumb_' + fname
 
     @cached_property
-    def current_pos(self):
+    def current_ordering(self):
         photo_list = list(
             Photo.objects.filter(album_id=self.album_id)
             .order_by(self.album.sort_order)
@@ -341,7 +341,7 @@ class Photo(models.Model):
 
     @cached_property
     def next_photo(self):
-        photo_list = self.current_pos
+        photo_list = self.current_ordering
         current = photo_list.index(self.pk)
         try:
             next_item = photo_list[current + 1]
@@ -351,7 +351,7 @@ class Photo(models.Model):
 
     @cached_property
     def previous_photo(self):
-        photo_list = self.current_pos
+        photo_list = self.current_ordering
         current = photo_list.index(self.pk)
         if current == 0:
             return None

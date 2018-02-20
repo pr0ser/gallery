@@ -275,19 +275,17 @@
   {% if photo.next_photo %}
     {% if photo.next_photo.hidpi_preview_img.url and photo.next_photo.preview_img.url %}
     <script>
-        function loadNextImage() {
+        function loadNextPhoto() {
             var ratio = window.devicePixelRatio;
-            var image;
+            var photo =  new Image();
             if (ratio >= 1.15) {
-                image =  new Image();
-                image.src = "{{ photo.next_photo.hidpi_preview_img.url }}";
+                photo.src = "{{ photo.next_photo.hidpi_preview_img.url }}";
 
             } else {
-                image =  new Image();
-                image.src = "{{ photo.next_photo.preview_img.url }}";
+                photo.src = "{{ photo.next_photo.preview_img.url }}";
             }
         }
-        window.onload = loadNextImage;
+        window.onload = loadNextPhoto;
     </script>
     {% endif %}
   {% endif %}
