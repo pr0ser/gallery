@@ -27,18 +27,22 @@ class IndexView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return (Album.objects
-                    .all()
-                    .filter(parent=None)
-                    .select_related('album_cover')
-                    .annotate(photocount=Count('photos')))
+            return (
+                Album.objects
+                .all()
+                .filter(parent=None)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
         else:
-            return (Album.objects
-                    .all()
-                    .filter(parent=None)
-                    .filter(public=True)
-                    .select_related('album_cover')
-                    .annotate(photocount=Count('photos')))
+            return (
+                Album.objects
+                .all()
+                .filter(parent=None)
+                .filter(public=True)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
 
 
 class AlbumView(ListView):
@@ -60,9 +64,20 @@ class AlbumView(ListView):
         context['album'] = album
         user = self.request.user
         if user.is_authenticated:
-            context['sub_albums'] = Album.objects.filter(parent=album.id)
+            context['sub_albums'] = (
+                Album.objects
+                .filter(parent=album.id)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
         else:
-            context['sub_albums'] = Album.objects.filter(parent=album.id).filter(public=True)
+            context['sub_albums'] = (
+                Album.objects
+                .filter(parent=album.id)
+                .filter(public=True)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
         return context
 
 
