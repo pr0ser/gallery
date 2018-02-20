@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db.models import Count
 from django.http import HttpResponseForbidden
 from django.http import StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -27,15 +28,17 @@ class IndexView(ListView):
         user = self.request.user
         if user.is_authenticated:
             return (Album.objects
-                    .all().
-                    filter(parent=None)
-                    .select_related('album_cover'))
+                    .all()
+                    .filter(parent=None)
+                    .select_related('album_cover')
+                    .annotate(photocount=Count('photos')))
         else:
             return (Album.objects
                     .all()
                     .filter(parent=None)
                     .filter(public=True)
-                    .select_related('album_cover'))
+                    .select_related('album_cover')
+                    .annotate(photocount=Count('photos')))
 
 
 class AlbumView(ListView):

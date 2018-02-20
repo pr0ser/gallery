@@ -282,7 +282,6 @@
             var photo =  new Image();
             if (ratio >= 1.15) {
                 photo.src = "{{ photo.next_photo.hidpi_preview_img.url }}";
-
             } else {
                 photo.src = "{{ photo.next_photo.preview_img.url }}";
             }
