@@ -331,11 +331,17 @@ class Photo(models.Model):
         return 'hidpithumb_' + fname
 
     @cached_property
-    def next_photo(self):
+    def current_pos(self):
         photo_list = list(
             Photo.objects.filter(album_id=self.album_id)
             .order_by(self.album.sort_order)
-            .values_list('id', flat=True))
+            .values_list('id', flat=True)
+        )
+        return photo_list
+
+    @cached_property
+    def next_photo(self):
+        photo_list = self.current_pos
         current = photo_list.index(self.pk)
         try:
             next_item = photo_list[current + 1]
@@ -345,10 +351,7 @@ class Photo(models.Model):
 
     @cached_property
     def previous_photo(self):
-        photo_list = list(
-            Photo.objects.filter(album_id=self.album_id)
-            .order_by(self.album.sort_order)
-            .values_list('id', flat=True))
+        photo_list = self.current_pos
         current = photo_list.index(self.pk)
         if current == 0:
             return None
