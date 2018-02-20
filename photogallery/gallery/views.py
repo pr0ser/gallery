@@ -151,7 +151,7 @@ class PhotoMapView(LoginRequiredMixin, DetailView):
     slug_field = 'slug'
     template_name = 'photo-map.html'
     context_object_name = 'photo'
-    queryset = Photo.objects.select_related('album')
+    queryset = Photo.objects.select_related('album', 'exifdata')
 
     def get_context_data(self, **kwargs):
         context = super(PhotoMapView, self).get_context_data(**kwargs)
