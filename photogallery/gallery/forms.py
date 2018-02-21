@@ -143,7 +143,6 @@ class EditExifDataForm(ModelForm):
     class Meta:
         model = ExifData
         fields = [
-            'date_taken',
             'make',
             'model',
             'iso',
