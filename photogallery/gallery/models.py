@@ -581,6 +581,9 @@ class ExifData(models.Model):
     def __str__(self):
         return self.photo.title
 
+    def get_absolute_url(self):
+        return reverse('gallery:photo', kwargs={'slug': self.photo.slug})
+
     def get_locality_and_country(self):
         try:
             self.locality, self.country = get_geocoding(self.latitude, self.longitude)

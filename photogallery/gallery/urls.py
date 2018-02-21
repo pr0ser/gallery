@@ -21,6 +21,7 @@ urlpatterns = [
     url('photo/<slug:slug>/edit', EditPhotoView.as_view(), name='photo-edit'),
     url('photo/<slug:slug>/cover', SetCoverPhotoView.as_view(), name='photo-setascover'),
     url('photo/<slug:slug>/delete', DeletePhotoView.as_view(), name='photo-delete'),
+    url('exif/<int:photo_id>/edit', EditExifData.as_view(), name='exif-edit'),
     url('upload', MassUploadView.as_view(), name='photo-massupload'),
     url('login/', UserLoginView.as_view(), name='login'),
     url('admin/login/', RedirectView.as_view(url=reverse_lazy('gallery:login'))),

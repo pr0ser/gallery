@@ -14,6 +14,7 @@
               <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
               Muokkaa kuvaa</h2>
             {% include 'photo-form.html' %}
+            <p><a href="{% url 'gallery:exif-edit' form.instance.id %}">Muokkaa metatietoja</a></p>
             <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
             <div class="ui hidden clearing divider"></div>
           </form>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Muokkaa metatietoja {% endblock %}
+
+{% block content %}
+  <div class="ui container">
+    <div class="ui centered stackable grid">
+      <div class="eight wide column">
+        <div class="ui raised segment">
+          <form class="ui large form {% if form.errors %}error{% endif %}"
+                action="{% url 'gallery:exif-edit' form.instance.photo_id %}"
+                method="post">
+            {% csrf_token %}
+            <h2 class="ui dividing header" id="segment-header">
+              <img class="ui circular image" src="{{ exifdata.photo.thumbnail_img.url }}"
+                   alt="{{ exifdata.photo.title }}">
+              Muokkaa metatietoja</h2>
+            {% for field in form %}
+              {% if forloop.counter0|divisibleby:2 %}
+                <div class="two fields">
+              {% endif %}
+            <div class="field {% if field.errors %}error{% endif %}">
+              <label>{{ field.label }}</label>
+              {{ field }}
+            </div>
+            {% if field.errors %}
+              <div class="ui error message">
+                {{ form.album.errors }}
+              </div>
+            {% endif %}
+            {% if forloop.counter|divisibleby:2 %}
+              </div>
+            {% endif %}
+            {% endfor %}
+
+            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
+            <div class="ui hidden clearing divider"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

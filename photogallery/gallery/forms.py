@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import Form, ModelForm, widgets
 from django.utils.translation import ugettext_lazy as _
 
-from gallery.models import Album, Photo
+from gallery.models import Album, Photo, ExifData
 
 blank_choice = (('', ''),)
 
@@ -137,3 +137,22 @@ class AlbumCoverPhotoForm(Form):
             album.save()
         except Exception:
             raise ValidationError(_('Photo or the selected album doesn\’t exist.'))
+
+
+class EditExifDataForm(ModelForm):
+    class Meta:
+        model = ExifData
+        fields = [
+            'date_taken',
+            'make',
+            'model',
+            'iso',
+            'shutter_speed',
+            'aperture',
+            'focal_length',
+            'lens',
+            'latitude',
+            'longitude',
+            'locality',
+            'country',
+        ]
