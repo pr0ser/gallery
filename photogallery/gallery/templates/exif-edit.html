@@ -24,7 +24,7 @@
             </div>
             {% if field.errors %}
               <div class="ui error message">
-                {{ form.album.errors }}
+                {{ field.errors }}
               </div>
             {% endif %}
             {% if forloop.counter|divisibleby:2 %}
