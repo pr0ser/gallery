@@ -45,6 +45,9 @@ class AlbumAdmin(admin.ModelAdmin):
         'show_location'
     )
 
+    def get_queryset(self, request):
+        return super(AlbumAdmin, self).get_queryset(request).select_related('album_cover')
+
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = (
@@ -118,6 +121,9 @@ class ExifAdmin(admin.ModelAdmin):
         'locality',
         'country'
     )
+
+    def get_queryset(self, request):
+        return super(ExifAdmin, self).get_queryset(request).select_related('photo')
 
 
 admin.site = GalleryAdminSite()
