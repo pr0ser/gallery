@@ -16,7 +16,7 @@
           </div>
 
           <div class="ui segment">
-            <form class="ui large form {% if form.errors %}error{% endif %}"
+            <form class="ui form {% if form.errors %}error{% endif %}"
                   action="{% url 'gallery:exif-edit' form.instance.photo_id %}"
                   method="post">
               {% csrf_token %}
