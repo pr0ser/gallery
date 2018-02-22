@@ -5,34 +5,44 @@
   <div class="ui container">
     <div class="ui centered stackable grid">
       <div class="eight wide column">
-        <div class="ui raised segment">
-          <form class="ui large form {% if form.errors %}error{% endif %}" action="{% url 'gallery:photo-massupload' %}"
-                method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h2 class="ui dividing header" id="segment-header">
+        <div class="ui raised segments">
+
+          <div class="ui segment gallery">
+            <h2 class="ui header gallery">
               <i class="image icon"></i>
-              Lisää useampi kuva</h2>
-            <div class="required field">
-              <label>{{ form.album.label }}</label>
-              {{ form.album }}
-            </div>
-            {% if form.album.errors %}
-              <div class="ui error message">
-                {{ form.album.errors }}
+              Lisää useampi kuva
+            </h2>
+          </div>
+
+          <div class="ui segment">
+            <form class="ui large form {% if form.errors %}error{% endif %}"
+                  action="{% url 'gallery:photo-massupload' %}"
+                  method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="required field">
+                <label>{{ form.album.label }}</label>
+                {{ form.album }}
               </div>
-            {% endif %}
-            <div class="required field">
-              <label>{{ form.image.label }}</label>
-              {{ form.image }}
-            </div>
-            {% if form.image.errors %}
-              <div class="ui error message">
-                {{ form.image.errors }}
+              {% if form.album.errors %}
+                <div class="ui error message">
+                  {{ form.album.errors }}
+                </div>
+              {% endif %}
+              <div class="required field">
+                <label>{{ form.image.label }}</label>
+                {{ form.image }}
               </div>
-            {% endif %}
-            <input class="ui right floated primary big button" type="submit" value="Lähetä"/>
-            <div class="ui hidden clearing divider"></div>
-          </form>
+              {% if form.image.errors %}
+                <div class="ui error message">
+                  {{ form.image.errors }}
+                </div>
+              {% endif %}
+              <div class="ui right aligned container savebutton">
+                <input class="ui primary big button" type="submit" value="Lähetä"/>
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>

@@ -5,19 +5,29 @@
   <div class="ui container">
     <div class="ui centered stackable grid">
       <div class="eight wide column">
-        <div class="ui raised segment">
-          <form class="ui large form {% if form.errors %}error{% endif %}"
-                action="{% url 'gallery:photo-edit' form.instance.slug %}"
-                method="post">
-            {% csrf_token %}
-            <h2 class="ui dividing header" id="segment-header">
-              <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
-              Muokkaa kuvaa</h2>
-            {% include 'photo-form.html' %}
-            <p><a href="{% url 'gallery:exif-edit' form.instance.id %}">Muokkaa metatietoja</a></p>
-            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
-            <div class="ui hidden clearing divider"></div>
-          </form>
+        <div class="ui raised segments">
+
+          <div class="ui segment gallery">
+            <h2 class="ui header" id="segment-header">
+              <img class="ui circular image" src="{{ photo.thumbnail_img.url }}"
+                   alt="{{ photo.title }}">
+              Muokkaa kuvaa
+            </h2>
+          </div>
+
+          <div class="ui segment">
+            <form class="ui large form {% if form.errors %}error{% endif %}"
+                  action="{% url 'gallery:photo-edit' form.instance.slug %}"
+                  method="post">
+              {% csrf_token %}
+              {% include 'photo-form.html' %}
+              <p><a href="{% url 'gallery:exif-edit' form.instance.id %}">Muokkaa metatietoja</a></p>
+              <div class="ui right aligned container savebutton">
+                <input class="ui primary big button" type="submit" value="Tallenna"/>
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>
@@ -25,11 +35,4 @@
 {% endblock %}
 
 {% block scripts %}
-  <script>
-      $('#album')
-          .dropdown({
-              placeholder: false
-          })
-      ;
-  </script>
 {% endblock %}

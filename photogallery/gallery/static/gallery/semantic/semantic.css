@@ -739,9 +739,8 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   background-color: #141414;
 }
 
-#segment-header {
-  margin-top: 0.2em;
-  padding-bottom: 0.7em;
+.ui.header.gallery {
+  padding-top: 0.5em;
 }
 
 /* Index page */
@@ -847,6 +846,11 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 }
 
 /* Forms */
+
+.ui.right.aligned.container.savebutton {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
 
 input[type=date]::-webkit-calendar-picker-indicator {
   background: transparent;
@@ -12646,8 +12650,8 @@ ol.ui.horizontal.list li:before,
 
 .ui.raised.segments,
 .ui.raised.segment {
-  -webkit-box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15);
-  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.3), 0px 2px 10px 0px rgba(34, 36, 38, 0.3);
+  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.3), 0px 2px 10px 0px rgba(34, 36, 38, 0.3);
 }
 
 /*******************************

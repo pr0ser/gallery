@@ -5,20 +5,30 @@
   <div class="ui container">
     <div class="ui centered stackable grid">
       <div class="eight wide column">
-        <div class="ui raised segment">
-          <form class="ui large form {% if form.errors %}error{% endif %}"
-                action="{% url 'gallery:album-edit' form.instance.directory %}"
-                method="post">
-            {% csrf_token %}
-            <h2 class="ui dividing header" id="segment-header">
+        <div class="ui raised segments">
+
+          <div class="ui segment gallery">
+            <h2 class="ui header">
               {% if album.album_cover %}
-              <img class="ui circular image" src="{{ album.album_cover.thumbnail_img.url }}" alt="{{ album.title }}">
+                <img class="ui circular image" src="{{ album.album_cover.thumbnail_img.url }}"
+                     alt="{{ album.title }}">
               {% endif %}
-              Muokkaa albumia</h2>
-            {% include 'album-form.html' %}
-            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
-            <div class="ui hidden clearing divider"></div>
-          </form>
+              Muokkaa albumia
+            </h2>
+          </div>
+
+          <div class="ui segment">
+            <form class="ui large form {% if form.errors %}error{% endif %}"
+                  action="{% url 'gallery:album-edit' form.instance.directory %}"
+                  method="post">
+              {% csrf_token %}
+              {% include 'album-form.html' %}
+              <div class="ui right aligned container savebutton">
+                <input class="ui primary big button" type="submit" value="Tallenna"/>
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>

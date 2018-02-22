@@ -53,29 +53,37 @@
     <div class="ui container" id="location">
       <div class="ui centered stackable grid">
         <div class="sixteen wide column">
-          <div class="ui raised segment">
-            <h2 class="ui dividing header" id="segment-header">
-              <img class="ui circular image" src="{{ photo.thumbnail_img.url }}" alt="{{ photo.title }}">
-              Sijainti kartalla</h2>
-            <div class="ui hidden clearing divider"></div>
-            <div id="map">
-              <script>
-                  function initMap() {
-                      var location = {
-                          lat: {{ photo.exifdata.latitude|unlocalize }},
-                          lng: {{ photo.exifdata.longitude|unlocalize }}
-                      };
-                      var map = new google.maps.Map(document.getElementById('map'), {
-                          zoom: 15,
-                          center: location
-                      });
-                      var marker = new google.maps.Marker({
-                          position: location,
-                          map: map
-                      });
-                  }
-              </script>
+          <div class="ui raised segments">
+
+            <div class="ui segment gallery">
+              <h2 class="ui header">
+                <img class="ui circular image" src="{{ photo.thumbnail_img.url }}"
+                     alt="{{ photo.title }}">
+                Sijainti kartalla
+              </h2>
             </div>
+
+            <div class="ui segment">
+              <div id="map">
+                <script>
+                    function initMap() {
+                        var location = {
+                            lat: {{ photo.exifdata.latitude|unlocalize }},
+                            lng: {{ photo.exifdata.longitude|unlocalize }}
+                        };
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 15,
+                            center: location
+                        });
+                        var marker = new google.maps.Marker({
+                            position: location,
+                            map: map
+                        });
+                    }
+                </script>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

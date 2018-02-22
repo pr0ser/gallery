@@ -12,34 +12,42 @@
       <div class="ui centered stackable grid">
         <div class="eight wide column">
           <div class="ui hidden divider"></div>
-          <div class="ui raised segment">
-            <form class="ui big form {% if form.errors %}error{% endif %}" action="{% url 'gallery:login' %}"
-                  method="post">
-              {% csrf_token %}
-              <h2 class="ui dividing header" id="segment-header">
+          <div class="ui raised segments">
+
+            <div class="ui segment gallery">
+              <h2 class="ui header gallery">
                 <i class="sign in icon"></i>
-                Kirjaudu sisään</h2>
-              <div class="required field">
-                <div class="ui left icon input">
-                  <i class="user icon"></i>
-                  <input type="text" name="username" placeholder="käyttäjätunnus" required>
+                Kirjaudu sisään
+              </h2>
+            </div>
+
+            <div class="ui segment">
+              <form class="ui big form {% if form.errors %}error{% endif %}"
+                    action="{% url 'gallery:login' %}"
+                    method="post">
+                {% csrf_token %}
+                <div class="required field">
+                  <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="username" placeholder="käyttäjätunnus" required>
+                  </div>
                 </div>
-              </div>
-              <div class="required field">
-                <div class="ui left icon input">
-                  <i class="lock icon"></i>
-                  <input type="password" name="password" placeholder="salasana" required>
+                <div class="required field">
+                  <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="password" placeholder="salasana" required>
+                  </div>
                 </div>
-              </div>
-              {% if form.errors %}
-                <div class="ui error message">
-                  <div class="header">Kirjautuminen epäonnistui</div>
-                  <p>Virheellinen käyttäjätunnus tai salasana.</p>
-                </div>
-              {% endif %}
-              <input type="hidden" name="next" value="{{ next }}" />
-              <button class="ui primary fluid large submit button" type="submit">Kirjaudu</button>
-            </form>
+                {% if form.errors %}
+                  <div class="ui error message">
+                    <div class="header">Kirjautuminen epäonnistui</div>
+                    <p>Virheellinen käyttäjätunnus tai salasana.</p>
+                  </div>
+                {% endif %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <button class="ui primary fluid large submit button" type="submit">Kirjaudu</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

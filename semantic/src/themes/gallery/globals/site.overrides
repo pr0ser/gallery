@@ -23,9 +23,8 @@
 #sidebar {
     background-color: #141414;
 }
-#segment-header {
-    margin-top: 0.2em;
-    padding-bottom: 0.7em;
+.ui.header.gallery {
+    padding-top: 0.5em;
 }
 
 /* Index page */
@@ -108,6 +107,10 @@
 }
 
 /* Forms */
+.ui.right.aligned.container.savebutton {
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
 input[type=date]::-webkit-calendar-picker-indicator {
     background: transparent;
 }

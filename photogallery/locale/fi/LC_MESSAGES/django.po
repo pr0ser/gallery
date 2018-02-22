@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-19 17:00+0000\n"
+"POT-Creation-Date: 2018-02-21 21:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,11 @@ msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
 #: gallery/admin.py:67 gallery/forms.py:93 gallery/forms.py:123
-#: gallery/models.py:241
+#: gallery/models.py:235
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:70 gallery/models.py:492
+#: gallery/admin.py:70 gallery/models.py:489
 msgid "Photo"
 msgstr "Kuva"
 
@@ -107,15 +107,15 @@ msgstr "Nimi (laskeva)"
 msgid "Parent"
 msgstr "Yläalbumi"
 
-#: gallery/models.py:83 gallery/models.py:244
+#: gallery/models.py:83 gallery/models.py:238
 msgid "Title"
 msgstr "Nimi"
 
-#: gallery/models.py:89 gallery/models.py:254
+#: gallery/models.py:89 gallery/models.py:248
 msgid "Date"
 msgstr "Päiväys"
 
-#: gallery/models.py:93 gallery/models.py:263
+#: gallery/models.py:93 gallery/models.py:257
 msgid "Description"
 msgstr "Kuvaus"
 
@@ -173,122 +173,122 @@ msgstr "Keskeneräiset kuvat"
 msgid "Unable to add photo %(photo_name)sto album: %(error_message)s"
 msgstr "Kuvan %(photo_name)s lisääminen albumiin epäonnistui: %(error_message)s"
 
-#: gallery/models.py:230
+#: gallery/models.py:224
 msgid "Cover photo"
 msgstr "Kansikuva"
 
-#: gallery/models.py:249
+#: gallery/models.py:243
 msgid "Slug"
 msgstr "Slug"
 
-#: gallery/models.py:258
+#: gallery/models.py:252
 msgid "Image file"
 msgstr "Kuvatiedosto"
 
-#: gallery/models.py:267
+#: gallery/models.py:261
 msgid "SHA-256"
 msgstr "SHA-256 -tiiviste"
 
-#: gallery/models.py:272
+#: gallery/models.py:266
 msgid "Ready"
 msgstr "Valmis"
 
-#: gallery/models.py:276
+#: gallery/models.py:270
 msgid "Preview image"
 msgstr "Esikatselukuva"
 
-#: gallery/models.py:281
+#: gallery/models.py:275
 msgid "High DPI preview image"
 msgstr "Korkearesoluutioinen esikatselukuva"
 
-#: gallery/models.py:286
+#: gallery/models.py:280
 msgid "Thumbnail image"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:291
+#: gallery/models.py:285
 msgid "High DPI thumbnail image"
 msgstr "Korkearesoluutioinen pienoiskuva"
 
-#: gallery/models.py:296
+#: gallery/models.py:290
 msgid "photo"
 msgstr "kuva"
 
-#: gallery/models.py:297
+#: gallery/models.py:291
 msgid "photos"
 msgstr "kuvat"
 
-#: gallery/models.py:457 gallery/models.py:623
+#: gallery/models.py:454 gallery/models.py:623
 msgid "Thumbnail"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:495
+#: gallery/models.py:492
 msgid "Date/Time taken"
 msgstr "Kuvausaika"
 
-#: gallery/models.py:501
+#: gallery/models.py:498
 msgid "Has location"
 msgstr "Sijaintitiedot"
 
-#: gallery/models.py:505
+#: gallery/models.py:502
 msgid "Manufacturer"
 msgstr "Valmistaja"
 
-#: gallery/models.py:511
+#: gallery/models.py:508
 msgid "Model"
 msgstr "Malli"
 
-#: gallery/models.py:517
+#: gallery/models.py:514
 msgid "ISO speed"
 msgstr "ISO-herkkyys"
 
-#: gallery/models.py:522
+#: gallery/models.py:519
 msgid "Shutter speed"
 msgstr "Suljinaika"
 
-#: gallery/models.py:528
+#: gallery/models.py:525
 msgid "Aperture"
 msgstr "Aukko"
 
-#: gallery/models.py:535
+#: gallery/models.py:532
 msgid "Focal length"
 msgstr "Polttoväli"
 
-#: gallery/models.py:542
+#: gallery/models.py:539
 msgid "Lens"
 msgstr "Objektiivi"
 
-#: gallery/models.py:548
+#: gallery/models.py:545
 msgid "Latitude"
 msgstr "Leveysaste"
 
-#: gallery/models.py:555
+#: gallery/models.py:552
 msgid "Longitude"
 msgstr "Pituusaste"
 
-#: gallery/models.py:562
+#: gallery/models.py:559
 msgid "Altitude"
 msgstr "Korkeus"
 
-#: gallery/models.py:567
+#: gallery/models.py:564
 msgid "Locality"
 msgstr "Paikkakunta"
 
-#: gallery/models.py:573
+#: gallery/models.py:570
 msgid "Country"
 msgstr "Maa"
 
-#: gallery/models.py:580 gallery/models.py:581
+#: gallery/models.py:577 gallery/models.py:578
 msgid "EXIF data"
 msgstr "EXIF-tiedot"
 
-#: gallery/views.py:227
+#: gallery/views.py:245
 msgid "No new photos found in the album directory."
 msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
-#: gallery/views.py:240
+#: gallery/views.py:258
 msgid "Photos will be scanned for changes on the background. It might take a while."
 msgstr "Kuvia tarkistetaan taustalla sisältävätkö ne muutoksia. Tämä voi kestää hetken."
 
-#: gallery/views.py:250
+#: gallery/views.py:268
 msgid "Geocoding information will be updated on the background. It might take a while."
 msgstr "Kuvien paikkakuntatiedot päivitetään taustalla. Tämä voi kestää hetken."

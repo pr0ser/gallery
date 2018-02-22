@@ -5,101 +5,108 @@
   <div class="ui container">
     <div class="ui centered stackable grid">
       <div class="eight wide column">
-        <div class="ui raised segment">
-          <form class="ui large form {% if form.errors %}error{% endif %}"
-                action="{% url 'gallery:exif-edit' form.instance.photo_id %}"
-                method="post">
-            {% csrf_token %}
-            <h2 class="ui dividing header" id="segment-header">
+        <div class="ui raised segments">
+
+          <div class="ui segment gallery">
+            <h2 class="ui header">
               <img class="ui circular image" src="{{ exifdata.photo.thumbnail_img.url }}"
                    alt="{{ exifdata.photo.title }}">
-              Muokkaa metatietoja</h2>
+              Muokkaa metatietoja
+            </h2>
+          </div>
 
-            <h3 class="ui dividing header">Kameran tiedot</h3>
+          <div class="ui segment">
+            <form class="ui large form {% if form.errors %}error{% endif %}"
+                  action="{% url 'gallery:exif-edit' form.instance.photo_id %}"
+                  method="post">
+              {% csrf_token %}
 
-            <div class="two fields">
-              <div class="field {% if form.make.errors %}error{% endif %}">
-                <label>{{ form.make.label }}</label>
-                {{ form.make }}
+              <h3 class="ui header">Kameran tiedot</h3>
+
+              <div class="two fields">
+                <div class="field {% if form.make.errors %}error{% endif %}">
+                  <label>{{ form.make.label }}</label>
+                  {{ form.make }}
+                </div>
+
+                <div class="field {% if form.model.errors %}error{% endif %}">
+                  <label>{{ form.model.label }}</label>
+                  {{ form.model }}
+                </div>
               </div>
 
-              <div class="field {% if form.model.errors %}error{% endif %}">
-                <label>{{ form.model.label }}</label>
-                {{ form.model }}
-              </div>
-            </div>
 
+              <div class="two fields">
+                <div class="field {% if form.iso.errors %}error{% endif %}">
+                  <label>{{ form.iso.label }}</label>
+                  {{ form.iso }}
+                </div>
 
-            <div class="two fields">
-              <div class="field {% if form.iso.errors %}error{% endif %}">
-                <label>{{ form.iso.label }}</label>
-                {{ form.iso }}
-              </div>
-
-              <div class="field {% if form.shutter_speed.errors %}error{% endif %}">
-                <label>{{ form.shutter_speed.label }}</label>
-                {{ form.shutter_speed }}
-              </div>
-            </div>
-
-
-            <div class="two fields">
-              <div class="field {% if form.aperture.errors %}error{% endif %}">
-                <label>{{ form.aperture.label }}</label>
-                {{ form.aperture }}
+                <div class="field {% if form.shutter_speed.errors %}error{% endif %}">
+                  <label>{{ form.shutter_speed.label }}</label>
+                  {{ form.shutter_speed }}
+                </div>
               </div>
 
-              <div class="field {% if form.focal_length.errors %}error{% endif %}">
-                <label>{{ form.focal_length.label }}</label>
-                {{ form.focal_length }}
-              </div>
-            </div>
 
+              <div class="two fields">
+                <div class="field {% if form.aperture.errors %}error{% endif %}">
+                  <label>{{ form.aperture.label }}</label>
+                  {{ form.aperture }}
+                </div>
 
-            <div class="two fields">
-              <div class="field {% if form.lens.errors %}error{% endif %}">
-                <label>{{ form.lens.label }}</label>
-                {{ form.lens }}
-              </div>
-            </div>
-
-            <h3 class="ui dividing header">Sijaintitiedot</h3>
-
-            <div class="two fields">
-              <div class="field {% if form.latitude.errors %}error{% endif %}">
-                <label>{{ form.latitude.label }}</label>
-                {{ form.latitude }}
+                <div class="field {% if form.focal_length.errors %}error{% endif %}">
+                  <label>{{ form.focal_length.label }}</label>
+                  {{ form.focal_length }}
+                </div>
               </div>
 
-              <div class="field {% if form.longitude.errors %}error{% endif %}">
-                <label>{{ form.longitude.label }}</label>
-                {{ form.longitude }}
-              </div>
-            </div>
 
-
-            <div class="two fields">
-              <div class="field {% if form.locality.errors %}error{% endif %}">
-                <label>{{ form.locality.label }}</label>
-                {{ form.locality }}
+              <div class="two fields">
+                <div class="field {% if form.lens.errors %}error{% endif %}">
+                  <label>{{ form.lens.label }}</label>
+                  {{ form.lens }}
+                </div>
               </div>
 
-              <div class="field {% if form.country.errors %}error{% endif %}">
-                <label>{{ form.country.label }}</label>
-                {{ form.country }}
+              <h3 class="ui header">Sijaintitiedot</h3>
+
+              <div class="two fields">
+                <div class="field {% if form.latitude.errors %}error{% endif %}">
+                  <label>{{ form.latitude.label }}</label>
+                  {{ form.latitude }}
+                </div>
+
+                <div class="field {% if form.longitude.errors %}error{% endif %}">
+                  <label>{{ form.longitude.label }}</label>
+                  {{ form.longitude }}
+                </div>
               </div>
-            </div>
 
-            <div class="ui error message">
-              {{ form.errors }}
-            </div>
 
-            <input class="ui right floated primary big button" type="submit" value="Tallenna"/>
-            <div class="ui hidden clearing divider"></div>
-          </form>
+              <div class="two fields">
+                <div class="field {% if form.locality.errors %}error{% endif %}">
+                  <label>{{ form.locality.label }}</label>
+                  {{ form.locality }}
+                </div>
+
+                <div class="field {% if form.country.errors %}error{% endif %}">
+                  <label>{{ form.country.label }}</label>
+                  {{ form.country }}
+                </div>
+              </div>
+
+              <div class="ui error message">
+                {{ form.errors }}
+              </div>
+              <div class="ui right aligned container savebutton">
+                <input class="ui primary big button" type="submit" value="Tallenna"/>
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 {% endblock %}
-
