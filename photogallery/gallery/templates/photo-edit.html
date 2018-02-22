@@ -21,7 +21,9 @@
                   method="post">
               {% csrf_token %}
               {% include 'photo-form.html' %}
-              <p><a href="{% url 'gallery:exif-edit' form.instance.id %}">Muokkaa metatietoja</a></p>
+              {% if photo.exifdata %}
+                <p><a href="{% url 'gallery:exif-edit' form.instance.id %}">Muokkaa metatietoja</a></p>
+              {% endif %}
               <div class="ui right aligned container savebutton">
                 <input class="ui primary big button" type="submit" value="Tallenna"/>
               </div>
