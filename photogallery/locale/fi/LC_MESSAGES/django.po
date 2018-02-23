@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 21:36+0000\n"
+"POT-Creation-Date: 2018-02-23 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,24 +30,24 @@ msgstr "Ylempi albumi"
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: gallery/admin.py:59
+#: gallery/admin.py:62
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:67 gallery/forms.py:93 gallery/forms.py:123
+#: gallery/admin.py:70 gallery/forms.py:93 gallery/forms.py:123
 #: gallery/models.py:235
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:70 gallery/models.py:489
+#: gallery/admin.py:73 gallery/models.py:489
 msgid "Photo"
 msgstr "Kuva"
 
-#: gallery/admin.py:90
+#: gallery/admin.py:93
 msgid "Camera and photo details"
 msgstr "Kameran ja kuvan tiedot"
 
-#: gallery/admin.py:102
+#: gallery/admin.py:105
 msgid "Location details"
 msgstr "Sijaintiin liittyvät tiedot"
 
@@ -81,6 +81,10 @@ msgstr "Tiedostoa ei voitu lukea."
 #: gallery/forms.py:139
 msgid "Photo or the selected album doesn\\’t exist."
 msgstr "Valittua kuvaa tai albumia ei ole olemassa."
+
+#: gallery/forms.py:163
+msgid "Latitude and longitude must both have values or be both empty."
+msgstr "Kentät leveysaste ja pituusaste ovat molemmat oltava täytetty tai molemmat tyhjiä"
 
 #: gallery/models.py:53
 #, python-format
