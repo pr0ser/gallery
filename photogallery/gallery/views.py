@@ -270,11 +270,18 @@ class UpdateAlbumLocalityView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class EditExifData(LoginRequiredMixin, UpdateView):
+class EditExifDataView(LoginRequiredMixin, UpdateView):
     model = ExifData
     form_class = EditExifDataForm
     template_name = 'exif-edit.html'
     pk_url_kwarg = 'photo_id'
+
+    def form_valid(self, form):
+        if form.instance.latitude and form.instance.longitude:
+            form.instance.has_location = True
+        else:
+            form.instance.has_location = False
+        return super(EditExifDataView, self).form_valid(form)
 
 
 class UserLoginView(LoginView):
