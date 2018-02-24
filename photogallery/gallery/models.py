@@ -27,6 +27,7 @@ def post_process_image(photo_id):
     image = Photo.objects.get(id=photo_id)
     image.create_thumbnails()
     image.create_previews()
+    image.save_exif_data()
     image.ready = True
     image.save()
 
@@ -299,12 +300,12 @@ class Photo(models.Model):
         super(Photo, self).save(*args, **kwargs)
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
-            self.save_exif_data()
             if not self.ready:
                 post_process_image(self.id)
             else:
                 self.create_previews()
                 self.create_thumbnails()
+                self.save_exif_data()
             super(Photo, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

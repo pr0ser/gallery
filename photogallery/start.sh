@@ -1,4 +1,5 @@
 #!/bin/sh
+sleep 5
 python manage.py migrate
 nice -n 19 python manage.py process_tasks &
 nice -n 19 python manage.py process_tasks &
