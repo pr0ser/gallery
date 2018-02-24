@@ -105,6 +105,11 @@ class NewAlbumView(LoginRequiredMixin, CreateView):
     form_class = NewAlbumForm
     template_name = 'album-new.html'
 
+    def get_initial(self):
+        initial = super(NewAlbumView, self).get_initial()
+        initial['parent'] = self.request.GET.get('parent')
+        return initial
+
 
 class EditAlbumView(LoginRequiredMixin, UpdateView):
     model = Album
