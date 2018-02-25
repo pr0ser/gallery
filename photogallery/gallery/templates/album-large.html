@@ -45,11 +45,15 @@
       {% if photos %}
         <div class="right aligned five wide column" id="album-button">
           {% if album.downloadable %}
-            <a class="ui small button" id="zip-button" data-tooltip="Tallenna albumin kuvat zip-tiedostona"
-               data-position="bottom right" href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
+            <a class="ui small button" id="zip-button"
+               data-tooltip="Tallenna albumin kuvat zip-tiedostona"
+               data-position="bottom right"
+               href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
           {% endif %}
-          <a class="ui small button" id="large-button" data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina"
-             data-position="bottom right" href="{% url 'gallery:album' album.directory %}">Näytä esikatselut</a>
+          <a class="ui small button" id="large-button"
+             data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina"
+             data-position="bottom right" href="{% url 'gallery:album' album.directory %}">Näytä
+            esikatselut</a>
         </div>
       {% endif %}
     </div>
@@ -66,7 +70,8 @@
                 <div class="header">
                   Kuvien käsittely kesken
                 </div>
-                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
+                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä
+                  kesken.</p>
               </div>
             </div>
           </div>
@@ -76,22 +81,29 @@
   {% endif %}
 
   <div class="ui container">
-    {% for photo in photos %}
-      <div class="photo">
-        {% if photo.preview_img %}
-          <a href="{% url 'gallery:photo' photo.slug %}">
-            <img class="ui centered image" src="{{ photo.preview_img.url }}"
-                    {% if photo.hidpi_preview_img %}
-                 srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
-                    {% endif %}
-                 alt="{{ photo.title }}">
-          </a>
-        {% else %}
-          <img class="ui centered image" src="{{ photo.image.url }}"
-               alt="{{ photo.title }}">
-        {% endif %}
+    <div class="ui centered stackable grid">
+      <div class="eight wide mobile sixteen wide tablet twelve wide computer column">
+        {% for photo in photos %}
+          <div class="album-large-photo">
+            <a href="{% url 'gallery:photo' photo.slug %}">
+              {% if photo.preview_img %}
+
+                <img class="ui centered image" src="{{ photo.preview_img.url }}"
+                        {% if photo.hidpi_preview_img %}
+                     srcset="{{ photo.hidpi_preview_img.url }} 1.5x"
+                        {% endif %}
+                     alt="{{ photo.title }}">
+
+              {% else %}
+                <img class="ui centered image" src="{{ photo.image.url }}"
+                     alt="{{ photo.title }}">
+              {% endif %}
+
+            </a>
+          </div>
+        {% endfor %}
       </div>
-    {% endfor %}
+    </div>
 
     {% if is_paginated %}
       <div class="ui center aligned basic segment">
@@ -115,9 +127,11 @@
           <div class="menu">
             {% for page in paginator.page_range %}
               {% if page_obj.number == page %}
-                <a class="active item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+                <a class="active item" href="?page={{ page }}">Sivu {{ page }}
+                  / {{ paginator.num_pages }}</a>
               {% else %}
-                <a class="item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
+                <a class="item" href="?page={{ page }}">Sivu {{ page }}
+                  / {{ paginator.num_pages }}</a>
               {% endif %}
             {% endfor %}
           </div>

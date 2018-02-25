@@ -55,9 +55,8 @@
 #album-grid .eight.wide.mobile.four.wide.tablet.four.wide.computer.column {
     padding: 0.3rem;
 }
-.photo .ui.centered.image {
-    max-height: 95vh;
-    padding-bottom: 1.5em;
+.album-large-photo {
+    margin-bottom: 1em;
 }
 #pending-photos {
     padding-bottom: 3rem;
@@ -91,9 +90,6 @@
 #photo-description {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-}
-.next-photo {
-    display:none;
 }
 
 /* Photo map page */

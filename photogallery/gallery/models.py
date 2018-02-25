@@ -438,22 +438,6 @@ class Photo(models.Model):
             self.hidpi_thumbnail_img_filename
         )
 
-    def admin_thumbnail(self):
-        if self.ready:
-            img_url = self.thumbnail_img.url
-            link = self.get_absolute_url()
-            return mark_safe(
-                f'<a href={link}>'
-                f'<img src="{img_url}"'
-                f'width="100"'
-                f'height="100"'
-                f'alt="Thumbnail"/>'
-                f'</a>'
-            )
-        else:
-            return None
-    admin_thumbnail.short_description = _("Thumbnail")
-
     def save_exif_data(self):
         exif_data = ExifInfo(self.image.path)
         try:
@@ -480,6 +464,22 @@ class Photo(models.Model):
                 data.save()
         except Exception as e:
             log.error(f'Failed to save EXIF data for file {self.image.path}: {e}')
+
+    def admin_thumbnail(self):
+        if self.ready:
+            img_url = self.thumbnail_img.url
+            link = self.get_absolute_url()
+            return mark_safe(
+                f'<a href={link}>'
+                f'<img src="{img_url}"'
+                f'width="100"'
+                f'height="100"'
+                f'alt="Thumbnail"/>'
+                f'</a>'
+            )
+        else:
+            return None
+    admin_thumbnail.short_description = _("Thumbnail")
 
 
 class ExifData(models.Model):

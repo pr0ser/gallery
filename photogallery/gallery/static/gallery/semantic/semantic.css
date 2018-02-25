@@ -782,9 +782,8 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   padding: 0.3rem;
 }
 
-.photo .ui.centered.image {
-  max-height: 95vh;
-  padding-bottom: 1.5em;
+.album-large-photo {
+  margin-bottom: 1em;
 }
 
 #pending-photos {
@@ -827,10 +826,6 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
 #photo-description {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.next-photo {
-  display: none;
 }
 
 /* Photo map page */
