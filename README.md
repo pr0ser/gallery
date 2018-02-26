@@ -27,9 +27,6 @@ Variable name | Comments
 POSTGRES_USER | Postgres database username
 POSTGRES_PASSWORD | Postgres database password
 POSTGRES_DB | Postgres database name
-DB_NAME | Database name in Django settings
-DB_USER | Database username in Django settings
-DB_PASS | Database password in Django settings
 DB_HOST | Database hostname in Django settings. Set as "db" for docker-compose to work properly
 DB_PORT | Database port in Django settings
 DEBUG | Django debug. Set as True or False
