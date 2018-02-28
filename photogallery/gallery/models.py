@@ -139,7 +139,8 @@ class Album(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.directory = slugify(self.title)
+        if not self.directory:
+            self.directory = slugify(self.title)
         super(Album, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
