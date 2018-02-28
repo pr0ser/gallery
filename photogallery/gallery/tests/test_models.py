@@ -291,14 +291,18 @@ class TestHighResPhoto(TestCase):
         self.photo.save()
 
     def test_preview_image(self):
+        image = Image.open(self.photo.preview_img.path)
         self.assertTrue(path.isfile(self.photo.preview_img.path))
         self.assertEqual(self.photo.preview_img.width, 1327)
         self.assertGreater(self.photo.preview_img.width, self.photo.preview_img.height)
+        self.assertEqual(image.format, 'JPEG')
 
     def test_hidpi_preview_image(self):
+        image = Image.open(self.photo.hidpi_preview_img.path)
         self.assertTrue(path.isfile(self.photo.hidpi_preview_img.path))
         self.assertEqual(self.photo.hidpi_preview_img.width, 2340)
         self.assertGreater(self.photo.hidpi_preview_img.width, self.photo.hidpi_preview_img.height)
+        self.assertEqual(image.format, 'JPEG')
 
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
@@ -322,6 +326,8 @@ class TestMidResPhoto(TestCase):
         self.assertTrue(path.isfile(self.photo.preview_img.path))
         self.assertEqual(self.photo.preview_img.width, 1327)
         self.assertGreater(self.photo.preview_img.width, self.photo.preview_img.height)
+        image = Image.open(self.photo.preview_img.path)
+        self.assertEqual(image.format, 'JPEG')
 
     def test_empty_hidpi_preview_image(self):
         self.assertFalse(bool(self.photo.hidpi_preview_img))
@@ -351,6 +357,76 @@ class TestLowResPhoto(TestCase):
         self.assertFalse(bool(self.photo.hidpi_preview_img))
 
     def test_original_image(self):
+        image = Image.open(self.photo.image.path)
         self.assertTrue(bool(self.photo.image))
         self.assertEqual(self.photo.image.width, 800)
         self.assertEqual(self.photo.image.height, 600)
+        self.assertEqual(image.format, 'JPEG')
+
+
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class TestNextAndPreviousPhoto(TestCase):
+    def setUp(self):
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
+        test_image = get_temporary_image(temp_file, width=100, height=100)
+        self.album = Album.objects.create(title='Album')
+
+        self.photo1 = Photo(title='Photo', image=test_image.name, album=self.album)
+        self.photo1.save()
+
+        self.photo2 = Photo(title='Photo 2', image=test_image.name, album=self.album)
+        self.photo2.save()
+
+        self.photo3 = Photo(title='Photo 3', image=test_image.name, album=self.album)
+        self.photo3.save()
+
+    def test_next(self):
+        self.assertIsNotNone(self.photo1.next_photo)
+        self.assertEqual(self.photo1.next_photo.id, self.photo2.id)
+
+    def test_not_previous(self):
+        self.assertIsNone(self.photo1.previous_photo)
+
+    def test_next_and_prev(self):
+        self.assertIsNotNone(self.photo2.next_photo)
+        self.assertEqual(self.photo2.next_photo.id, self.photo3.id)
+
+        self.assertIsNotNone(self.photo2.previous_photo)
+        self.assertEqual(self.photo2.previous_photo.id, self.photo1.id)
+
+    def test_not_next(self):
+        self.assertIsNone(self.photo3.next_photo)
+
+
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class TestCustomSortOrderNextAndPrev(TestCase):
+    def setUp(self):
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
+        test_image = get_temporary_image(temp_file, width=100, height=100)
+        self.album = Album.objects.create(title='Album', sort_order='-title')
+
+        self.photo1 = Photo(title='Photo', image=test_image.name, album=self.album)
+        self.photo1.save()
+
+        self.photo2 = Photo(title='Photo 2', image=test_image.name, album=self.album)
+        self.photo2.save()
+
+        self.photo3 = Photo(title='Photo 3', image=test_image.name, album=self.album)
+        self.photo3.save()
+
+    def test_next(self):
+        self.assertIsNotNone(self.photo3.next_photo)
+        self.assertEqual(self.photo3.next_photo.id, self.photo2.id)
+
+    def test_next_and_prev(self):
+        self.assertIsNotNone(self.photo2.next_photo)
+        self.assertEqual(self.photo2.next_photo.id, self.photo1.id)
+
+        self.assertIsNotNone(self.photo2.previous_photo)
+        self.assertEqual(self.photo2.previous_photo.id, self.photo3.id)
+
+    def test_not_next(self):
+        self.assertIsNone(self.photo1.next_photo)
+
+    def test_not_previous(self):
+        self.assertIsNone(self.photo3.previous_photo)
