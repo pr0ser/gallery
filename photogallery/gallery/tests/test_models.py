@@ -137,7 +137,7 @@ class TestAlbumEdit(TestCase):
 class TestNewPhoto(TestCase):
     def setUp(self):
         self.temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
@@ -208,16 +208,12 @@ class TestNewPhoto(TestCase):
         self.assertEqual(
             self.photo.preview_dir(), path.join('previews', self.photo.album.directory))
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoFileNames(TestCase):
     def setUp(self):
         self.temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
@@ -254,15 +250,11 @@ class TestPhotoFileNames(TestCase):
             'hidpithumb_' + path.basename(self.temp_file.name)
         )
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoPreviewDirCreation(TestCase):
     def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
+        self.temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
         self.test_image = get_temporary_image(self.temp_file, width=100, height=100)
         self.album = Album.objects.create(title='Album')
         self.photo = Photo(title='Photo', image=self.test_image.name, album=self.album)
@@ -280,16 +272,12 @@ class TestPhotoPreviewDirCreation(TestCase):
         self.photo.album.delete()
         self.assertFalse(path.isdir(preview_dir))
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestHighResPhoto(TestCase):
     def setUp(self):
         self.temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
@@ -316,16 +304,12 @@ class TestHighResPhoto(TestCase):
         self.assertGreater(self.photo.hidpi_preview_img.width, self.photo.hidpi_preview_img.height)
         self.assertEqual(image.format, 'JPEG')
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestMidResPhoto(TestCase):
     def setUp(self):
         self.temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
@@ -348,16 +332,12 @@ class TestMidResPhoto(TestCase):
     def test_empty_hidpi_preview_image(self):
         self.assertFalse(bool(self.photo.hidpi_preview_img))
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestLowResPhoto(TestCase):
     def setUp(self):
         self.temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
@@ -383,15 +363,11 @@ class TestLowResPhoto(TestCase):
         self.assertEqual(self.photo.image.height, 600)
         self.assertEqual(image.format, 'JPEG')
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.temp_file.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestNextAndPreviousPhoto(TestCase):
     def setUp(self):
-        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
+        temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
         self.test_image = get_temporary_image(temp_file, width=100, height=100)
         self.album = Album.objects.create(title='Album')
 
@@ -421,15 +397,11 @@ class TestNextAndPreviousPhoto(TestCase):
     def test_not_next(self):
         self.assertIsNone(self.photo3.next_photo)
 
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.test_image.name)
-        remove(file)
-
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestCustomSortOrderNextAndPrev(TestCase):
     def setUp(self):
-        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
+        temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
         self.test_image = get_temporary_image(temp_file, width=100, height=100)
         self.album = Album.objects.create(title='Album', sort_order='-title')
 
@@ -458,10 +430,6 @@ class TestCustomSortOrderNextAndPrev(TestCase):
 
     def test_not_previous(self):
         self.assertIsNone(self.photo3.previous_photo)
-
-    def tearDown(self):
-        file = path.join(tempfile.gettempdir(), self.test_image.name)
-        remove(file)
 
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
