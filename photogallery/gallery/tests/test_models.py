@@ -1,11 +1,11 @@
 import datetime
 import tempfile
 from os import path, chdir
+from shutil import copy2
 
 from PIL import Image
 from django.core.exceptions import ValidationError
-from django.test import TestCase
-from django.test import override_settings
+from django.test import TestCase, override_settings
 
 from gallery.models import Album, Photo
 
@@ -430,3 +430,17 @@ class TestCustomSortOrderNextAndPrev(TestCase):
 
     def test_not_previous(self):
         self.assertIsNone(self.photo3.previous_photo)
+
+
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class TestExif(TestCase):
+    def setUp(self):
+        image = '/gallery/gallery/tests/testdata/test-photo.jpg'
+        copy2(image, tempfile.gettempdir())
+        self.image_file = 'test-photo.jpg'
+        self.album = Album.objects.create(title='Album')
+        self.photo = Photo(title='Photo', image=self.image_file, album=self.album)
+        self.photo.save()
+
+    def test_has_exif(self):
+        self.assertIsNotNone(self.photo.exifdata)
