@@ -557,7 +557,7 @@ class ExifData(models.Model):
         blank=True,
         null=True
     )
-    altitude = models.PositiveIntegerField(
+    altitude = models.IntegerField(
         _('Altitude'),
         blank=True,
         null=True
