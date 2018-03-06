@@ -179,6 +179,15 @@ class Album(models.Model):
         album_dir = os.path.join('photos', self.directory)
         return album_dir
 
+    def get_photos_in_dir(self):
+        os.chdir(settings.MEDIA_ROOT)
+        extensions = ['*.jpg', '*.jpeg', '*.png']
+        photos = []
+        for ext in extensions:
+            photos.extend(glob(os.path.join(self.media_dir, ext)))
+            photos.extend(glob(os.path.join(self.media_dir, ext.upper())))
+        return photos
+
     def scan_new_photos(self):
         existing_photos = (
             Photo.objects
@@ -186,14 +195,11 @@ class Album(models.Model):
             .filter(album_id=self.pk)
             .values_list('image', flat=True)
         )
-        extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']
-        os.chdir(settings.MEDIA_ROOT)
-        all_photos = glob(os.path.join(self.media_dir, '*'))
+        all_photos = self.get_photos_in_dir()
         new_photos = 0
         errors = ''
         for photo in all_photos:
-            extension = os.path.splitext(photo)[1]
-            if photo not in existing_photos and extension in extensions:
+            if photo not in existing_photos:
                 try:
                     new_photo = Photo(
                         title=os.path.splitext(os.path.basename(photo))[0],
@@ -203,10 +209,7 @@ class Album(models.Model):
                     new_photo.save()
                     new_photos += 1
                 except Exception as e:
-                    errors += (
-                        _('Unable to add photo %(photo_name)s'
-                          'to album: %(error_message)s')
-                        % {'photo_name': os.path.basename(photo), 'error_message': e})
+                    errors += _(f'Unable to add photo {os.path.basename(photo)} to album: {e}')
         return new_photos, errors
 
     def admin_thumbnail(self):
