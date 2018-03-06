@@ -209,7 +209,9 @@ class Album(models.Model):
                     new_photo.save()
                     new_photos += 1
                 except Exception as e:
-                    errors += _(f'Unable to add photo {os.path.basename(photo)} to album: {e}')
+                    errors += _('Failed to add photo %(filename)s to album.') \
+                              % {'filename': os.path.basename(photo)}
+                    log.error(f'Failed to add photo {os.path.basename(photo)}: {e}')
         return new_photos, errors
 
     def admin_thumbnail(self):
