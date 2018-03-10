@@ -128,17 +128,14 @@
   {% if user.is_authenticated %}
     {% if album.pending_photos %}
       <div class="ui container" id="pending-photos">
-        <div class="ui centered stackable grid ">
-          <div class="six wide column">
-            <div class="ui icon message">
-              <i class="notched circle loading icon"></i>
-              <div class="content">
-                <div class="header">
-                  Kuvien käsittely kesken
+        <div class="ui centered stackable grid">
+          <div class="eight wide column">
+            <div class="ui message">
+              <div class="ui blue progress" id="progress">
+                <div class="bar">
+                  <div class="progress"></div>
                 </div>
-                <p>
-                  Albumissa on <span id="count">{{ album.pending_photos }}</span>
-                   {{ album.pending_photos|pluralize:"kuva jonka, kuvaa joiden" }} käsittely on vielä kesken.</p>
+                <div class="label">Käsitellään kuvia (<span id="count">{{ album.pending_photos }}</span> jäljellä)</div>
               </div>
             </div>
           </div>
@@ -250,15 +247,24 @@
 
   {% if user.is_authenticated and album.pending_photos %}
     <script>
+
+        var total = {{ album.pending_photos }};
         var url = '{% url 'gallery:album-in-prog' album.directory %}';
         var count = 0;
-        function GetPendingPhotos() {
+        function GetProgress() {
             $.getJSON(url, function(result){
                 var photoCount = result.in_progress;
 
-                if (photoCount !== 0 && count < 200 ) {
+                if (photoCount !== 0 && count < 500 ) {
+                    var percentage = (total - photoCount) / total * 100;
+
+                    $('#progress').progress({
+                        percent: percentage
+                    });
+
                     $('#count').text(photoCount);
-                    setTimeout(function() { GetPendingPhotos(); }, 2000);
+
+                    setTimeout(function() { GetProgress(); }, 1500);
                     count++
                 }
 
@@ -268,7 +274,7 @@
             });
         }
 
-        window.onload = GetPendingPhotos;
+        window.onload = GetProgress;
     </script>
   {% endif %}
 
