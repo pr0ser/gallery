@@ -44,7 +44,8 @@
     "popup",
     "sidebar",
     "form",
-    "transition"
+    "transition",
+    "progress"
   ],
-  "version": "2.2.13"
+  "version": "2.3.0"
 }

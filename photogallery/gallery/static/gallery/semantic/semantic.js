@@ -1,5 +1,5 @@
  /*
- * # Semantic UI - 2.2.13
+ * # Semantic UI - 2.3.0
  * https://github.com/Semantic-Org/Semantic-UI
  * http://www.semantic-ui.com/
  *
@@ -9,7 +9,7 @@
  *
  */
 /*!
- * # Semantic UI 2.2.13 - Site
+ * # Semantic UI 2.3.0 - Site
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -497,7 +497,7 @@ $.extend($.expr[ ":" ], {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Form Validation
+ * # Semantic UI 2.3.0 - Form Validation
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -856,7 +856,7 @@ $.fn.form = function(parameters) {
                   module.validate.field( validationRules );
                 }
               }
-              else if(settings.on == 'blur' || settings.on == 'change') {
+              else if(settings.on == 'blur') {
                 if(validationRules) {
                   module.validate.field( validationRules );
                 }
@@ -1101,9 +1101,9 @@ $.fn.form = function(parameters) {
                 }
                 else {
                   if(isRadio) {
-                    if(values[name] === undefined) {
+                    if(values[name] === undefined || values[name] == false) {
                       values[name] = (isChecked)
-                        ? true
+                        ? value || true
                         : false
                       ;
                     }
@@ -1761,10 +1761,10 @@ $.fn.form.settings = {
     isExactly            : '{name} must be exactly "{ruleValue}"',
     not                  : '{name} cannot be set to "{ruleValue}"',
     notExactly           : '{name} cannot be set to exactly "{ruleValue}"',
-    contain              : '{name} cannot contain "{ruleValue}"',
-    containExactly       : '{name} cannot contain exactly "{ruleValue}"',
-    doesntContain        : '{name} must contain  "{ruleValue}"',
-    doesntContainExactly : '{name} must contain exactly "{ruleValue}"',
+    contain              : '{name} must contain "{ruleValue}"',
+    containExactly       : '{name} must contain exactly "{ruleValue}"',
+    doesntContain        : '{name} cannot contain  "{ruleValue}"',
+    doesntContainExactly : '{name} cannot contain exactly "{ruleValue}"',
     minLength            : '{name} must be at least {ruleValue} characters',
     length               : '{name} must be at least {ruleValue} characters',
     exactLength          : '{name} must be exactly {ruleValue} characters',
@@ -2204,7 +2204,7 @@ $.fn.form.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Checkbox
+ * # Semantic UI 2.3.0 - Checkbox
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -3036,7 +3036,7 @@ $.fn.checkbox.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Dimmer
+ * # Semantic UI 2.3.0 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -3275,6 +3275,7 @@ $.fn.dimmer = function(parameters) {
               }
               $dimmer
                 .transition({
+                  displayType : 'flex',
                   animation   : settings.transition + ' in',
                   queue       : false,
                   duration    : module.get.duration(),
@@ -3319,6 +3320,7 @@ $.fn.dimmer = function(parameters) {
               module.verbose('Hiding dimmer with css');
               $dimmer
                 .transition({
+                  displayType : 'flex',
                   animation   : settings.transition + ' out',
                   queue       : false,
                   duration    : module.get.duration(),
@@ -3745,7 +3747,7 @@ $.fn.dimmer.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Dropdown
+ * # Semantic UI 2.3.0 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -4242,7 +4244,7 @@ $.fn.dropdown = function(parameters) {
             ? callback
             : function(){}
           ;
-          if( module.is.active() ) {
+          if( module.is.active() && !module.is.animatingOutward() ) {
             module.debug('Hiding dropdown');
             if(settings.onHide.call(element) !== false) {
               module.animate.hide(function() {
@@ -6181,7 +6183,6 @@ $.fn.dropdown = function(parameters) {
             var
               escapedValue = module.escape.value(value),
               hasInput     = ($input.length > 0),
-              isAddition   = !module.has.value(value),
               currentValue = module.get.values(),
               stringValue  = (value !== undefined)
                 ? String(value)
@@ -6284,8 +6285,8 @@ $.fn.dropdown = function(parameters) {
                       module.save.remoteData(selectedText, selectedValue);
                     }
                     if(settings.useLabels) {
-                      module.add.value(selectedValue, selectedText, $selected);
                       module.add.label(selectedValue, selectedText, shouldAnimate);
+                      module.add.value(selectedValue, selectedText, $selected);
                       module.set.activeItem($selected);
                       module.filterActive();
                       module.select.nextAvailable($selectedItem);
@@ -6333,8 +6334,8 @@ $.fn.dropdown = function(parameters) {
             ;
             $label = settings.onLabelCreate.call($label, escapedValue, text);
 
-            if(module.has.label(value)) {
-              module.debug('Label already exists, skipping', escapedValue);
+            if(module.has.value(value)) {
+              module.debug('User selection already exists, skipping', escapedValue);
               return;
             }
             if(settings.label.variation) {
@@ -6473,6 +6474,10 @@ $.fn.dropdown = function(parameters) {
               currentValue = module.get.values(),
               newValue
             ;
+            if(module.has.value(addedValue)) {
+              module.debug('Value already selected');
+              return;
+            }
             if(addedValue === '') {
               module.debug('Cannot select blank values from multiselect');
               return;
@@ -6804,6 +6809,12 @@ $.fn.dropdown = function(parameters) {
             return (module.get.query() !== '');
           },
           value: function(value) {
+            return (settings.ignoreCase)
+              ? module.has.valueIgnoringCase(value)
+              : module.has.valueMatchingCase(value)
+            ;
+          },
+          valueMatchingCase: function(value) {
             var
               values   = module.get.values(),
               hasValue = $.isArray(values)
@@ -6814,12 +6825,34 @@ $.fn.dropdown = function(parameters) {
               ? true
               : false
             ;
+          },
+          valueIgnoringCase: function(value) {
+            var
+              values   = module.get.values(),
+              hasValue = false
+            ;
+            if(!$.isArray(values)) {
+              values = [values];
+            }
+            $.each(values, function(index, existingValue) {
+              if(String(value).toLowerCase() == String(existingValue).toLowerCase()) {
+                hasValue = true;
+                return false;
+              }
+            });
+            return hasValue;
           }
         },
 
         is: {
           active: function() {
             return $module.hasClass(className.active);
+          },
+          animatingInward: function() {
+            return $menu.transition('is inward');
+          },
+          animatingOutward: function() {
+            return $menu.transition('is outward');
           },
           bubbledLabelClick: function(event) {
             return $(event.target).is('select, input') && $module.closest('label').length > 0;
@@ -6956,6 +6989,9 @@ $.fn.dropdown = function(parameters) {
             ;
             calculations = {
               context: {
+                offset    : ($context.get(0) === window)
+                  ? { top: 0, left: 0}
+                  : $context.offset(),
                 scrollTop : $context.scrollTop(),
                 height    : $context.outerHeight()
               },
@@ -6968,8 +7004,8 @@ $.fn.dropdown = function(parameters) {
               calculations.menu.offset.top += calculations.context.scrollTop;
             }
             onScreen = {
-              above : (calculations.context.scrollTop) <= calculations.menu.offset.top - calculations.menu.height,
-              below : (calculations.context.scrollTop + calculations.context.height) >= calculations.menu.offset.top + calculations.menu.height
+              above : (calculations.context.scrollTop) <= calculations.menu.offset.top - calculations.context.offset.top - calculations.menu.height,
+              below : (calculations.context.scrollTop + calculations.context.height) >= calculations.menu.offset.top - calculations.context.offset.top + calculations.menu.height
             };
             if(onScreen.below) {
               module.verbose('Dropdown can fit in context downward', onScreen);
@@ -6998,6 +7034,9 @@ $.fn.dropdown = function(parameters) {
             ;
             calculations = {
               context: {
+                offset     : ($context.get(0) === window)
+                  ? { top: 0, left: 0}
+                  : $context.offset(),
                 scrollLeft : $context.scrollLeft(),
                 width      : $context.outerWidth()
               },
@@ -7009,7 +7048,7 @@ $.fn.dropdown = function(parameters) {
             if(module.is.horizontallyScrollableContext()) {
               calculations.menu.offset.left += calculations.context.scrollLeft;
             }
-            isOffscreenRight = (calculations.menu.offset.left + calculations.menu.width >= calculations.context.scrollLeft + calculations.context.width);
+            isOffscreenRight = (calculations.menu.offset.left - calculations.context.offset.left + calculations.menu.width >= calculations.context.scrollLeft + calculations.context.width);
             if(isOffscreenRight) {
               module.verbose('Dropdown cannot fit in context rightward', isOffscreenRight);
               canOpenRightward = false;
@@ -7115,7 +7154,7 @@ $.fn.dropdown = function(parameters) {
                     duration   : settings.duration,
                     debug      : settings.debug,
                     verbose    : settings.verbose,
-                    queue      : true,
+                    queue      : false,
                     onStart    : start,
                     onComplete : function() {
                       callback.call(element);
@@ -7403,7 +7442,8 @@ $.fn.dropdown.settings = {
   forceSelection         : true,       // force a choice on blur with search selection
 
   allowAdditions         : false,      // whether multiple select should allow user added values
-  hideAdditions          : true,      // whether or not to hide special message prompting a user they can enter a value
+  ignoreCase             : false,       // whether to consider values not matching in case to be the same
+  hideAdditions          : true,       // whether or not to hide special message prompting a user they can enter a value
 
   maxSelections          : false,      // When set to a number limits the number of selections to this count
   useLabels              : true,       // whether multiple select should filter currently active selections from choices
@@ -7625,7 +7665,7 @@ $.fn.dropdown.settings.templates = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Modal
+ * # Semantic UI 2.3.0 - Modal
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -7734,6 +7774,10 @@ $.fn.modal = function(parameters) {
             var
               defaultSettings = {
                 debug      : settings.debug,
+                variation  : settings.centered
+                  ? false
+                  : 'top aligned'
+                ,
                 dimmerName : 'modals'
               },
               dimmerSettings = $.extend(true, defaultSettings, settings.dimmerSettings)
@@ -7791,7 +7835,6 @@ $.fn.modal = function(parameters) {
           module.cacheSizes();
           module.set.screenHeight();
           module.set.type();
-          module.set.position();
         },
 
         refreshModals: function() {
@@ -7864,21 +7907,23 @@ $.fn.modal = function(parameters) {
             module.hide();
           },
           click: function(event) {
+            if(!settings.closable) {
+              module.verbose('Dimmer clicked but closable setting is disabled');
+              return;
+            }
             var
               $target   = $(event.target),
               isInModal = ($target.closest(selector.modal).length > 0),
               isInDOM   = $.contains(document.documentElement, event.target)
             ;
-            if(!isInModal && isInDOM) {
+            if(!isInModal && isInDOM && module.is.active()) {
               module.debug('Dimmer clicked, hiding all modals');
-              if( module.is.active() ) {
-                module.remove.clickaway();
-                if(settings.allowMultiple) {
-                  module.hide();
-                }
-                else {
-                  module.hideAll();
-                }
+              module.remove.clickaway();
+              if(settings.allowMultiple) {
+                module.hide();
+              }
+              else {
+                module.hideAll();
               }
             }
           },
@@ -7946,7 +7991,6 @@ $.fn.modal = function(parameters) {
 
             module.showDimmer();
             module.cacheSizes();
-            module.set.position();
             module.set.screenHeight();
             module.set.type();
             module.set.clickaway();
@@ -8113,7 +8157,13 @@ $.fn.modal = function(parameters) {
 
         save: {
           focus: function() {
-            $focusedElement = $(document.activeElement).blur();
+            var
+              $activeElement = $(document.activeElement),
+              inCurrentModal = $activeElement.closest($module).length > 0
+            ;
+            if(!inCurrentModal) {
+              $focusedElement = $(document.activeElement).blur();
+            }
           }
         },
 
@@ -8130,11 +8180,9 @@ $.fn.modal = function(parameters) {
             $module.removeClass(className.active);
           },
           clickaway: function() {
-            if(settings.closable) {
-              $dimmer
-                .off('click' + elementEventNamespace)
-              ;
-            }
+            $dimmer
+              .off('click' + elementEventNamespace)
+            ;
           },
           bodyStyle: function() {
             if($body.attr('style') === '') {
@@ -8232,11 +8280,9 @@ $.fn.modal = function(parameters) {
             }
           },
           clickaway: function() {
-            if(settings.closable) {
-              $dimmer
-                .on('click' + elementEventNamespace, module.event.click)
-              ;
-            }
+            $dimmer
+              .on('click' + elementEventNamespace, module.event.click)
+            ;
           },
           dimmerSettings: function() {
             if($.fn.dimmer === undefined) {
@@ -8247,8 +8293,11 @@ $.fn.modal = function(parameters) {
               defaultSettings = {
                 debug      : settings.debug,
                 dimmerName : 'modals',
-                variation  : false,
                 closable   : 'auto',
+                variation  : settings.centered
+                  ? false
+                  : 'top aligned'
+                ,
                 duration   : {
                   show     : settings.duration,
                   hide     : settings.duration
@@ -8302,25 +8351,6 @@ $.fn.modal = function(parameters) {
             else {
               module.verbose('Modal cannot fit on screen setting to scrolling');
               module.set.scrolling();
-            }
-          },
-          position: function() {
-            module.verbose('Centering modal on page', module.cache);
-            if(module.can.fit()) {
-              $module
-                .css({
-                  top: '',
-                  marginTop: module.cache.topOffset
-                })
-              ;
-            }
-            else {
-              $module
-                .css({
-                  marginTop : '',
-                  top       : $document.scrollTop()
-                })
-              ;
             }
           },
           undetached: function() {
@@ -8531,6 +8561,8 @@ $.fn.modal.settings = {
   inverted       : false,
   blurring       : false,
 
+  centered       : true,
+
   dimmerSettings : {
     closable : false,
     useCSS   : true
@@ -8593,7 +8625,7 @@ $.fn.modal.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Popup
+ * # Semantic UI 2.3.0 - Popup
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -9082,7 +9114,7 @@ $.fn.popup = function(parameters) {
           },
           content: function() {
             $module.removeData(metadata.content);
-            return $module.data(metadata.content) || $module.attr('title') || settings.content;
+            return $module.data(metadata.content) || settings.content || $module.attr('title');
           },
           variation: function() {
             $module.removeData(metadata.variation);
@@ -9096,9 +9128,10 @@ $.fn.popup = function(parameters) {
           },
           calculations: function() {
             var
-              targetElement    = $target[0],
-              isWindow         = ($boundary[0] == window),
-              targetPosition   = (settings.inline || (settings.popup && settings.movePopup))
+              $popupOffsetParent = module.get.offsetParent($popup),
+              targetElement      = $target[0],
+              isWindow           = ($boundary[0] == window),
+              targetPosition     = (settings.inline || (settings.popup && settings.movePopup))
                 ? $target.position()
                 : $target.offset(),
               screenPosition = (isWindow)
@@ -9142,6 +9175,17 @@ $.fn.popup = function(parameters) {
                 height : $boundary.height()
               }
             };
+
+            // if popup offset context is not same as target, then adjust calculations
+            if($popupOffsetParent.get(0) !== $offsetParent.get(0)) {
+              var
+                popupOffset        = $popupOffsetParent.offset()
+              ;
+              calculations.target.top -= popupOffset.top;
+              calculations.target.left -= popupOffset.left;
+              calculations.parent.width = $popupOffsetParent.outerWidth();
+              calculations.parent.height = $popupOffsetParent.outerHeight();
+            }
 
             // add in container calcs if fluid
             if( settings.setFluidWidth && module.is.fluid() ) {
@@ -9219,11 +9263,11 @@ $.fn.popup = function(parameters) {
             }
             return distanceFromBoundary;
           },
-          offsetParent: function($target) {
+          offsetParent: function($element) {
             var
-              element = ($target !== undefined)
-                ? $target[0]
-                : $module[0],
+              element = ($element !== undefined)
+                ? $element[0]
+                : $target[0],
               parentNode = element.parentNode,
               $node    = $(parentNode)
             ;
@@ -9231,14 +9275,14 @@ $.fn.popup = function(parameters) {
               var
                 is2D     = ($node.css('transform') === 'none'),
                 isStatic = ($node.css('position') === 'static'),
-                isHTML   = $node.is('html')
+                isBody   = $node.is('body')
               ;
-              while(parentNode && !isHTML && isStatic && is2D) {
+              while(parentNode && !isBody && isStatic && is2D) {
                 parentNode = parentNode.parentNode;
                 $node    = $(parentNode);
                 is2D     = ($node.css('transform') === 'none');
                 isStatic = ($node.css('position') === 'static');
-                isHTML   = $node.is('html');
+                isBody   = $node.is('body');
               }
             }
             return ($node && $node.length > 0)
@@ -9346,6 +9390,18 @@ $.fn.popup = function(parameters) {
             target = calculations.target;
             popup  = calculations.popup;
             parent = calculations.parent;
+
+            if(module.should.centerArrow(calculations)) {
+              module.verbose('Adjusting offset to center arrow on small target element');
+              if(position == 'top left' || position == 'bottom left') {
+                offset += (target.width / 2)
+                offset -= settings.arrowPixelsFromEdge;
+              }
+              if(position == 'top right' || position == 'bottom right') {
+                offset -= (target.width / 2)
+                offset += settings.arrowPixelsFromEdge;
+              }
+            }
 
             if(target.width === 0 && target.height === 0 && !module.is.svg(target.element)) {
               module.debug('Popup target is hidden, no action taken');
@@ -9640,6 +9696,12 @@ $.fn.popup = function(parameters) {
           }
         },
 
+        should: {
+          centerArrow: function(calculations) {
+            return !module.is.basic() && calculations.target.width <= (settings.arrowPixelsFromEdge * 2);
+          }
+        },
+
         is: {
           offstage: function(distanceFromBoundary, position) {
             var
@@ -9661,6 +9723,9 @@ $.fn.popup = function(parameters) {
           },
           svg: function(element) {
             return module.supports.svg() && (element instanceof SVGGraphicsElement);
+          },
+          basic: function() {
+            return $module.hasClass(className.basic);
           },
           active: function() {
             return $module.hasClass(className.active);
@@ -9974,8 +10039,11 @@ $.fn.popup.settings = {
   // specify position to appear even if it doesn't fit
   lastResort     : false,
 
+  // number of pixels from edge of popup to pointing arrow center (used from centering)
+  arrowPixelsFromEdge: 20,
+
   // delay used to prevent accidental refiring of animations due to user error
-  delay        : {
+  delay : {
     show : 50,
     hide : 70
   },
@@ -10019,6 +10087,7 @@ $.fn.popup.settings = {
 
   className   : {
     active       : 'active',
+    basic        : 'basic',
     animating    : 'animating',
     dropdown     : 'dropdown',
     fluid        : 'fluid',
@@ -10080,7 +10149,7 @@ $.fn.popup.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Sidebar
+ * # Semantic UI 2.3.0 - Sidebar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -11114,7 +11183,7 @@ $.fn.sidebar.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.2.13 - Transition
+ * # Semantic UI 2.3.0 - Transition
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -12202,6 +12271,938 @@ $.fn.transition.settings = {
     repeated    : 'That animation is already occurring, cancelling repeated animation',
     method      : 'The method you called is not defined',
     support     : 'This browser does not support CSS animations'
+  }
+
+};
+
+
+})( jQuery, window, document );
+
+/*!
+ * # Semantic UI 2.3.0 - Progress
+ * http://github.com/semantic-org/semantic-ui/
+ *
+ *
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+;(function ($, window, document, undefined) {
+
+"use strict";
+
+window = (typeof window != 'undefined' && window.Math == Math)
+  ? window
+  : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+;
+
+var
+  global = (typeof window != 'undefined' && window.Math == Math)
+    ? window
+    : (typeof self != 'undefined' && self.Math == Math)
+      ? self
+      : Function('return this')()
+;
+
+$.fn.progress = function(parameters) {
+  var
+    $allModules    = $(this),
+
+    moduleSelector = $allModules.selector || '',
+
+    time           = new Date().getTime(),
+    performance    = [],
+
+    query          = arguments[0],
+    methodInvoked  = (typeof query == 'string'),
+    queryArguments = [].slice.call(arguments, 1),
+
+    returnedValue
+  ;
+
+  $allModules
+    .each(function() {
+      var
+        settings          = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.progress.settings, parameters)
+          : $.extend({}, $.fn.progress.settings),
+
+        className       = settings.className,
+        metadata        = settings.metadata,
+        namespace       = settings.namespace,
+        selector        = settings.selector,
+        error           = settings.error,
+
+        eventNamespace  = '.' + namespace,
+        moduleNamespace = 'module-' + namespace,
+
+        $module         = $(this),
+        $bar            = $(this).find(selector.bar),
+        $progress       = $(this).find(selector.progress),
+        $label          = $(this).find(selector.label),
+
+        element         = this,
+        instance        = $module.data(moduleNamespace),
+
+        animating = false,
+        transitionEnd,
+        module
+      ;
+
+      module = {
+
+        initialize: function() {
+          module.debug('Initializing progress bar', settings);
+
+          module.set.duration();
+          module.set.transitionEvent();
+
+          module.read.metadata();
+          module.read.settings();
+
+          module.instantiate();
+        },
+
+        instantiate: function() {
+          module.verbose('Storing instance of progress', module);
+          instance = module;
+          $module
+            .data(moduleNamespace, module)
+          ;
+        },
+        destroy: function() {
+          module.verbose('Destroying previous progress for', $module);
+          clearInterval(instance.interval);
+          module.remove.state();
+          $module.removeData(moduleNamespace);
+          instance = undefined;
+        },
+
+        reset: function() {
+          module.remove.nextValue();
+          module.update.progress(0);
+        },
+
+        complete: function() {
+          if(module.percent === undefined || module.percent < 100) {
+            module.remove.progressPoll();
+            module.set.percent(100);
+          }
+        },
+
+        read: {
+          metadata: function() {
+            var
+              data = {
+                percent : $module.data(metadata.percent),
+                total   : $module.data(metadata.total),
+                value   : $module.data(metadata.value)
+              }
+            ;
+            if(data.percent) {
+              module.debug('Current percent value set from metadata', data.percent);
+              module.set.percent(data.percent);
+            }
+            if(data.total) {
+              module.debug('Total value set from metadata', data.total);
+              module.set.total(data.total);
+            }
+            if(data.value) {
+              module.debug('Current value set from metadata', data.value);
+              module.set.value(data.value);
+              module.set.progress(data.value);
+            }
+          },
+          settings: function() {
+            if(settings.total !== false) {
+              module.debug('Current total set in settings', settings.total);
+              module.set.total(settings.total);
+            }
+            if(settings.value !== false) {
+              module.debug('Current value set in settings', settings.value);
+              module.set.value(settings.value);
+              module.set.progress(module.value);
+            }
+            if(settings.percent !== false) {
+              module.debug('Current percent set in settings', settings.percent);
+              module.set.percent(settings.percent);
+            }
+          }
+        },
+
+        bind: {
+          transitionEnd: function(callback) {
+            var
+              transitionEnd = module.get.transitionEnd()
+            ;
+            $bar
+              .one(transitionEnd + eventNamespace, function(event) {
+                clearTimeout(module.failSafeTimer);
+                callback.call(this, event);
+              })
+            ;
+            module.failSafeTimer = setTimeout(function() {
+              $bar.triggerHandler(transitionEnd);
+            }, settings.duration + settings.failSafeDelay);
+            module.verbose('Adding fail safe timer', module.timer);
+          }
+        },
+
+        increment: function(incrementValue) {
+          var
+            maxValue,
+            startValue,
+            newValue
+          ;
+          if( module.has.total() ) {
+            startValue     = module.get.value();
+            incrementValue = incrementValue || 1;
+            newValue       = startValue + incrementValue;
+          }
+          else {
+            startValue     = module.get.percent();
+            incrementValue = incrementValue || module.get.randomValue();
+
+            newValue       = startValue + incrementValue;
+            maxValue       = 100;
+            module.debug('Incrementing percentage by', startValue, newValue);
+          }
+          newValue = module.get.normalizedValue(newValue);
+          module.set.progress(newValue);
+        },
+        decrement: function(decrementValue) {
+          var
+            total     = module.get.total(),
+            startValue,
+            newValue
+          ;
+          if(total) {
+            startValue     =  module.get.value();
+            decrementValue =  decrementValue || 1;
+            newValue       =  startValue - decrementValue;
+            module.debug('Decrementing value by', decrementValue, startValue);
+          }
+          else {
+            startValue     =  module.get.percent();
+            decrementValue =  decrementValue || module.get.randomValue();
+            newValue       =  startValue - decrementValue;
+            module.debug('Decrementing percentage by', decrementValue, startValue);
+          }
+          newValue = module.get.normalizedValue(newValue);
+          module.set.progress(newValue);
+        },
+
+        has: {
+          progressPoll: function() {
+            return module.progressPoll;
+          },
+          total: function() {
+            return (module.get.total() !== false);
+          }
+        },
+
+        get: {
+          text: function(templateText) {
+            var
+              value   = module.value                || 0,
+              total   = module.total                || 0,
+              percent = (animating)
+                ? module.get.displayPercent()
+                : module.percent || 0,
+              left = (module.total > 0)
+                ? (total - value)
+                : (100 - percent)
+            ;
+            templateText = templateText || '';
+            templateText = templateText
+              .replace('{value}', value)
+              .replace('{total}', total)
+              .replace('{left}', left)
+              .replace('{percent}', percent)
+            ;
+            module.verbose('Adding variables to progress bar text', templateText);
+            return templateText;
+          },
+
+          normalizedValue: function(value) {
+            if(value < 0) {
+              module.debug('Value cannot decrement below 0');
+              return 0;
+            }
+            if(module.has.total()) {
+              if(value > module.total) {
+                module.debug('Value cannot increment above total', module.total);
+                return module.total;
+              }
+            }
+            else if(value > 100 ) {
+              module.debug('Value cannot increment above 100 percent');
+              return 100;
+            }
+            return value;
+          },
+
+          updateInterval: function() {
+            if(settings.updateInterval == 'auto') {
+              return settings.duration;
+            }
+            return settings.updateInterval;
+          },
+
+          randomValue: function() {
+            module.debug('Generating random increment percentage');
+            return Math.floor((Math.random() * settings.random.max) + settings.random.min);
+          },
+
+          numericValue: function(value) {
+            return (typeof value === 'string')
+              ? (value.replace(/[^\d.]/g, '') !== '')
+                ? +(value.replace(/[^\d.]/g, ''))
+                : false
+              : value
+            ;
+          },
+
+          transitionEnd: function() {
+            var
+              element     = document.createElement('element'),
+              transitions = {
+                'transition'       :'transitionend',
+                'OTransition'      :'oTransitionEnd',
+                'MozTransition'    :'transitionend',
+                'WebkitTransition' :'webkitTransitionEnd'
+              },
+              transition
+            ;
+            for(transition in transitions){
+              if( element.style[transition] !== undefined ){
+                return transitions[transition];
+              }
+            }
+          },
+
+          // gets current displayed percentage (if animating values this is the intermediary value)
+          displayPercent: function() {
+            var
+              barWidth       = $bar.width(),
+              totalWidth     = $module.width(),
+              minDisplay     = parseInt($bar.css('min-width'), 10),
+              displayPercent = (barWidth > minDisplay)
+                ? (barWidth / totalWidth * 100)
+                : module.percent
+            ;
+            return (settings.precision > 0)
+              ? Math.round(displayPercent * (10 * settings.precision)) / (10 * settings.precision)
+              : Math.round(displayPercent)
+            ;
+          },
+
+          percent: function() {
+            return module.percent || 0;
+          },
+          value: function() {
+            return module.nextValue || module.value || 0;
+          },
+          total: function() {
+            return module.total || false;
+          }
+        },
+
+        create: {
+          progressPoll: function() {
+            module.progressPoll = setTimeout(function() {
+              module.update.toNextValue();
+              module.remove.progressPoll();
+            }, module.get.updateInterval());
+          },
+        },
+
+        is: {
+          complete: function() {
+            return module.is.success() || module.is.warning() || module.is.error();
+          },
+          success: function() {
+            return $module.hasClass(className.success);
+          },
+          warning: function() {
+            return $module.hasClass(className.warning);
+          },
+          error: function() {
+            return $module.hasClass(className.error);
+          },
+          active: function() {
+            return $module.hasClass(className.active);
+          },
+          visible: function() {
+            return $module.is(':visible');
+          }
+        },
+
+        remove: {
+          progressPoll: function() {
+            module.verbose('Removing progress poll timer');
+            if(module.progressPoll) {
+              clearTimeout(module.progressPoll);
+              delete module.progressPoll;
+            }
+          },
+          nextValue: function() {
+            module.verbose('Removing progress value stored for next update');
+            delete module.nextValue;
+          },
+          state: function() {
+            module.verbose('Removing stored state');
+            delete module.total;
+            delete module.percent;
+            delete module.value;
+          },
+          active: function() {
+            module.verbose('Removing active state');
+            $module.removeClass(className.active);
+          },
+          success: function() {
+            module.verbose('Removing success state');
+            $module.removeClass(className.success);
+          },
+          warning: function() {
+            module.verbose('Removing warning state');
+            $module.removeClass(className.warning);
+          },
+          error: function() {
+            module.verbose('Removing error state');
+            $module.removeClass(className.error);
+          }
+        },
+
+        set: {
+          barWidth: function(value) {
+            if(value > 100) {
+              module.error(error.tooHigh, value);
+            }
+            else if (value < 0) {
+              module.error(error.tooLow, value);
+            }
+            else {
+              $bar
+                .css('width', value + '%')
+              ;
+              $module
+                .attr('data-percent', parseInt(value, 10))
+              ;
+            }
+          },
+          duration: function(duration) {
+            duration = duration || settings.duration;
+            duration = (typeof duration == 'number')
+              ? duration + 'ms'
+              : duration
+            ;
+            module.verbose('Setting progress bar transition duration', duration);
+            $bar
+              .css({
+                'transition-duration':  duration
+              })
+            ;
+          },
+          percent: function(percent) {
+            percent = (typeof percent == 'string')
+              ? +(percent.replace('%', ''))
+              : percent
+            ;
+            // round display percentage
+            percent = (settings.precision > 0)
+              ? Math.round(percent * (10 * settings.precision)) / (10 * settings.precision)
+              : Math.round(percent)
+            ;
+            module.percent = percent;
+            if( !module.has.total() ) {
+              module.value = (settings.precision > 0)
+                ? Math.round( (percent / 100) * module.total * (10 * settings.precision)) / (10 * settings.precision)
+                : Math.round( (percent / 100) * module.total * 10) / 10
+              ;
+              if(settings.limitValues) {
+                module.value = (module.value > 100)
+                  ? 100
+                  : (module.value < 0)
+                    ? 0
+                    : module.value
+                ;
+              }
+            }
+            module.set.barWidth(percent);
+            module.set.labelInterval();
+            module.set.labels();
+            settings.onChange.call(element, percent, module.value, module.total);
+          },
+          labelInterval: function() {
+            var
+              animationCallback = function() {
+                module.verbose('Bar finished animating, removing continuous label updates');
+                clearInterval(module.interval);
+                animating = false;
+                module.set.labels();
+              }
+            ;
+            clearInterval(module.interval);
+            module.bind.transitionEnd(animationCallback);
+            animating = true;
+            module.interval = setInterval(function() {
+              var
+                isInDOM = $.contains(document.documentElement, element)
+              ;
+              if(!isInDOM) {
+                clearInterval(module.interval);
+                animating = false;
+              }
+              module.set.labels();
+            }, settings.framerate);
+          },
+          labels: function() {
+            module.verbose('Setting both bar progress and outer label text');
+            module.set.barLabel();
+            module.set.state();
+          },
+          label: function(text) {
+            text = text || '';
+            if(text) {
+              text = module.get.text(text);
+              module.verbose('Setting label to text', text);
+              $label.text(text);
+            }
+          },
+          state: function(percent) {
+            percent = (percent !== undefined)
+              ? percent
+              : module.percent
+            ;
+            if(percent === 100) {
+              if(settings.autoSuccess && !(module.is.warning() || module.is.error() || module.is.success())) {
+                module.set.success();
+                module.debug('Automatically triggering success at 100%');
+              }
+              else {
+                module.verbose('Reached 100% removing active state');
+                module.remove.active();
+                module.remove.progressPoll();
+              }
+            }
+            else if(percent > 0) {
+              module.verbose('Adjusting active progress bar label', percent);
+              module.set.active();
+            }
+            else {
+              module.remove.active();
+              module.set.label(settings.text.active);
+            }
+          },
+          barLabel: function(text) {
+            if(text !== undefined) {
+              $progress.text( module.get.text(text) );
+            }
+            else if(settings.label == 'ratio' && module.total) {
+              module.verbose('Adding ratio to bar label');
+              $progress.text( module.get.text(settings.text.ratio) );
+            }
+            else if(settings.label == 'percent') {
+              module.verbose('Adding percentage to bar label');
+              $progress.text( module.get.text(settings.text.percent) );
+            }
+          },
+          active: function(text) {
+            text = text || settings.text.active;
+            module.debug('Setting active state');
+            if(settings.showActivity && !module.is.active() ) {
+              $module.addClass(className.active);
+            }
+            module.remove.warning();
+            module.remove.error();
+            module.remove.success();
+            text = settings.onLabelUpdate('active', text, module.value, module.total);
+            if(text) {
+              module.set.label(text);
+            }
+            module.bind.transitionEnd(function() {
+              settings.onActive.call(element, module.value, module.total);
+            });
+          },
+          success : function(text) {
+            text = text || settings.text.success || settings.text.active;
+            module.debug('Setting success state');
+            $module.addClass(className.success);
+            module.remove.active();
+            module.remove.warning();
+            module.remove.error();
+            module.complete();
+            if(settings.text.success) {
+              text = settings.onLabelUpdate('success', text, module.value, module.total);
+              module.set.label(text);
+            }
+            else {
+              text = settings.onLabelUpdate('active', text, module.value, module.total);
+              module.set.label(text);
+            }
+            module.bind.transitionEnd(function() {
+              settings.onSuccess.call(element, module.total);
+            });
+          },
+          warning : function(text) {
+            text = text || settings.text.warning;
+            module.debug('Setting warning state');
+            $module.addClass(className.warning);
+            module.remove.active();
+            module.remove.success();
+            module.remove.error();
+            module.complete();
+            text = settings.onLabelUpdate('warning', text, module.value, module.total);
+            if(text) {
+              module.set.label(text);
+            }
+            module.bind.transitionEnd(function() {
+              settings.onWarning.call(element, module.value, module.total);
+            });
+          },
+          error : function(text) {
+            text = text || settings.text.error;
+            module.debug('Setting error state');
+            $module.addClass(className.error);
+            module.remove.active();
+            module.remove.success();
+            module.remove.warning();
+            module.complete();
+            text = settings.onLabelUpdate('error', text, module.value, module.total);
+            if(text) {
+              module.set.label(text);
+            }
+            module.bind.transitionEnd(function() {
+              settings.onError.call(element, module.value, module.total);
+            });
+          },
+          transitionEvent: function() {
+            transitionEnd = module.get.transitionEnd();
+          },
+          total: function(totalValue) {
+            module.total = totalValue;
+          },
+          value: function(value) {
+            module.value = value;
+          },
+          progress: function(value) {
+            if(!module.has.progressPoll()) {
+              module.debug('First update in progress update interval, immediately updating', value);
+              module.update.progress(value);
+              module.create.progressPoll();
+            }
+            else {
+              module.debug('Updated within interval, setting next update to use new value', value);
+              module.set.nextValue(value);
+            }
+          },
+          nextValue: function(value) {
+            module.nextValue = value;
+          }
+        },
+
+        update: {
+          toNextValue: function() {
+            var
+              nextValue = module.nextValue
+            ;
+            if(nextValue) {
+              module.debug('Update interval complete using last updated value', nextValue);
+              module.update.progress(nextValue);
+              module.remove.nextValue();
+            }
+          },
+          progress: function(value) {
+            var
+              percentComplete
+            ;
+            value = module.get.numericValue(value);
+            if(value === false) {
+              module.error(error.nonNumeric, value);
+            }
+            value = module.get.normalizedValue(value);
+            if( module.has.total() ) {
+              module.set.value(value);
+              percentComplete = (value / module.total) * 100;
+              module.debug('Calculating percent complete from total', percentComplete);
+              module.set.percent( percentComplete );
+            }
+            else {
+              percentComplete = value;
+              module.debug('Setting value to exact percentage value', percentComplete);
+              module.set.percent( percentComplete );
+            }
+          }
+        },
+
+        setting: function(name, value) {
+          module.debug('Changing setting', name, value);
+          if( $.isPlainObject(name) ) {
+            $.extend(true, settings, name);
+          }
+          else if(value !== undefined) {
+            if($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            }
+            else {
+              settings[name] = value;
+            }
+          }
+          else {
+            return settings[name];
+          }
+        },
+        internal: function(name, value) {
+          if( $.isPlainObject(name) ) {
+            $.extend(true, module, name);
+          }
+          else if(value !== undefined) {
+            module[name] = value;
+          }
+          else {
+            return module[name];
+          }
+        },
+        debug: function() {
+          if(!settings.silent && settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function() {
+          if(!settings.silent && settings.verbose && settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function() {
+          if(!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
+        },
+        performance: {
+          log: function(message) {
+            var
+              currentTime,
+              executionTime,
+              previousTime
+            ;
+            if(settings.performance) {
+              currentTime   = new Date().getTime();
+              previousTime  = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time          = currentTime;
+              performance.push({
+                'Name'           : message[0],
+                'Arguments'      : [].slice.call(message, 1) || '',
+                'Element'        : element,
+                'Execution Time' : executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function() {
+            var
+              title = settings.name + ':',
+              totalTime = 0
+            ;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function(index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if(moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if(console.table) {
+                console.table(performance);
+              }
+              else {
+                $.each(performance, function(index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time']+'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function(query, passedArguments, context) {
+          var
+            object = instance,
+            maxDepth,
+            found,
+            response
+          ;
+          passedArguments = passedArguments || queryArguments;
+          context         = element         || context;
+          if(typeof query == 'string' && object !== undefined) {
+            query    = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function(depth, value) {
+              var camelCaseValue = (depth != maxDepth)
+                ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+                : query
+              ;
+              if( $.isPlainObject( object[camelCaseValue] ) && (depth != maxDepth) ) {
+                object = object[camelCaseValue];
+              }
+              else if( object[camelCaseValue] !== undefined ) {
+                found = object[camelCaseValue];
+                return false;
+              }
+              else if( $.isPlainObject( object[value] ) && (depth != maxDepth) ) {
+                object = object[value];
+              }
+              else if( object[value] !== undefined ) {
+                found = object[value];
+                return false;
+              }
+              else {
+                module.error(error.method, query);
+                return false;
+              }
+            });
+          }
+          if ( $.isFunction( found ) ) {
+            response = found.apply(context, passedArguments);
+          }
+          else if(found !== undefined) {
+            response = found;
+          }
+          if($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          }
+          else if(returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          }
+          else if(response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+
+      if(methodInvoked) {
+        if(instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      }
+      else {
+        if(instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+    })
+  ;
+
+  return (returnedValue !== undefined)
+    ? returnedValue
+    : this
+  ;
+};
+
+$.fn.progress.settings = {
+
+  name         : 'Progress',
+  namespace    : 'progress',
+
+  silent       : false,
+  debug        : false,
+  verbose      : false,
+  performance  : true,
+
+  random       : {
+    min : 2,
+    max : 5
+  },
+
+  duration       : 300,
+
+  updateInterval : 'auto',
+
+  autoSuccess    : true,
+  showActivity   : true,
+  limitValues    : true,
+
+  label          : 'percent',
+  precision      : 0,
+  framerate      : (1000 / 30), /// 30 fps
+
+  percent        : false,
+  total          : false,
+  value          : false,
+
+  // delay in ms for fail safe animation callback
+  failSafeDelay : 100,
+
+  onLabelUpdate : function(state, text, value, total){
+    return text;
+  },
+  onChange      : function(percent, value, total){},
+  onSuccess     : function(total){},
+  onActive      : function(value, total){},
+  onError       : function(value, total){},
+  onWarning     : function(value, total){},
+
+  error    : {
+    method     : 'The method you called is not defined.',
+    nonNumeric : 'Progress value is non numeric',
+    tooHigh    : 'Value specified is above 100%',
+    tooLow     : 'Value specified is below 0%'
+  },
+
+  regExp: {
+    variable: /\{\$*[A-z0-9]+\}/g
+  },
+
+  metadata: {
+    percent : 'percent',
+    total   : 'total',
+    value   : 'value'
+  },
+
+  selector : {
+    bar      : '> .bar',
+    label    : '> .label',
+    progress : '.bar > .progress'
+  },
+
+  text : {
+    active  : false,
+    error   : false,
+    success : false,
+    warning : false,
+    percent : '{percent}%',
+    ratio   : '{value} of {total}'
+  },
+
+  className : {
+    active  : 'active',
+    error   : 'error',
+    success : 'success',
+    warning : 'warning'
   }
 
 };
