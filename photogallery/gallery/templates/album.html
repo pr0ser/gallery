@@ -258,7 +258,7 @@
             $.getJSON(url, function(result){
                 var photoCount = result.in_progress;
 
-                if (photoCount !== 0 && count < 500 ) {
+                if (photoCount !== 0 && count < 600 ) {
                     var percentage = (total - photoCount) / total * 100;
 
                     $('#progress').progress({
@@ -267,7 +267,7 @@
 
                     $('#count').text(photoCount);
 
-                    setTimeout(function() { GetProgress(); }, 1500);
+                    setTimeout(function() { GetProgress(); }, 1000);
                     count++
                 }
 
