@@ -17,20 +17,22 @@
 {% endif %}
 
 {% block content %}
-  <div class="ui container">
-    <div class="ui breadcrumb">
-      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
-      {% if album.parent %}
-        {% for parent in album.parent_albums reversed %}
-          <i class="right angle icon divider"></i>
-          <a class="section"
-             href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
-        {% endfor %}
-      {% endif %}
-      <i class="right angle icon divider"></i>
-      <div class="active section">{{ album.title }}</div>
+  {% if album.public or user.is_authenticated %}
+    <div class="ui container">
+      <div class="ui breadcrumb">
+        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+        {% if album.parent %}
+          {% for parent in album.parent_albums reversed %}
+            <i class="right angle icon divider"></i>
+            <a class="section"
+               href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+          {% endfor %}
+        {% endif %}
+        <i class="right angle icon divider"></i>
+        <div class="active section">{{ album.title }}</div>
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   <div class="ui container" id="album-header">
     <div class="ui two column middle aligned container padded grid">
@@ -48,12 +50,15 @@
             <a class="ui small button" id="zip-button"
                data-tooltip="Tallenna albumin kuvat zip-tiedostona"
                data-position="bottom right"
-               href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
+               href="{% url 'gallery:album-download' album.directory %}">
+              Lataa kuvat
+            </a>
           {% endif %}
           <a class="ui small button" id="large-button"
              data-tooltip="Listaa kaikki albumin kuvat esikatselukuvina"
-             data-position="bottom right" href="{% url 'gallery:album' album.directory %}">Näytä
-            esikatselut</a>
+             data-position="bottom right" href="{% url 'gallery:album' album.directory %}">
+            Näytä esikatselut
+          </a>
         </div>
       {% endif %}
     </div>
@@ -70,8 +75,7 @@
                 <div class="header">
                   Kuvien käsittely kesken
                 </div>
-                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä
-                  kesken.</p>
+                <p>Albumissa on {{ album.pending_photos }} kuvaa joiden käsittely on vielä kesken.</p>
               </div>
             </div>
           </div>
@@ -127,11 +131,9 @@
           <div class="menu">
             {% for page in paginator.page_range %}
               {% if page_obj.number == page %}
-                <a class="active item" href="?page={{ page }}">Sivu {{ page }}
-                  / {{ paginator.num_pages }}</a>
+                <a class="active item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
               {% else %}
-                <a class="item" href="?page={{ page }}">Sivu {{ page }}
-                  / {{ paginator.num_pages }}</a>
+                <a class="item" href="?page={{ page }}">Sivu {{ page }} / {{ paginator.num_pages }}</a>
               {% endif %}
             {% endfor %}
           </div>
