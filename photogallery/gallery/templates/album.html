@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  {% if not photos and not sub_albums %}
+  {% if not photos and not sub_albums and not album.pending_photos %}
     {% load l10n %}
     <div class="ui stackable centered container grid">
       <div class="eight wide column column">
@@ -131,12 +131,14 @@
         <div class="ui centered stackable grid ">
           <div class="six wide column">
             <div class="ui icon message">
-              <i class="hourglass start icon"></i>
+              <i class="notched circle loading icon"></i>
               <div class="content">
                 <div class="header">
                   Kuvien käsittely kesken
                 </div>
-                <p>Albumissa on {{ album.pending_photos }} {{ album.pending_photos|pluralize:"kuva jonka, kuvaa joiden" }} käsittely on vielä kesken.</p>
+                <p>
+                  Albumissa on <span id="count">{{ album.pending_photos }}</span>
+                   {{ album.pending_photos|pluralize:"kuva jonka, kuvaa joiden" }} käsittely on vielä kesken.</p>
               </div>
             </div>
           </div>
@@ -243,6 +245,32 @@
                 direction: 'upward'
             })
         ;
+    </script>
+  {% endif %}
+
+  {% if user.is_authenticated and album.pending_photos %}
+    <script>
+        var url = '{% url 'gallery:album-in-prog' album.directory %}';
+        var count = 0;
+        function GetPendingPhotos() {
+            $.getJSON(url, function(result){
+                var photoCount = result.in_progress;
+
+                if (photoCount !== 0 && count < 200 ) {
+                    $('#count').text(photoCount);
+                    setTimeout(function() { GetPendingPhotos(); }, 2000);
+                    count++
+                }
+
+                if (photoCount === 0) {
+                    location.reload();
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            GetPendingPhotos();
+        });
     </script>
   {% endif %}
 

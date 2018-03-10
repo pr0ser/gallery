@@ -11,6 +11,7 @@ urlpatterns = [
     url('album/<slug:slug>/large', LargeAlbumView.as_view(), name='album-large'),
     url('album/<slug:slug>/edit', EditAlbumView.as_view(), name='album-edit'),
     url('album/<slug:slug>/scan', ScanNewPhotosView.as_view(), name='album-scan'),
+    url('album/<slug:slug>/in-progress', GetInProgressPhotosView.as_view(), name='album-in-prog'),
     url('album/<slug:slug>/refresh', RefreshPhotosView.as_view(), name='album-refresh'),
     url('album/<slug:slug>/update-gc', UpdateAlbumLocalityView.as_view(), name='album-update-gc'),
     url('album/<slug:slug>/download', DownloadZipView.as_view(), name='album-download'),

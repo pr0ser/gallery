@@ -6,8 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Count
-from django.http import HttpResponseForbidden
-from django.http import StreamingHttpResponse
+from django.http import HttpResponseForbidden, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
@@ -251,6 +250,14 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         if errors:
             messages.error(request, errors)
         return redirect('gallery:album', slug=album.directory)
+
+
+class GetInProgressPhotosView(View):
+    def get(self, request, *args, **kwargs):
+        album = get_object_or_404(Album, directory=kwargs.get('slug'))
+        photos = Photo.objects.filter(album=album.id).filter(ready=False).count()
+        data = {'in_progress': photos}
+        return JsonResponse(data)
 
 
 class RefreshPhotosView(LoginRequiredMixin, View):
