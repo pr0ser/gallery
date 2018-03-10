@@ -198,7 +198,7 @@
 
 {% block modals %}
   {% if user.is_authenticated %}
-    <div class="ui small modal album-delete">
+    <div class="ui small modal" id="album-modal">
       <div class="header">
         Poista albumi
       </div>
@@ -216,7 +216,7 @@
       </div>
     </div>
 
-    <div class="ui small modal photo-delete">
+    <div class="ui small modal" id="photo-modal">
       <div class="header">
         Poista kuva
       </div>
@@ -240,12 +240,18 @@
 {% block scripts %}
   {% if user.is_authenticated %}
     <script>
-        $('.ui.small.modal.album-delete')
+        $('#album-modal')
+            .modal({
+                centered: true
+            })
             .modal('setting', 'duration', 0)
             .modal('attach events', '#album-delete', 'show')
         ;
 
-        $('.ui.small.modal.photo-delete')
+        $('#photo-modal')
+            .modal({
+                centered: false
+            })
             .modal('setting', 'duration', 0)
             .modal('attach events', '#photo-delete', 'show')
         ;

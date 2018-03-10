@@ -184,6 +184,9 @@
   {% if user.is_authenticated %}
     <script>
         $('.ui.small.modal')
+            .modal({
+                centered: false
+            })
             .modal('setting', 'duration', 0)
             .modal('attach events', '#album-delete', 'show')
         ;
