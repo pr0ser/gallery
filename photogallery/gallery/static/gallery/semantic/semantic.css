@@ -804,6 +804,11 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   margin-bottom: 3em;
 }
 
+#progress-label {
+  margin-top: 0.5em;
+  font-size: 0.83em !important;
+}
+
 /* Photo page */
 
 #photo .ui.centered.image {

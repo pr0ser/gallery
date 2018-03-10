@@ -71,6 +71,10 @@
     margin-top: 1.5em;
     margin-bottom: 3em;
 }
+#progress-label {
+    margin-top: 0.5em;
+    font-size: 0.83em !important;
+}
 
 /* Photo page */
 #photo .ui.centered.image {

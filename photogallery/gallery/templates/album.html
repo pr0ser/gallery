@@ -130,12 +130,12 @@
       <div class="ui container" id="pending-photos">
         <div class="ui centered stackable grid">
           <div class="eight wide column">
-            <div class="ui message">
-              <div class="ui blue progress" id="progress">
-                <div class="bar">
-                  <div class="progress"></div>
-                </div>
-                <div class="label">Käsitellään kuvia (<span id="count">{{ album.pending_photos }}</span> jäljellä)</div>
+            <div class="ui large blue progress" id="progress">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label" id="progress-label">
+                Käsitellään kuvia (<span id="count">{{ album.pending_photos }}</span> jäljellä)
               </div>
             </div>
           </div>
