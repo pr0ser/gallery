@@ -17,20 +17,22 @@
 {% endif %}
 
 {% block content %}
-  <div class="ui container">
-    <div class="ui breadcrumb">
-      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
-      {% if album.parent %}
-        {% for parent in album.parent_albums reversed %}
-          <i class="right angle icon divider"></i>
-          <a class="section"
-             href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
-        {% endfor %}
-      {% endif %}
-      <i class="right angle icon divider"></i>
-      <div class="active section">{{ album.title }}</div>
+  {% if album.public or user.is_authenticated %}
+    <div class="ui container">
+      <div class="ui breadcrumb">
+        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+        {% if album.parent %}
+          {% for parent in album.parent_albums reversed %}
+            <i class="right angle icon divider"></i>
+            <a class="section"
+               href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+          {% endfor %}
+        {% endif %}
+        <i class="right angle icon divider"></i>
+        <div class="active section">{{ album.title }}</div>
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   <div class="ui container" id="album-header">
     <div class="ui two column middle aligned container padded grid">
@@ -46,11 +48,18 @@
       {% if photos %}
         <div class="right aligned five wide column" id="album-button">
           {% if album.downloadable %}
-            <a class="ui small button" id="zip-button" data-tooltip="Tallenna albumin kuvat zip-tiedostona"
-               data-position="bottom right" href="{% url 'gallery:album-download' album.directory %}">Lataa kuvat</a>
+            <a class="ui small button" id="zip-button"
+               data-tooltip="Tallenna albumin kuvat zip-tiedostona"
+               data-position="bottom right"
+               href="{% url 'gallery:album-download' album.directory %}">
+              Lataa kuvat
+            </a>
           {% endif %}
-          <a class="ui small button" id="large-button" data-tooltip="Listaa kaikki albumin kuvat suurempina"
-             data-position="bottom right" href="{% url 'gallery:album-large' album.directory %}">Näytä kaikki</a>
+          <a class="ui small button" id="large-button"
+             data-tooltip="Listaa kaikki albumin kuvat suurempina"
+             data-position="bottom right" href="{% url 'gallery:album-large' album.directory %}">
+            Näytä kaikki
+          </a>
         </div>
       {% endif %}
     </div>
@@ -66,7 +75,10 @@
             <div class="header">Ei kuvia</div>
             <p>Albumiin ei ole vielä lisätty kuvia.</p>
           </div>
-          <a class="ui right floated primary button" href="{% url 'gallery:photo-massupload' %}?album_id={{ album.id|unlocalize }}">Lisää kuvia</a>
+          <a class="ui right floated primary button"
+             href="{% url 'gallery:photo-massupload' %}?album_id={{ album.id|unlocalize }}">
+            Lisää kuvia
+          </a>
         </div>
       </div>
     </div>
