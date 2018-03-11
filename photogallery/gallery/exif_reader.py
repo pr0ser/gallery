@@ -53,7 +53,11 @@ class ExifInfo(object):
 
     def _get_exif_data(self):
         image = Image.open(self.filename)
-        exif_info = image._getexif()
+        exif_info = {}
+        try:
+            exif_info = image._getexif()
+        except Exception as e:
+            log.info(f'No EXIF data found for file: {self.filename}: {e}')
         if exif_info:
             try:
                 tags = {}

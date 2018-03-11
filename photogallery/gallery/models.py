@@ -353,7 +353,7 @@ class Photo(models.Model):
         image.thumbnail(size=max_size, resample=Image.LANCZOS)
         image.save(
             fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
-            format='JPEG',
+            format=image.format,
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
             optimize=True,
@@ -371,7 +371,7 @@ class Photo(models.Model):
             centering=(0.5, 0.5))
         image.save(
             fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
-            format='JPEG',
+            format=image.format,
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
             optimize=True,
@@ -420,8 +420,8 @@ class Photo(models.Model):
         )
 
     def save_exif_data(self):
-        exif_data = ExifInfo(self.image.path)
         try:
+            exif_data = ExifInfo(self.image.path)
             if exif_data.has_exif_data:
                 tz_date = make_aware(exif_data.time_taken, get_current_timezone())
                 data = ExifData(
