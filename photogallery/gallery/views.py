@@ -252,7 +252,7 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class GetInProgressPhotosView(View):
+class GetInProgressPhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         photos = Photo.objects.filter(album=album.id).filter(ready=False).count()
