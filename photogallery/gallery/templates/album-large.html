@@ -203,7 +203,7 @@
     <script>
 
         var total = {{ album.pending_photos }};
-        var url = '{% url 'gallery:album-in-prog' album.directory %}';
+        var url = '{% url 'gallery:album-in-progress' album.directory %}';
         var count = 0;
         function GetProgress() {
             $.getJSON(url, function(result){

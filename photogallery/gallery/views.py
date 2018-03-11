@@ -16,7 +16,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 from zipstream import ZipFile, ZIP_STORED
 
 from gallery.forms import *
-from gallery.models import Album, Photo, async_save_photo, update_album_localities
+from gallery.models import Album, Photo
+from gallery.tasks import async_save_photo, update_album_localities
 
 
 class IndexView(ListView):
@@ -252,7 +253,7 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class GetInProgressPhotosView(LoginRequiredMixin, View):
+class GetInProgressView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         photos = Photo.objects.filter(album=album.id).filter(ready=False).count()

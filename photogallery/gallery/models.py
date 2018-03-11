@@ -5,7 +5,6 @@ from datetime import date
 from glob import glob
 
 from PIL import Image, ImageOps
-from background_task import background
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -16,35 +15,11 @@ from django.utils.text import slugify
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
 
+import gallery.tasks
 from gallery.exif_reader import ExifInfo
 from gallery.utils import calc_hash, auto_orient, get_geocoding
 
 log = logging.getLogger(__name__)
-
-
-@background
-def post_process_image(photo_id):
-    image = Photo.objects.get(id=photo_id)
-    image.create_thumbnails()
-    image.create_previews()
-    image.save_exif_data()
-    image.ready = True
-    image.save()
-
-
-@background
-def async_save_photo(photo_id):
-    photo = Photo.objects.get(pk=photo_id)
-    photo.save_exif_data()
-    photo.save()
-
-
-@background
-def update_album_localities(album_id):
-    photos = (Photo.objects.all().filter(album_id=album_id).iterator())
-    for photo in photos:
-        if hasattr(photo, 'exifdata'):
-            photo.exifdata.update_geocoding(overwrite=True)
 
 
 def validate_album_title(value):
@@ -307,7 +282,7 @@ class Photo(models.Model):
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
             if not self.ready:
-                post_process_image(self.id)
+                gallery.tasks.post_process_image(self.id)
             else:
                 self.create_previews()
                 self.create_thumbnails()
