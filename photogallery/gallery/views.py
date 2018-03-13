@@ -254,13 +254,15 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class GetInProgressView(LoginRequiredMixin, View):
+class InProgressView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         post_processing = Photo.objects.filter(album=album.id).filter(ready=False).count()
         updating = Task.objects.filter(verbose_name=album.directory).count()
-        data = {'post_processing': post_processing,
-                'updating': updating}
+        data = {
+            'post_processing': post_processing,
+            'updating': updating
+        }
         return JsonResponse(data)
 
 
