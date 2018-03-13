@@ -53,8 +53,11 @@ class TestNewAlbum(TestCase):
     def test_media_dir(self):
         self.assertEqual(self.public_album.media_dir, 'photos/public-album')
 
-    def test_pending_photos(self):
-        self.assertEqual(self.public_album.pending_photos, 0)
+    def test_pending_post_processing(self):
+        self.assertEqual(self.public_album.pending_post_processing, 0)
+
+    def test_pending_updates(self):
+        self.assertEqual(self.public_album.pending_updates, 0)
 
     def test_default_sort_order(self):
         self.assertEqual(self.public_album.sort_order, 'title')

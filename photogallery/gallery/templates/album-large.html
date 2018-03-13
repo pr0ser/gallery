@@ -11,7 +11,7 @@
     </div>
     <a class="item" href="{% url 'gallery:album-edit' album.directory %}">Muokkaa</a>
     <a class="item" href="{% url 'gallery:album-scan' album.directory %}">Etsi uusia kuvia</a>
-    <a class="item" href="{% url 'gallery:album-refresh' album.directory %}">Päivitä kuvat</a>
+    <a class="item" href="{% url 'gallery:album-update' album.directory %}">Päivitä kuvat</a>
     <a class="item" href="#" id="album-delete">Poista</a>
   {% endblock %}
 {% endif %}
@@ -64,23 +64,38 @@
     </div>
   </div>
 
-  {% if user.is_authenticated %}
-    {% if album.pending_photos %}
-      <div class="ui container" id="pending-photos">
-        <div class="ui centered stackable grid">
-          <div class="eight wide column">
-            <div class="ui large blue progress" id="progress">
-              <div class="bar">
-                <div class="progress"></div>
-              </div>
-              <div class="label" id="progress-label">
-                Käsitellään kuvia (<span id="count">{{ album.pending_photos }}</span> jäljellä)
-              </div>
+  {% if user.is_authenticated and album.pending_post_processing %}
+    <div class="ui container pending-photos">
+      <div class="ui centered stackable grid">
+        <div class="eight wide column">
+          <div class="ui large blue progress" id="post-process-progress">
+            <div class="bar">
+              <div class="progress"></div>
+            </div>
+            <div class="label pending-label">
+              Käsitellään kuvia (<span id="pp-count">{{ album.pending_post_processing }}</span> jäljellä)
             </div>
           </div>
         </div>
       </div>
-    {% endif %}
+    </div>
+  {% endif %}
+
+  {% if user.is_authenticated and album.pending_updates %}
+    <div class="ui container pending-photos">
+      <div class="ui centered stackable grid">
+        <div class="eight wide column">
+          <div class="ui large blue progress" id="update-progress">
+            <div class="bar">
+              <div class="progress"></div>
+            </div>
+            <div class="label pending-label">
+              Päivitetään kuvia (<span id="update-count">{{ album.pending_updates }}</span> jäljellä)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   {% endif %}
 
   <div class="ui container">
@@ -199,24 +214,23 @@
       ;
   </script>
 
-  {% if user.is_authenticated and album.pending_photos %}
+  {% if user.is_authenticated and album.pending_post_processing %}
     <script>
-
-        var total = {{ album.pending_photos }};
+        var total = {{ album.pending_post_processing }};
         var url = '{% url 'gallery:album-in-progress' album.directory %}';
         var count = 0;
         function GetProgress() {
             $.getJSON(url, function(result){
-                var photoCount = result.in_progress;
+                var photoCount = result.post_processing;
 
                 if (photoCount !== 0 && count < 600 ) {
                     var percentage = (total - photoCount) / total * 100;
 
-                    $('#progress').progress({
+                    $('#post-process-progress').progress({
                         percent: percentage
                     });
 
-                    $('#count').text(photoCount);
+                    $('#pp-count').text(photoCount);
 
                     setTimeout(function() { GetProgress(); }, 1000);
                     count++
@@ -229,6 +243,38 @@
         }
 
         window.onload = GetProgress;
+    </script>
+  {% endif %}
+
+  {% if user.is_authenticated and album.pending_updates %}
+    <script>
+        var total = {{ album.pending_updates }};
+        var url = '{% url 'gallery:album-in-progress' album.directory %}';
+        var count = 0;
+        function GetUpdateProgress() {
+            $.getJSON(url, function(result){
+                var updateCount = result.updating;
+
+                if (updateCount !== 0 && count < 600 ) {
+                    var percentage = (total - updateCount) / total * 100;
+
+                    $('#update-progress').progress({
+                        percent: percentage
+                    });
+
+                    $('#update-count').text(updateCount);
+
+                    setTimeout(function() { GetUpdateProgress(); }, 1000);
+                    count++
+                }
+
+                if (updateCount === 0) {
+                    window.location.replace('{{ album.get_absolute_url }}');
+                }
+            });
+        }
+
+        window.onload = GetUpdateProgress;
     </script>
   {% endif %}
 {% endblock %}

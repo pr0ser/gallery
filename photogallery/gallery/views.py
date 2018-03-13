@@ -1,5 +1,6 @@
 import os
 
+from background_task.models import Task
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -256,20 +257,19 @@ class ScanNewPhotosView(LoginRequiredMixin, View):
 class GetInProgressView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        photos = Photo.objects.filter(album=album.id).filter(ready=False).count()
-        data = {'in_progress': photos}
+        post_processing = Photo.objects.filter(album=album.id).filter(ready=False).count()
+        updating = Task.objects.filter(verbose_name=album.directory).count()
+        data = {'post_processing': post_processing,
+                'updating': updating}
         return JsonResponse(data)
 
 
-class RefreshPhotosView(LoginRequiredMixin, View):
+class UpdatePhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         photos = Photo.objects.filter(album_id=album.id).iterator()
         for photo in photos:
-            async_save_photo(photo.id)
-        messages.info(
-            request, _('Photos will be scanned for changes '
-                       'on the background. It might take a while.'))
+            async_save_photo(photo.id, verbose_name=album.directory)
         return redirect('gallery:album', slug=album.directory)
 
 

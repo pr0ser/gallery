@@ -17,7 +17,7 @@ class AlbumAdmin(admin.ModelAdmin):
         'date',
         'directory',
         'parent',
-        'pending_photos',
+        'pending_post_processing',
         'admin_thumbnail',
         'public',
     )

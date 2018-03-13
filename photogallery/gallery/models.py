@@ -5,6 +5,7 @@ from datetime import date
 from glob import glob
 
 from PIL import Image, ImageOps
+from background_task.models import Task
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -144,10 +145,16 @@ class Album(models.Model):
         return albums
 
     @cached_property
-    def pending_photos(self):
-        pending = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
-        return pending
-    pending_photos.short_description = _("Pending photos")
+    def pending_post_processing(self):
+        post_processing = Photo.objects.filter(album_id=self.id).filter(ready=False).count()
+        return post_processing
+    pending_post_processing.short_description = _("Photos pending post-processing")
+
+    @cached_property
+    def pending_updates(self):
+        updating = Task.objects.filter(verbose_name=self.directory).count()
+        return updating
+    pending_updates.short_description = _("Photos pending updates")
 
     @property
     def media_dir(self):

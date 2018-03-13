@@ -787,7 +787,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   margin-bottom: 1em;
 }
 
-#pending-photos {
+.ui.container.pending-photos {
   padding-bottom: 3rem;
 }
 
@@ -804,7 +804,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   margin-bottom: 3em;
 }
 
-#progress-label {
+.label.pending-label {
   margin-top: 0.5em;
   font-size: 0.83em !important;
 }
