@@ -280,6 +280,24 @@ class TestAlbumEditView(TestCase):
         self.assertRedirects(self.response, '/login/?next=/album/test-album/edit', status_code=302)
 
 
+class TestDeleteAlbumView(TestCase):
+    def setUp(self):
+        self.album = Album.objects.create(
+            title='Test Album',
+            description='Test description'
+        )
+        self.url = reverse('gallery:album-delete', kwargs={'slug': self.album.directory})
+
+    def test_delete(self):
+        self.client.force_login(User.objects.get_or_create(username='user')[0])
+        self.response = self.client.post(self.url, follow=True)
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_anonymous_access(self):
+        self.response = self.client.post(self.url, follow=True)
+        self.assertRedirects(self.response, '/login/?next=/album/test-album/delete', status_code=302)
+
+
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoEditView(TestCase):
     def setUp(self):
@@ -359,3 +377,27 @@ class TestPhotoMapView(TestCase):
         self.client.logout()
         self.response = self.client.get(self.url)
         self.assertRedirects(self.response, '/login/?next=/photo/test-photo/map', status_code=302)
+
+
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class TestPhotoDeleteView(TestCase):
+    def setUp(self):
+        self.album = Album.objects.create(
+            title='Test Album',
+            description='Test description'
+        )
+        temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
+        self.test_image = get_temporary_image(temp_file, width=100, height=100)
+        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
+        self.photo.save()
+        self.url = reverse('gallery:photo-delete', kwargs={'slug': self.photo.slug})
+        self.client.force_login(User.objects.get_or_create(username='user')[0])
+        self.response = self.client.post(self.url)
+
+    def test_redirect(self):
+        self.assertEqual(self.response.status_code, 302)
+
+    def test_anonymous_access(self):
+        self.client.logout()
+        self.response = self.client.post(self.url)
+        self.assertRedirects(self.response, '/login/?next=/photo/test-photo/delete', status_code=302)
