@@ -15,32 +15,47 @@
           </div>
 
           <div class="ui segment">
-            <form class="ui large form {% if form.errors %}error{% endif %}"
+
+            <form class="ui large form"
                   action="{% url 'gallery:photo-massupload' %}"
-                  method="post" enctype="multipart/form-data">
+                  method="post"
+                  enctype="multipart/form-data"
+                  id="upload-form">
               {% csrf_token %}
+
               <div class="required field">
                 <label>{{ form.album.label }}</label>
                 {{ form.album }}
               </div>
-              {% if form.album.errors %}
-                <div class="ui error message">
-                  {{ form.album.errors }}
-                </div>
-              {% endif %}
+
               <div class="required field">
                 <label>{{ form.image.label }}</label>
                 {{ form.image }}
               </div>
-              {% if form.image.errors %}
-                <div class="ui error message">
-                  {{ form.image.errors }}
-                </div>
-              {% endif %}
-              <div class="ui right aligned container savebutton">
-                <input class="ui primary big button" type="submit" value="Lähetä"/>
-              </div>
+
             </form>
+
+            <div class="ui large blue progress" id="upload-progress">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label pending-label">
+                Lähetetään kuvia
+              </div>
+            </div>
+
+            <div class="ui error message" id="upload-errors">
+              <strong>Tarkista seuraavat virheet</strong>
+              <ul id="error-list">
+              </ul>
+            </div>
+
+            <div class="ui right aligned container savebutton">
+              <button class="ui primary big button" onclick="upload()">
+                Lähetä
+              </button>
+            </div>
+
           </div>
 
         </div>
@@ -54,5 +69,59 @@
       $('#select')
           .dropdown()
       ;
+  </script>
+
+  <script>
+      function parseErrors(json) {
+          var errors = json.errors;
+          $('#upload-errors').show();
+
+          if ('album' in errors) {
+              for(var i in errors.album) {
+                  $('#error-list').append('<li>Albumi: ' + errors.album[i] + '</li>');
+              }
+          }
+
+          if ('image' in errors) {
+              for(var i in errors.image) {
+                  $('#error-list').append('<li>' + errors.image[i] + '</li>');
+              }
+          }
+      }
+
+      function upload(){
+          var form = document.getElementById('upload-form');
+          var xhr = new XMLHttpRequest();
+          xhr.responseType = 'json';
+
+          $( "#error-list" ).empty();
+
+          $('#upload-errors').hide();
+
+          $( '#upload-progress' ).toggle();
+
+          xhr.upload.addEventListener('progress', function(evt){
+              if (evt.lengthComputable) {
+                  var percentage = evt.loaded / evt.total * 100;
+
+                  $('#upload-progress').progress({
+                      autoSuccess: false,
+                      percent: percentage
+                  });
+              }
+          }, false);
+
+          xhr.open("post", form.action);
+          xhr.send(new FormData(form));
+
+          xhr.onload = function () {
+              if (xhr.status === 200 && xhr.response.message === 'OK') {
+                  window.location.href = xhr.response.successUrl;
+              } else {
+                  $('#upload-progress').toggle();
+                  parseErrors(xhr.response);
+              }
+          }
+      }
   </script>
 {% endblock %}

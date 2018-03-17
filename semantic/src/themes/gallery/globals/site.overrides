@@ -117,3 +117,8 @@ input[type=date]::-webkit-calendar-picker-indicator {
 input[type=date]::-webkit-inner-spin-button {
     display: none;
 }
+
+/* Mass upload page */
+#upload-progress, #upload-errors {
+    display: none;
+}

@@ -220,22 +220,27 @@ class SetCoverPhotoView(LoginRequiredMixin, FormView):
 class MassUploadView(LoginRequiredMixin, FormView):
     form_class = MassUploadForm
     template_name = 'photo-massupload.html'
-    success_url = reverse_lazy('gallery:index')
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         files = request.FILES.getlist('image')
         if form.is_valid():
+            album = Album.objects.get(pk=form.instance.album.id)
             for file in files:
                 instance = Photo(title=path.splitext(file.name)[0],
                                  album_id=form.instance.album.id,
                                  ready=False,
                                  image=file)
                 instance.save()
-            return redirect('gallery:album', slug=form.instance.album.directory)
+            return JsonResponse({
+                'message': 'OK',
+                'successUrl': album.get_absolute_url()
+            })
         else:
-            return self.form_invalid(form)
+            return JsonResponse({
+                'errors': dict(form.errors.items())
+            })
 
     def get_initial(self):
         initial = super(MassUploadView, self).get_initial()
