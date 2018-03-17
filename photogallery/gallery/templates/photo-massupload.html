@@ -51,7 +51,7 @@
             </div>
 
             <div class="ui right aligned container savebutton">
-              <button class="ui primary big button" onclick="upload()">
+              <button class="ui primary big button" id="submit-button" onclick="upload()">
                 Lähetä
               </button>
             </div>
@@ -94,11 +94,10 @@
           var xhr = new XMLHttpRequest();
           xhr.responseType = 'json';
 
-          $( "#error-list" ).empty();
-
+          $('#submit-button').addClass('disabled');
+          $('#error-list').empty();
           $('#upload-errors').hide();
-
-          $( '#upload-progress' ).toggle();
+          $('#upload-progress').toggle();
 
           xhr.upload.addEventListener('progress', function(evt){
               if (evt.lengthComputable) {
@@ -119,6 +118,7 @@
                   window.location.href = xhr.response.successUrl;
               } else {
                   $('#upload-progress').toggle();
+                  $('#submit-button').removeClass('disabled');
                   parseErrors(xhr.response);
               }
           }
