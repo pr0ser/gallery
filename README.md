@@ -43,6 +43,9 @@ As a default the docker-compose.yml file is configured to build Pillow SIMD with
 ### Build Docker images
 `docker-compose build`
 
+### Generate Django secret key in Python shell
+`from django.core.management.utils import get_random_secret_key;print(get_random_secret_key())`
+
 ### Create Django superuser
 `docker-compose run django python manage.py createsuperuser`
 
