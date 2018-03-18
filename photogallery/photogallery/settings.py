@@ -180,6 +180,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'gallery.views': {
+            'handlers': ['console', 'logfile'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'gallery.exif_reader': {
             'handlers': ['console', 'logfile'],
             'level': 'INFO',

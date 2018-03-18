@@ -1,4 +1,6 @@
+import logging
 import os
+from random import randint
 
 from background_task.models import Task
 from django.conf import settings
@@ -19,6 +21,8 @@ from zipstream import ZipFile, ZIP_STORED
 from gallery.forms import *
 from gallery.models import Album, Photo
 from gallery.tasks import async_save_photo, update_album_localities
+
+log = logging.getLogger(__name__)
 
 
 class IndexView(ListView):
@@ -222,25 +226,31 @@ class MassUploadView(LoginRequiredMixin, FormView):
     template_name = 'photo-massupload.html'
 
     def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
+        form = self.get_form(self.get_form_class())
         files = request.FILES.getlist('image')
         if form.is_valid():
             album = Album.objects.get(pk=form.instance.album.id)
+            existing_titles = Photo.objects.filter(album=album.id).values_list('title', flat=True)
             for file in files:
-                instance = Photo(title=path.splitext(file.name)[0],
-                                 album_id=form.instance.album.id,
-                                 ready=False,
-                                 image=file)
+                title = path.splitext(file.name)[0]
+                if title in existing_titles:
+                    title = title + '-' + str(randint(100, 1000))
+                    messages.warning(request, _('Possible duplicate photo detected.'))
+                    log.warning(
+                        f'Duplicate name detected in mass upload: {path.splitext(file.name)[0]}'
+                    )
+                instance = Photo(
+                    title=title,
+                    album_id=form.instance.album.id,
+                    ready=False,
+                    image=file)
                 instance.save()
             return JsonResponse({
                 'message': 'OK',
                 'successUrl': album.get_absolute_url()
             })
         else:
-            return JsonResponse({
-                'errors': dict(form.errors.items())
-            })
+            return JsonResponse({'errors': dict(form.errors.items())})
 
     def get_initial(self):
         initial = super(MassUploadView, self).get_initial()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 18:08+0000\n"
+"POT-Creation-Date: 2018-03-18 18:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgstr "Albumin tiedot"
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:70 gallery/forms.py:93 gallery/forms.py:123
+#: gallery/admin.py:70 gallery/forms.py:93 gallery/forms.py:115
 #: gallery/models.py:224
 msgid "Album"
 msgstr "Albumi"
@@ -66,23 +66,14 @@ msgstr "Kuvat"
 
 #: gallery/forms.py:108
 #, python-format
-msgid "Photo title %(value)s already exists."
-msgstr "Kuvan nimi %(value)s on jo olemassa."
-
-#: gallery/forms.py:114
-#, python-format
 msgid "%(value)s files are not supported."
 msgstr "%(value)s ei ole tuettu tiedostotyyppi."
 
-#: gallery/forms.py:117
-msgid "Could not read the uploaded file."
-msgstr "Tiedostoa ei voitu lukea."
-
-#: gallery/forms.py:139
+#: gallery/forms.py:131
 msgid "Photo or the selected album doesn\\’t exist."
 msgstr "Valittua kuvaa tai albumia ei ole olemassa."
 
-#: gallery/forms.py:163
+#: gallery/forms.py:155
 msgid "Latitude and longitude must both have values or be both empty."
 msgstr "Kentät leveysaste ja pituusaste ovat molemmat oltava täytetty tai molemmat tyhjiä."
 
@@ -172,7 +163,6 @@ msgid "Photos pending post-processing"
 msgstr "Keskeneräiset kuvat"
 
 #: gallery/models.py:157
-#| msgid "Pending photos"
 msgid "Photos pending updates"
 msgstr "Päivitystä odottavat kuvat"
 
@@ -289,10 +279,14 @@ msgstr "Maa"
 msgid "EXIF data"
 msgstr "EXIF-tiedot"
 
-#: gallery/views.py:251
+#: gallery/views.py:238
+msgid "Possible duplicate photo detected."
+msgstr "Mahdollinen duplikaattikuva havaittu."
+
+#: gallery/views.py:266
 msgid "No new photos found in the album directory."
 msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
-#: gallery/views.py:281
+#: gallery/views.py:298
 msgid "Geocoding information will be updated on the background. It might take a while."
 msgstr "Kuvien paikkakuntatiedot päivitetään taustalla. Tämä voi kestää hetken."
