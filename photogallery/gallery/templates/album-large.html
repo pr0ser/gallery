@@ -219,7 +219,7 @@
         var total = {{ album.pending_post_processing }};
         var url = '{% url 'gallery:album-in-progress' album.directory %}';
         var count = 0;
-        function GetProgress() {
+        function getProgress() {
             $.getJSON(url, function(result){
                 var photoCount = result.post_processing;
 
@@ -232,7 +232,7 @@
 
                     $('#pp-count').text(photoCount);
 
-                    setTimeout(function() { GetProgress(); }, 1000);
+                    setTimeout(function() { getProgress(); }, 1000);
                     count++
                 }
 
@@ -242,7 +242,7 @@
             });
         }
 
-        window.onload = GetProgress;
+        window.onload = getProgress;
     </script>
   {% endif %}
 
@@ -251,7 +251,7 @@
         var total = {{ album.pending_updates }};
         var url = '{% url 'gallery:album-in-progress' album.directory %}';
         var count = 0;
-        function GetUpdateProgress() {
+        function getUpdateProgress() {
             $.getJSON(url, function(result){
                 var updateCount = result.updating;
 
@@ -264,7 +264,7 @@
 
                     $('#update-count').text(updateCount);
 
-                    setTimeout(function() { GetUpdateProgress(); }, 1000);
+                    setTimeout(function() { getUpdateProgress(); }, 1000);
                     count++
                 }
 
@@ -274,7 +274,7 @@
             });
         }
 
-        window.onload = GetUpdateProgress;
+        window.onload = getUpdateProgress;
     </script>
   {% endif %}
 {% endblock %}
