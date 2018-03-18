@@ -38,7 +38,7 @@ ALLOWED_HOSTS | Django allowed hosts, for example ['example.com', 'www.example.c
 GEOCODING_API_KEY | Google Geocoding API key
 MAPS_API_KEY | Google Maps JavaScript API key
 
-As a default the docker-compose.yml file is configured to build Pillow SIMD with AVX2 instructions. **If the host CPU doesn't support AVX2 instructions, change _SIMD_LEVEL_ arg to _"sse4"_**. Remember also to create the default logging directory 'gallery/logs/'.
+As a default the docker-compose.yml file is configured to build Pillow SIMD with AVX2 instructions. **If the host CPU doesn't support AVX2 instructions, change _SIMD_LEVEL_ arg to _"sse4"_**. Remember also to create the default logging directory: "photogallery/logs/"
 ### Build Docker images
 `docker-compose build`
 
