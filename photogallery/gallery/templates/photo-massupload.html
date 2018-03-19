@@ -117,7 +117,12 @@
               if (xhr.status === 200 && xhr.response.message === 'OK') {
                   window.location.href = xhr.response.successUrl;
               } else {
-                  $('#upload-progress').toggle();
+                  $('#upload-progress')
+                      .toggle()
+                      .progress({
+                          percent: 0
+                      })
+                  ;
                   $('#submit-button').removeClass('disabled');
                   parseErrors(xhr.response);
               }
