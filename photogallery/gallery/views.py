@@ -1,6 +1,5 @@
 import logging
 import os
-from random import randint
 
 from background_task.models import Task
 from django.conf import settings
@@ -12,6 +11,7 @@ from django.db.models import Count
 from django.http import HttpResponseForbidden, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils.crypto import get_random_string
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, View
@@ -57,10 +57,12 @@ class AlbumView(ListView):
 
     def get_queryset(self):
         album = get_object_or_404(Album, directory=self.kwargs['slug'])
-        queryset = (Photo.objects
-                    .filter(album_id=album.id)
-                    .filter(ready=True)
-                    .order_by(album.sort_order))
+        queryset = (
+            Photo.objects
+            .filter(album_id=album.id)
+            .filter(ready=True)
+            .order_by(album.sort_order)
+        )
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -93,10 +95,12 @@ class LargeAlbumView(ListView):
 
     def get_queryset(self):
         album = get_object_or_404(Album, directory=self.kwargs['slug'])
-        queryset = (Photo.objects
-                    .filter(album_id=album.id)
-                    .filter(ready=True)
-                    .order_by(album.sort_order))
+        queryset = (
+            Photo.objects
+            .filter(album_id=album.id)
+            .filter(ready=True)
+            .order_by(album.sort_order)
+        )
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -134,11 +138,13 @@ class DownloadZipView(View):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         if not album.downloadable:
             return HttpResponseForbidden()
-        photos = (Photo.objects
-                  .filter(album_id=album.id)
-                  .filter(ready=True)
-                  .values_list('image', flat=True)
-                  .iterator())
+        photos = (
+            Photo.objects
+            .filter(album_id=album.id)
+            .filter(ready=True)
+            .values_list('image', flat=True)
+            .iterator()
+        )
         file = ZipFile(mode='w', compression=ZIP_STORED)
         os.chdir(settings.MEDIA_ROOT)
         for photo in photos:
@@ -234,7 +240,7 @@ class MassUploadView(LoginRequiredMixin, FormView):
             for file in files:
                 title = path.splitext(file.name)[0]
                 if title in existing_titles:
-                    title = title + '-' + str(randint(100, 1000))
+                    title = title + '-' + get_random_string(length=5)
                     messages.warning(request, _('Possible duplicate photo detected.'))
                     log.warning(
                         f'Duplicate name detected in mass upload: {path.splitext(file.name)[0]}'
