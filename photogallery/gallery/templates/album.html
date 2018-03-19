@@ -286,6 +286,10 @@
                 }
 
                 if (photoCount === 0) {
+                    $('#update-progress').progress({
+                        autoSuccess: false,
+                        percent: 100
+                    });
                     location.reload();
                 }
             });
@@ -318,6 +322,10 @@
                 }
 
                 if (updateCount === 0) {
+                    $('#update-progress').progress({
+                        autoSuccess: false,
+                        percent: 100
+                    });
                     window.location.replace('{{ album.get_absolute_url }}');
                 }
             });
