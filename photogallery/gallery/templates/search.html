@@ -25,7 +25,7 @@
         <span class="content">
           Hakutulokset
           {% if results %}
-            <span class="sub header">Haku tuotti {{ results.count }} osumaa.</span>
+            <span class="sub header">Haku tuotti {{ paginator.count }} osumaa.</span>
           {% else %}
             <span class="sub header">Haku ei tuottanut osumia.</span>
           {% endif %}

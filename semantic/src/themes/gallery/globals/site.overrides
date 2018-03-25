@@ -135,5 +135,5 @@ input[type=date]::-webkit-inner-spin-button {
 /* Search page */
 #main-search {
     margin-top: 0.5em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
