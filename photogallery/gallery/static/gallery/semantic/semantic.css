@@ -880,6 +880,13 @@ input[type=date]::-webkit-inner-spin-button {
   display: none;
 }
 
+/* Search page */
+
+#main-search {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
 /*******************************
          Site Overrides
 *******************************/
