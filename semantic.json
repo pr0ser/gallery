@@ -19,6 +19,7 @@
   "autoInstall": false,
   "rtl": false,
   "components": [
+    "api",
     "reset",
     "site",
     "button",
@@ -42,6 +43,7 @@
     "dropdown",
     "modal",
     "popup",
+    "search",
     "sidebar",
     "form",
     "transition",

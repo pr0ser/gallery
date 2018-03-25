@@ -44,6 +44,11 @@
   <div class="ui inverted borderless menu" id="main-menu">
     <a class="item" href="{% url 'gallery:index' %}"><h1>Galleria</h1></a>
     <div class="right menu">
+      {% if not request.path == '/search' %}
+        <a class="item" id="search-button" onclick="$('#search').toggle(); $('#search-input').focus();">
+          <i class="search icon"></i>
+        </a>
+      {% endif %}
       {% if user.is_authenticated %}
         <div class="ui top right dropdown link item">
           <i class="sidebar icon"></i>
@@ -55,6 +60,22 @@
         </span>
         </a>
       {% endif %}
+    </div>
+  </div>
+
+  <div class="ui right aligned container" id="search">
+    <div class="ui stackable grid containe">
+      <div class="right floated right aligned six wide column">
+
+        <div class="ui fluid search">
+          <div class="ui icon input">
+            <input class="prompt" id="search-input" type="text" placeholder="Hae">
+            <i class="search icon"></i>
+          </div>
+          <div class="results" id="search-results"></div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -86,6 +107,23 @@
       ;
   </script>
 {% endif %}
+
+<script>
+    $('.ui.search')
+        .search({
+            apiSettings: {
+                url: '/api/search?q={query}'
+            },
+            minCharacters: 3,
+            maxResults: 6,
+            error : {
+                noResults: 'Hakusi ei tuottanut yhtään osumaa.'
+
+            }
+        })
+    ;
+</script>
+
 {% block modals %}{% endblock %}
 {% block scripts %}{% endblock %}
 

@@ -5,6 +5,8 @@ from os import environ
 from urllib import parse, request
 
 from PIL import Image
+from django.contrib.postgres.search import SearchQuery
+from psycopg2.extensions import adapt
 
 log = logging.getLogger(__name__)
 
@@ -96,3 +98,25 @@ def get_geocoding(latitude, longitude):
             f'for coordinates {latitude},{longitude}: {e}'
         )
         return None
+
+
+class PartialQuery(SearchQuery):
+    def as_sql(self, compiler, connection):
+        # Or <-> available in Postgres 9.6
+        value = adapt('%s:*' % ' & '.join(self.value.split()))
+
+        if self.config:
+            config_sql, config_params = compiler.compile(self.config)
+            template = 'to_tsquery({}::regconfig, {})'\
+                .format(config_sql, value)
+            params = config_params
+
+        else:
+            template = 'to_tsquery({})'\
+                .format(value)
+            params = []
+
+        if self.invert:
+            template = '!!({})'.format(template)
+
+        return template, params

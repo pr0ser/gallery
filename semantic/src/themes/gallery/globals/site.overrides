@@ -26,6 +26,15 @@
 .ui.header.gallery {
     padding-top: 0.5em;
 }
+#search {
+    display: none;
+}
+#search-results {
+    text-align: left;
+}
+.ui.search>.results .result .image+.content {
+    overflow: hidden;
+}
 
 /* Index page */
 .indexcard {

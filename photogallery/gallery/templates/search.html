@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Testisivu{% endblock %}
+
+{% block content %}
+
+  <div class="ui container">
+
+
+    <div class="ui centered stackable grid">
+      <div class="six wide column">
+        <form action="{% url 'gallery:search' %}" method="get">
+          <div class="ui big fluid icon input">
+            <input type="text" name="q" placeholder="Hae" value="{{ request.GET.q }}">
+            <i class="search icon"></i>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% if  request.GET.q %}
+      <div class="ui container" id="album-header">
+        <h1 class="ui header">
+        <span class="content">
+          Hakutulokset
+          {% if results %}
+            <span class="sub header">Haku tuotti {{ results.count }} osumaa.</span>
+          {% else %}
+            <span class="sub header">Haku ei tuottanut osumia.</span>
+          {% endif %}
+        </span>
+        </h1>
+      </div>
+    {% endif %}
+
+    <div class="ui grid" id="album-grid">
+      {% for result in results %}
+        <div class="eight wide mobile four wide tablet four wide computer column">
+          <a href="{% url 'gallery:photo' result.slug %}" class="ui fluid image">
+            <img class="ui image" src="{{ result.thumbnail_img.url }}"
+                 srcset="{{ result.hidpi_thumbnail_img.url }} 2x" alt="{{ result.title }}">
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="ui hidden divider"></div>
+
+    {% if is_paginated %}
+      <div class="ui pagination menu">
+        {% for page in paginator.page_range %}
+          {% if page_obj.number == page %}
+            <a class="active item" href="?q={{ request.GET.q }}&page={{ page }}">{{ page }}</a>
+          {% else %}
+            <a class="item" href="?q={{ request.GET.q }}&page={{ page }}">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="ui hidden divider"></div>
+    {% endif %}
+
+  </div>
+{% endblock %}
+

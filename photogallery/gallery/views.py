@@ -1,5 +1,6 @@
 import logging
 import os
+from urllib import parse
 
 from background_task.models import Task
 from django.conf import settings
@@ -7,7 +8,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db.models import Count
+from django.contrib.postgres.search import SearchRank, SearchVector
+from django.db.models import Count, Q
 from django.http import HttpResponseForbidden, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -21,6 +23,7 @@ from zipstream import ZipFile, ZIP_STORED
 from gallery.forms import *
 from gallery.models import Album, Photo
 from gallery.tasks import async_save_photo, update_album_localities
+from gallery.utils import PartialQuery
 
 log = logging.getLogger(__name__)
 
@@ -318,6 +321,91 @@ class EditExifDataView(LoginRequiredMixin, UpdateView):
         else:
             form.instance.has_location = False
         return super(EditExifDataView, self).form_valid(form)
+
+
+class SearchView(ListView):
+    template_name = 'search.html'
+    context_object_name = 'results'
+    paginate_by = 40
+
+    def get_queryset(self):
+        vector = (
+                SearchVector('title', weight='A') +
+                SearchVector('description', weight='A') +
+                SearchVector('album__title', weight='B') +
+                SearchVector('album__description', weight='B') +
+                SearchVector('exifdata__locality', weight='C') +
+                SearchVector('exifdata__country', weight='C') +
+                SearchVector('exifdata__make', weight='D') +
+                SearchVector('exifdata__model', weight='D') +
+                SearchVector('exifdata__lens', weight='D')
+        )
+        user = self.request.user
+        query = self.request.GET.get('q')
+        if query:
+            if user.is_authenticated:
+                return (
+                    Photo.objects
+                    .annotate(rank=SearchRank(vector, PartialQuery(query, config='simple')))
+                    .filter(rank__gte=0.01)
+                    .order_by('-rank')
+                )
+            else:
+                return (
+                    Photo.objects
+                    .annotate(rank=SearchRank(vector, PartialQuery(query, config='simple')))
+                    .filter(rank__gte=0.01)
+                    .filter(album__public=True)
+                    .filter(Q(album__parent__public=True) | Q(album__parent__public__isnull=True))
+                    .order_by('-rank')
+                )
+        else:
+            return Photo.objects.none()
+
+
+class SearchAPIView(View):
+    def get(self, request, *args, **kwargs):
+        vector = (
+            SearchVector('title', weight='A') +
+            SearchVector('description', weight='A') +
+            SearchVector('album__title', weight='B') +
+            SearchVector('album__description', weight='B') +
+            SearchVector('exifdata__locality', weight='C') +
+            SearchVector('exifdata__country', weight='C') +
+            SearchVector('exifdata__make', weight='D') +
+            SearchVector('exifdata__model', weight='D') +
+            SearchVector('exifdata__lens', weight='D')
+        )
+        query = self.request.GET.get('q')
+        if self.request.user.is_authenticated:
+            results = list(
+                Photo.objects
+                .annotate(rank=SearchRank(vector, PartialQuery(query, config='simple')))
+                .filter(rank__gte=0.01)
+                .order_by('-rank')[:6]
+                .iterator()
+            )
+        else:
+            results = list(
+                Photo.objects
+                .annotate(rank=SearchRank(vector, PartialQuery(query, config='simple')))
+                .filter(rank__gte=0.01)
+                .filter(album__public=True)
+                .filter(Q(album__parent__public=True) | Q(album__parent__public__isnull=True))
+                .order_by('-rank')[:6]
+                .iterator()
+            )
+        items = []
+        for result in results:
+            item = {
+                'title': result.title,
+                'description': result.description,
+                'image': result.thumbnail_img.url,
+                'url': result.get_absolute_url()
+            }
+            items.append(item)
+        action = {'url': f'/search?q={parse.quote_plus(query)}', 'text': _('Show all')}
+        return JsonResponse({'results': items, 'action': action})
 
 
 class UserLoginView(LoginView):
