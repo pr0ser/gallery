@@ -346,14 +346,14 @@ class SearchView(ListView):
             if user.is_authenticated:
                 return (
                     Photo.objects
-                    .annotate(rank=SearchRank(vector, PartialQuery(query, config='finnish')))
+                    .annotate(rank=SearchRank(vector, PartialQuery(query)))
                     .filter(rank__gte=0.01)
                     .order_by('-rank')
                 )
             else:
                 return (
                     Photo.objects
-                    .annotate(rank=SearchRank(vector, PartialQuery(query, config='finnish')))
+                    .annotate(rank=SearchRank(vector, PartialQuery(query)))
                     .filter(rank__gte=0.01)
                     .filter(album__public=True)
                     .filter(Q(album__parent__public=True) | Q(album__parent__public__isnull=True))
@@ -380,7 +380,7 @@ class SearchAPIView(View):
         if self.request.user.is_authenticated:
             results = list(
                 Photo.objects
-                .annotate(rank=SearchRank(vector, PartialQuery(query, config='finnish')))
+                .annotate(rank=SearchRank(vector, PartialQuery(query)))
                 .filter(rank__gte=0.01)
                 .order_by('-rank')[:6]
                 .iterator()
@@ -388,7 +388,7 @@ class SearchAPIView(View):
         else:
             results = list(
                 Photo.objects
-                .annotate(rank=SearchRank(vector, PartialQuery(query, config='finnish')))
+                .annotate(rank=SearchRank(vector, PartialQuery(query)))
                 .filter(rank__gte=0.01)
                 .filter(album__public=True)
                 .filter(Q(album__parent__public=True) | Q(album__parent__public__isnull=True))
