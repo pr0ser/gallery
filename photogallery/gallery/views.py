@@ -365,6 +365,10 @@ class SearchView(ListView):
 
 class SearchAPIView(View):
     def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        if not query:
+            return JsonResponse({'results': []})
+
         vector = (
             SearchVector('title', weight='A') +
             SearchVector('description', weight='A') +
@@ -376,7 +380,7 @@ class SearchAPIView(View):
             SearchVector('exifdata__model', weight='D') +
             SearchVector('exifdata__lens', weight='D')
         )
-        query = self.request.GET.get('q')
+
         if self.request.user.is_authenticated:
             results = list(
                 Photo.objects
@@ -395,6 +399,7 @@ class SearchAPIView(View):
                 .order_by('-rank')[:6]
                 .iterator()
             )
+
         items = []
         for result in results:
             item = {
@@ -404,6 +409,7 @@ class SearchAPIView(View):
                 'url': result.get_absolute_url()
             }
             items.append(item)
+
         action = {'url': f'/search?q={parse.quote_plus(query)}', 'text': _('Show all')}
         return JsonResponse({'results': items, 'action': action})
 
