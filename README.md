@@ -15,6 +15,7 @@ Dockerized Django photo gallery with Semantic UI styles.
 * Edit albums and photos titles and descriptions
 * Delete albums and photos
 * Ability to scan album directories for new photos (if uploaded directly to server for example with SCP)
+* Search photos with title, description and metadata
 
 ## Setup
 
