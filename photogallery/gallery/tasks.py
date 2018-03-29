@@ -31,7 +31,7 @@ def async_save_photo(self, album_id):
                     'total': total_count
                 }
             )
-    return f'Updated {total} photos ({album.title})'
+    return f'Updated {total_count} photos ({album.title})'
 
 
 @shared_task
