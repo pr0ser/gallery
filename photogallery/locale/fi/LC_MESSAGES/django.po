@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-18 18:46+0000\n"
+"POT-Creation-Date: 2018-03-29 16:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,11 @@ msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
 #: gallery/admin.py:70 gallery/forms.py:93 gallery/forms.py:115
-#: gallery/models.py:224
+#: gallery/models.py:237
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:73 gallery/models.py:478
+#: gallery/admin.py:73 gallery/models.py:491
 msgid "Photo"
 msgstr "Kuva"
 
@@ -55,7 +55,7 @@ msgstr "Sijaintiin liittyvät tiedot"
 msgid "Gallery"
 msgstr "Galleria"
 
-#: gallery/forms.py:73 gallery/models.py:40
+#: gallery/forms.py:73 gallery/models.py:41
 #, python-format
 msgid "%(value)s is not allowed photo title."
 msgstr "%(value)s ei ole salittu kuvan nimi."
@@ -77,216 +77,225 @@ msgstr "Valittua kuvaa tai albumia ei ole olemassa."
 msgid "Latitude and longitude must both have values or be both empty."
 msgstr "Kentät leveysaste ja pituusaste ovat molemmat oltava täytetty tai molemmat tyhjiä."
 
-#: gallery/models.py:30
+#: gallery/models.py:31
 #, python-format
 msgid "%(value)s is not allowed album name."
 msgstr "%(value)s ei ole salittu albumin nimi."
 
-#: gallery/models.py:47
+#: gallery/models.py:48
 msgid "Date (ascending)"
 msgstr "Päiväys (nouseva)"
 
-#: gallery/models.py:48
+#: gallery/models.py:49
 msgid "Date (descending)"
 msgstr "Päiväys (laskeva)"
 
-#: gallery/models.py:49
+#: gallery/models.py:50
 msgid "Title (ascending)"
 msgstr "Nimi (nouseva)"
 
-#: gallery/models.py:50
+#: gallery/models.py:51
 msgid "Title (descending)"
 msgstr "Nimi (laskeva)"
 
-#: gallery/models.py:56
+#: gallery/models.py:57
 msgid "Parent"
 msgstr "Yläalbumi"
 
-#: gallery/models.py:60 gallery/models.py:227
+#: gallery/models.py:61 gallery/models.py:240
 msgid "Title"
 msgstr "Nimi"
 
-#: gallery/models.py:66 gallery/models.py:237
+#: gallery/models.py:67 gallery/models.py:250
 msgid "Date"
 msgstr "Päiväys"
 
-#: gallery/models.py:70 gallery/models.py:246
+#: gallery/models.py:71 gallery/models.py:259
 msgid "Description"
 msgstr "Kuvaus"
 
-#: gallery/models.py:74
+#: gallery/models.py:75
 msgid "Directory"
 msgstr "Hakemisto"
 
-#: gallery/models.py:83
+#: gallery/models.py:84
 msgid "Album cover"
 msgstr "Albumin kansikuva"
 
-#: gallery/models.py:86
+#: gallery/models.py:87
 msgid "Sort order"
 msgstr "Lajittelujärjestys"
 
-#: gallery/models.py:89
+#: gallery/models.py:90
 msgid "Sort order of photos in this album"
 msgstr "Albumin kuvien lajittelujärjestys"
 
-#: gallery/models.py:93
+#: gallery/models.py:94
 msgid "Public"
 msgstr "Julkinen"
 
-#: gallery/models.py:97
+#: gallery/models.py:98
 msgid "Allow ZIP download"
 msgstr "Salli lataukset"
 
-#: gallery/models.py:101
+#: gallery/models.py:102
 msgid "Show EXIF metadata"
 msgstr "Näytä kuvien metatiedot"
 
-#: gallery/models.py:105
+#: gallery/models.py:106
 msgid "Show location information"
 msgstr "Näytä sijaintitiedot"
 
-#: gallery/models.py:110
+#: gallery/models.py:111
 msgid "album"
 msgstr "albumi"
 
-#: gallery/models.py:111
+#: gallery/models.py:112
 msgid "albums"
 msgstr "albumit"
 
-#: gallery/models.py:133
+#: gallery/models.py:134
 msgid "Unable to delete album directories."
 msgstr "Albumin hakemistojen poisto epäonnistui."
 
-#: gallery/models.py:151
+#: gallery/models.py:152
 msgid "Photos pending post-processing"
 msgstr "Keskeneräiset kuvat"
 
-#: gallery/models.py:157
+#: gallery/models.py:170
 msgid "Photos pending updates"
 msgstr "Päivitystä odottavat kuvat"
 
-#: gallery/models.py:194
+#: gallery/models.py:207
 #, python-format
 msgid "Failed to add photo %(filename)s to album."
 msgstr "Kuvan %(filename)s lisääminen albumiin epäonnistui."
 
-#: gallery/models.py:213
+#: gallery/models.py:226
 msgid "Cover photo"
 msgstr "Kansikuva"
 
-#: gallery/models.py:232
+#: gallery/models.py:245
 msgid "Slug"
 msgstr "Slug"
 
-#: gallery/models.py:241
+#: gallery/models.py:254
 msgid "Image file"
 msgstr "Kuvatiedosto"
 
-#: gallery/models.py:250
+#: gallery/models.py:263
 msgid "SHA-256"
 msgstr "SHA-256 -tiiviste"
 
-#: gallery/models.py:255
+#: gallery/models.py:268
 msgid "Ready"
 msgstr "Valmis"
 
-#: gallery/models.py:259
+#: gallery/models.py:272
 msgid "Preview image"
 msgstr "Esikatselukuva"
 
-#: gallery/models.py:264
+#: gallery/models.py:277
 msgid "High DPI preview image"
 msgstr "Korkearesoluutioinen esikatselukuva"
 
-#: gallery/models.py:269
+#: gallery/models.py:282
 msgid "Thumbnail image"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:274
+#: gallery/models.py:287
 msgid "High DPI thumbnail image"
 msgstr "Korkearesoluutioinen pienoiskuva"
 
-#: gallery/models.py:279
+#: gallery/models.py:292
 msgid "photo"
 msgstr "kuva"
 
-#: gallery/models.py:280
+#: gallery/models.py:293
 msgid "photos"
 msgstr "kuvat"
 
-#: gallery/models.py:470 gallery/models.py:612
+#: gallery/models.py:483 gallery/models.py:625
 msgid "Thumbnail"
 msgstr "Pienoiskuva"
 
-#: gallery/models.py:481
+#: gallery/models.py:494
 msgid "Date/Time taken"
 msgstr "Kuvausaika"
 
-#: gallery/models.py:487
+#: gallery/models.py:500
 msgid "Has location"
 msgstr "Sijaintitiedot"
 
-#: gallery/models.py:491
+#: gallery/models.py:504
 msgid "Manufacturer"
 msgstr "Valmistaja"
 
-#: gallery/models.py:497
+#: gallery/models.py:510
 msgid "Model"
 msgstr "Malli"
 
-#: gallery/models.py:503
+#: gallery/models.py:516
 msgid "ISO speed"
 msgstr "ISO-herkkyys"
 
-#: gallery/models.py:508
+#: gallery/models.py:521
 msgid "Shutter speed"
 msgstr "Suljinaika"
 
-#: gallery/models.py:514
+#: gallery/models.py:527
 msgid "Aperture"
 msgstr "Aukko"
 
-#: gallery/models.py:521
+#: gallery/models.py:534
 msgid "Focal length"
 msgstr "Polttoväli"
 
-#: gallery/models.py:528
+#: gallery/models.py:541
 msgid "Lens"
 msgstr "Objektiivi"
 
-#: gallery/models.py:534
+#: gallery/models.py:547
 msgid "Latitude"
 msgstr "Leveysaste"
 
-#: gallery/models.py:541
+#: gallery/models.py:554
 msgid "Longitude"
 msgstr "Pituusaste"
 
-#: gallery/models.py:548
+#: gallery/models.py:561
 msgid "Altitude"
 msgstr "Korkeus"
 
-#: gallery/models.py:553
+#: gallery/models.py:566
 msgid "Locality"
 msgstr "Paikkakunta"
 
-#: gallery/models.py:559
+#: gallery/models.py:572
 msgid "Country"
 msgstr "Maa"
 
-#: gallery/models.py:566 gallery/models.py:567
+#: gallery/models.py:579 gallery/models.py:580
 msgid "EXIF data"
 msgstr "EXIF-tiedot"
 
-#: gallery/views.py:238
+#: gallery/tasks.py:34
+#, python-format
+msgid "Updated %(total)s photos (%(album)s)"
+msgstr "%(total)s kuvaa päivitetty (%(album)s)"
+
+#: gallery/views.py:247
 msgid "Possible duplicate photo detected."
 msgstr "Mahdollinen duplikaattikuva havaittu."
 
-#: gallery/views.py:266
+#: gallery/views.py:275
 msgid "No new photos found in the album directory."
 msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
-#: gallery/views.py:298
+#: gallery/views.py:305
 msgid "Geocoding information will be updated on the background. It might take a while."
 msgstr "Kuvien paikkakuntatiedot päivitetään taustalla. Tämä voi kestää hetken."
+
+#: gallery/views.py:411
+msgid "Show all"
+msgstr "Näytä kaikki"

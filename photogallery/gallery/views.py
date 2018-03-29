@@ -2,7 +2,6 @@ import logging
 import os
 from urllib import parse
 
-from background_task.models import Task
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -282,7 +281,7 @@ class InProgressView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
         post_processing = Photo.objects.filter(album=album.id).filter(ready=False).count()
-        updating = Task.objects.filter(verbose_name=album.directory).count()
+        updating = album.pending_updates
         data = {
             'post_processing': post_processing,
             'updating': updating
@@ -293,16 +292,14 @@ class InProgressView(LoginRequiredMixin, View):
 class UpdatePhotosView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        photos = Photo.objects.filter(album_id=album.id).iterator()
-        for photo in photos:
-            async_save_photo(photo.id, verbose_name=album.directory)
+        async_save_photo.delay(album.id)
         return redirect('gallery:album', slug=album.directory)
 
 
 class UpdateAlbumLocalityView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        update_album_localities(album.id)
+        update_album_localities.delay(album.id)
         messages.info(
             request, _('Geocoding information will be updated '
                        'on the background. It might take a while.'))

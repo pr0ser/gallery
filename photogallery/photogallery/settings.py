@@ -3,19 +3,19 @@ Django settings for gallery project.
 
 """
 
-import os
 from ast import literal_eval
+from os import path, environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = literal_eval(os.environ['DEBUG'])
+DEBUG = literal_eval(environ['DEBUG'])
 
-ALLOWED_HOSTS = literal_eval(os.environ['ALLOWED_HOSTS'])
+ALLOWED_HOSTS = literal_eval(environ['ALLOWED_HOSTS'])
 
 # Use secure cookies if DEBUG is False
 if not DEBUG:
@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'background_task',
-    'django_cleanup',
+    'django_celery_results',
+    'django_cleanup'
 ]
 
 if DEBUG:
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':       'django.db.backends.postgresql',
-        'NAME':         os.environ['POSTGRES_DB'],
-        'USER':         os.environ['POSTGRES_USER'],
-        'PASSWORD':     os.environ['POSTGRES_PASSWORD'],
-        'HOST':         os.environ['DB_HOST'],
-        'PORT':         os.environ['DB_PORT'],
+        'NAME':         environ['POSTGRES_DB'],
+        'USER':         environ['POSTGRES_USER'],
+        'PASSWORD':     environ['POSTGRES_PASSWORD'],
+        'HOST':         environ['DB_HOST'],
+        'PORT':         environ['DB_PORT'],
         'CONN_MAX_AGE': 600,
     }
 }
@@ -119,13 +119,13 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
+    path.join(BASE_DIR, 'locale'),
 )
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = path.join(BASE_DIR, 'static')
 
 # Logging
 LOGGING = {
@@ -140,7 +140,7 @@ LOGGING = {
         'logfile': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'gallery.log'),
+            'filename': path.join(BASE_DIR, 'logs', 'gallery.log'),
             'maxBytes': 1024*1024*10,  # 10MB
             'backupCount': 0,
             'formatter': 'verbose',
@@ -184,22 +184,26 @@ LOGGING = {
     }
 }
 
+# Celery
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_RESULT_BACKEND = 'django-db'
+
 # Other
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = path.join(BASE_DIR, 'media')
 
-FILE_UPLOAD_PERMISSIONS = int(os.environ['UPLOAD_PERMISSIONS'], 8)
+FILE_UPLOAD_PERMISSIONS = int(environ['UPLOAD_PERMISSIONS'], 8)
 
-FILE_UPLOAD_DIRECTORY_PERMISSIONS = int(os.environ['DIRECTORY_PERMISSIONS'], 8)
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = int(environ['DIRECTORY_PERMISSIONS'], 8)
 
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = '/'
-
-BACKGROUND_TASK_RUN_ASYNC = True
-
-BACKGROUND_TASK_ASYNC_THREADS = int(os.environ['ASYNC_THREADS'])
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 

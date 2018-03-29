@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import shutil
@@ -5,7 +6,6 @@ from datetime import date
 from glob import glob
 
 from PIL import Image, ImageOps
-from background_task.models import Task
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -15,6 +15,7 @@ from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
+from django_celery_results.models import TaskResult
 
 import gallery.tasks
 from gallery.exif_reader import ExifInfo
@@ -152,8 +153,20 @@ class Album(models.Model):
 
     @cached_property
     def pending_updates(self):
-        updating = Task.objects.filter(verbose_name=self.directory).count()
-        return updating
+        task = (
+            TaskResult.objects
+            .filter(status='PROGRESS')
+            .filter(result__contains=self.directory)
+            .first()
+        )
+        if task:
+            content = json.loads(task.result)
+            if content['album'] == self.directory:
+                return content['total'] - content['current']
+            else:
+                return 0
+        else:
+            return 0
     pending_updates.short_description = _("Photos pending updates")
 
     @property
@@ -289,7 +302,7 @@ class Photo(models.Model):
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
             if not self.ready:
-                gallery.tasks.post_process_image(self.id)
+                gallery.tasks.post_process_image.delay(self.id)
             else:
                 self.create_previews()
                 self.create_thumbnails()
