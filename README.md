@@ -6,7 +6,7 @@ Dockerized Django photo gallery with Semantic UI styles.
 * Create public or private albums
 * Upload photos to albums
   * Preview images and thumbnails are generated with Pillow SIMD
-  * Mass uploaded photos are created asynchronously Celery
+  * Mass uploaded photos are created asynchronously with Celery
   * Creates also HiDPI images and uses them with srcset
 * Display image EXIF data 
   * Reverse geocodes locality and country based of EXIF data
