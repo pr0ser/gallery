@@ -1,10 +1,6 @@
 #!/bin/sh
 sleep 5
 python manage.py migrate
-nice -n 19 python manage.py process_tasks &
-nice -n 19 python manage.py process_tasks &
-nice -n 19 python manage.py process_tasks &
-nice -n 19 python manage.py process_tasks &
 gunicorn photogallery.wsgi:application \
 --workers 4 \
 --bind 0.0.0.0:8000 \

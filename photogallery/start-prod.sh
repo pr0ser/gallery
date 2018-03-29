@@ -1,7 +1,6 @@
 #!/bin/sh
 python manage.py migrate
 python manage.py collectstatic --noinput
-nice -n 19 python manage.py process_tasks &
 gunicorn photogallery.wsgi:application \
 --workers 3 \
 --bind unix:/run/gallery/gallery.socket \
