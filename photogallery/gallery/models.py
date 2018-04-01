@@ -307,7 +307,7 @@ class Photo(models.Model):
                 self.create_previews()
                 self.create_thumbnails()
                 self.save_exif_data()
-            super(Photo, self).save(*args, **kwargs)
+                super(Photo, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('gallery:photo', kwargs={'slug': self.slug})
