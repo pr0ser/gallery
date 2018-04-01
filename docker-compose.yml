@@ -42,7 +42,7 @@ services:
       args:
         SIMD_LEVEL: "avx2"
     restart: always
-    command: sh -c "nice -n 19 celery -A photogallery worker --loglevel=info"
+    command: sh -c "nice -n19 ionice -c3 celery -A photogallery worker --loglevel=info"
     volumes:
       - ./photogallery/:/gallery
     depends_on:
