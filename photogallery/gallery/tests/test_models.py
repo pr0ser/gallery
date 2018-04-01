@@ -436,6 +436,27 @@ class TestCustomSortOrderNextAndPrev(TestCase):
 
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class TestHashCalculation(TestCase):
+    def setUp(self):
+        image = '/gallery/gallery/tests/testdata/test-photo.jpg'
+        copy2(image, tempfile.gettempdir())
+        self.image_file = 'test-photo.jpg'
+        self.album = Album.objects.create(title='Album')
+        self.photo = Photo(title='Photo', image=self.image_file, album=self.album)
+        self.photo.save()
+
+    def test_file_hash(self):
+        self.assertEquals(
+            self.photo.file_hash,
+            '789c4b74dea2b36e6d229a5ba6fb1a8c0ccc35507a649b261ef01b5734b7a47b'
+        )
+
+    def tearDown(self):
+        file = path.join(tempfile.gettempdir(), self.image_file)
+        remove(file)
+
+
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestExif(TestCase):
     def setUp(self):
         image = '/gallery/gallery/tests/testdata/test-photo.jpg'
