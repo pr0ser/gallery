@@ -45,7 +45,7 @@
             </div>
 
             <div class="ui error message" id="upload-errors">
-              <strong>Tarkista seuraavat virheet</strong>
+              <strong>Virhe lähettämisessä</strong>
               <ul id="error-list">
               </ul>
             </div>
@@ -73,19 +73,24 @@
 
   <script>
       function parseErrors(json) {
-          var errors = json.errors;
           $('#upload-errors').show();
 
-          if ('album' in errors) {
-              for(var i in errors.album) {
-                  $('#error-list').append('<li>Albumi: ' + errors.album[i] + '</li>');
-              }
-          }
+          if (json.hasOwnProperty('errors')) {
+              var errors = json.errors;
 
-          if ('image' in errors) {
-              for(var i in errors.image) {
-                  $('#error-list').append('<li>' + errors.image[i] + '</li>');
+              if ('album' in errors) {
+                  for(var i in errors.album) {
+                      $('#error-list').append('<li>Albumi: ' + errors.album[i] + '</li>');
+                  }
               }
+
+              if ('image' in errors) {
+                  for(var i in errors.image) {
+                      $('#error-list').append('<li>' + errors.image[i] + '</li>');
+                  }
+              }
+          } else {
+              $('#error-list').append('<li>Lähettäminen epäonnistui tuntemattomasta syystä.</li>');
           }
       }
 
@@ -97,7 +102,7 @@
           $('#submit-button').addClass('disabled');
           $('#error-list').empty();
           $('#upload-errors').hide();
-          $('#upload-progress').toggle();
+          $('#upload-progress').show();
 
           xhr.upload.addEventListener('progress', function(evt){
               if (evt.lengthComputable) {
@@ -110,15 +115,23 @@
               }
           }, false);
 
-          xhr.open("post", form.action);
+          xhr.upload.addEventListener('error', function(){
+              $('#upload-progress').hide();
+              $('#upload-errors').show();
+              $('#error-list').append('<li>Tiedoston siirto palvelimelle epäonnistui.</li>');
+              $('#submit-button').removeClass('disabled');
+          });
+
+          xhr.open('post', form.action);
           xhr.send(new FormData(form));
 
           xhr.onload = function () {
               if (xhr.status === 200 && xhr.response.message === 'OK') {
+                  $('#upload-progress').progress('set success');
                   window.location.href = xhr.response.successUrl;
               } else {
                   $('#upload-progress')
-                      .toggle()
+                      .hide()
                       .progress({
                           percent: 0
                       })
@@ -126,7 +139,7 @@
                   $('#submit-button').removeClass('disabled');
                   parseErrors(xhr.response);
               }
-          }
+          };
       }
   </script>
 {% endblock %}

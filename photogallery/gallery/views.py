@@ -258,7 +258,7 @@ class MassUploadView(LoginRequiredMixin, FormView):
                 'successUrl': album.get_absolute_url()
             })
         else:
-            return JsonResponse({'errors': dict(form.errors.items())})
+            return JsonResponse({'errors': dict(form.errors.items())}, status=400)
 
     def get_initial(self):
         initial = super(MassUploadView, self).get_initial()
