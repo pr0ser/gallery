@@ -35,8 +35,9 @@ SECRET_KEY | Django secret key. Needs to be generated separately
 UPLOAD_PERMISSIONS | Django upload permissions. Specify like 644 or 660, not as Django specifies it (0o664 or 0664)
 DIRECTORY_PERMISSIONS | Django directory permissions Specify like 755 or 750, not as Django specifies it (0o755 or 0770)
 ALLOWED_HOSTS | Django allowed hosts, for example ['example.com', 'www.example.com'] or just ['localhost']
-GEOCODING_API_KEY | Google Geocoding API key
-MAPS_API_KEY | Google Maps JavaScript API key
+GEOCODING_API_KEY | Google [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) key
+MAPS_API_KEY | Google [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/) key
+GUNICORN_WORKERS | Number of [Gunicorn worker](http://docs.gunicorn.org/en/stable/settings.html#worker-processes) processses to start
 
 As a default the docker-compose.yml file is configured to build Pillow SIMD with AVX2 instructions. **If the host CPU doesn't support AVX2 instructions, change _SIMD_LEVEL_ arg to _"sse4"_**. Remember also to create the default logging directory: "photogallery/logs/"
 ### Build Docker images

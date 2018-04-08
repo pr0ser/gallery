@@ -2,7 +2,7 @@
 sleep 5
 python manage.py migrate
 gunicorn photogallery.wsgi:application \
---workers 4 \
+--workers $GUNICORN_WORKERS \
 --bind 0.0.0.0:8000 \
 --reload \
 --timeout 120 \
