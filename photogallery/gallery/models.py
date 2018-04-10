@@ -163,10 +163,7 @@ class Album(models.Model):
             content = json.loads(task.result)
             if content['album'] == self.directory:
                 return content['total'] - content['current']
-            else:
-                return 0
-        else:
-            return 0
+        return 0
     pending_updates.short_description = _("Photos pending updates")
 
     @property
