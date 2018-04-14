@@ -9,7 +9,9 @@ from PIL import Image, ImageOps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils.crypto import get_random_string
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
@@ -198,6 +200,10 @@ class Album(models.Model):
                         album_id=self.pk,
                         image=photo,
                         ready=False)
+
+                    if Photo.is_existing_slug(slugify(new_photo.title)):
+                        new_photo.title = new_photo.title + '-' + get_random_string(length=5)
+
                     new_photo.save()
                     new_photos += 1
                 except Exception as e:
@@ -435,6 +441,13 @@ class Photo(models.Model):
             self.preview_dir(),
             self.hidpi_thumbnail_img_filename
         )
+
+    @classmethod
+    def is_existing_slug(cls, slug):
+        if Photo.objects.filter(slug=slug).exists():
+            return True
+        else:
+            return False
 
     def save_exif_data(self):
         try:
