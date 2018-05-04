@@ -2,7 +2,7 @@ celery>=4.1.0,<4.2.0
 Django>=2.0,<2.1.0
 django-celery-results>=1.0.1,<1.1.0
 django-cleanup>=2.1.0,<2.2.0
-django-debug-toolbar
+django-debug-toolbar==1.9.1
 dj-static>=0.0.6,<0.1.0
 gunicorn>=19.7.1,<19.8.0
 pillow-simd==5.1.1.post0
