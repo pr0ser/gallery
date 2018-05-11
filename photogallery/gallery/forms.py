@@ -154,10 +154,6 @@ class EditExifDataForm(ModelForm):
         longitude = cleaned_data.get("longitude")
         error_msg = _('Latitude and longitude must both have values or be both empty.')
 
-        if latitude and not longitude:
-            self.add_error('latitude', error_msg)
-            self.add_error('longitude', error_msg)
-
-        if longitude and not latitude:
+        if (latitude and not longitude) or (longitude and not latitude):
             self.add_error('latitude', error_msg)
             self.add_error('longitude', error_msg)
