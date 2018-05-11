@@ -238,15 +238,8 @@ class MassUploadView(LoginRequiredMixin, FormView):
         files = request.FILES.getlist('image')
         if form.is_valid():
             album = Album.objects.get(pk=form.instance.album.id)
-            existing_titles = Photo.objects.filter(album=album.id).values_list('title', flat=True)
             for file in files:
                 title = path.splitext(file.name)[0]
-                if title in existing_titles:
-                    title = title + '-' + get_random_string(length=5)
-                    messages.warning(request, _('Possible duplicate photo detected.'))
-                    log.warning(
-                        f'Duplicate name detected in mass upload: {path.splitext(file.name)[0]}'
-                    )
                 instance = Photo(
                     title=title,
                     album_id=form.instance.album.id,

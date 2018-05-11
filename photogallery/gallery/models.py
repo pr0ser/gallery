@@ -4,6 +4,7 @@ import os
 import shutil
 from datetime import date
 from glob import glob
+from string import ascii_lowercase
 
 from PIL import Image, ImageOps
 from django.conf import settings
@@ -200,10 +201,6 @@ class Album(models.Model):
                         album_id=self.pk,
                         image=photo,
                         ready=False)
-
-                    if Photo.is_existing_slug(slugify(new_photo.title)):
-                        new_photo.title = new_photo.title + '-' + get_random_string(length=5)
-
                     new_photo.save()
                     new_photos += 1
                 except Exception as e:
@@ -242,7 +239,7 @@ class Photo(models.Model):
     title = models.CharField(
         _('Title'),
         max_length=100,
-        unique=True
+        unique=False
     )
     slug = models.SlugField(
         _('Slug'),
@@ -301,6 +298,8 @@ class Photo(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if self.is_existing_slug():
+            self.slug = self.slug + '-' + get_random_string(length=5, allowed_chars=ascii_lowercase)
         super(Photo, self).save(*args, **kwargs)
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
@@ -442,11 +441,12 @@ class Photo(models.Model):
             self.hidpi_thumbnail_img_filename
         )
 
-    @classmethod
-    def is_existing_slug(cls, slug):
-        if Photo.objects.filter(slug=slug).exists():
-            return True
-        else:
+    def is_existing_slug(self):
+        try:
+            photo = Photo.objects.get(slug=self.slug)
+            if photo.pk != self.pk:
+                return True
+        except Exception:
             return False
 
     def save_exif_data(self):
