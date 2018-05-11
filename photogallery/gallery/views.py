@@ -1,5 +1,5 @@
-import logging
-import os
+from logging import getLogger
+from os import chdir, environ
 from urllib import parse
 
 from django.conf import settings
@@ -23,7 +23,7 @@ from gallery.models import Album, Photo
 from gallery.tasks import async_save_photo, update_album_localities
 from gallery.utils import PartialQuery
 
-log = logging.getLogger(__name__)
+log = getLogger(__name__)
 
 
 class IndexView(ListView):
@@ -147,9 +147,9 @@ class DownloadZipView(View):
             .iterator()
         )
         file = ZipFile(mode='w', compression=ZIP_STORED)
-        os.chdir(settings.MEDIA_ROOT)
+        chdir(settings.MEDIA_ROOT)
         for photo in photos:
-            file.write(photo, os.path.basename(photo))
+            file.write(photo, path.basename(photo))
         response = StreamingHttpResponse(file, content_type='application/zip')
         response['Content-Disposition'] = f'attachment; filename={album.directory}.zip'
         return response
@@ -172,7 +172,7 @@ class PhotoMapView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PhotoMapView, self).get_context_data(**kwargs)
-        api_key = os.environ['MAPS_API_KEY']
+        api_key = environ['MAPS_API_KEY']
         context['api_key'] = api_key
         return context
 

@@ -1,6 +1,6 @@
-import hashlib
-import json
-import logging
+from hashlib import sha256
+from json import load as jsonload
+from logging import getLogger
 from os import environ
 from urllib import parse, request
 
@@ -8,15 +8,15 @@ from PIL import Image
 from django.contrib.postgres.search import SearchQuery
 from psycopg2.extensions import adapt
 
-log = logging.getLogger(__name__)
+log = getLogger(__name__)
 
 
 def calc_hash(filename):
-    hash_sha256 = hashlib.sha256()
+    sha2 = sha256()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
-            hash_sha256.update(chunk)
-    return hash_sha256.hexdigest()
+            sha2.update(chunk)
+    return sha2.hexdigest()
 
 
 def auto_orient(image):
@@ -56,7 +56,7 @@ def google_geocode_lookup(latitude, longitude):
     address_comps = None
 
     try:
-        response = json.load(request.urlopen(base_url + params))
+        response = jsonload(request.urlopen(base_url + params))
         address_comps = response['results']
     except Exception as e:
         log.error(f'Failed to perform Google Geocoding API lookup '

@@ -1,9 +1,9 @@
-import json
-import logging
-import os
-import shutil
 from datetime import date
 from glob import glob
+from json import loads as jsonloads
+from logging import getLogger
+from os import path, makedirs, chdir
+from shutil import rmtree
 from string import ascii_lowercase
 
 from PIL import Image, ImageOps
@@ -24,7 +24,7 @@ import gallery.tasks
 from gallery.exif_reader import ExifInfo
 from gallery.utils import calc_hash, auto_orient, get_geocoding
 
-log = logging.getLogger(__name__)
+log = getLogger(__name__)
 
 
 def validate_album_title(value):
@@ -127,12 +127,12 @@ class Album(models.Model):
         return reverse('gallery:album', kwargs={'slug': self.directory})
 
     def delete_album_dirs(self):
-        dirs = [os.path.join(settings.MEDIA_ROOT, 'photos', self.directory),
-                os.path.join(settings.MEDIA_ROOT, 'previews', self.directory)]
+        dirs = [path.join(settings.MEDIA_ROOT, 'photos', self.directory),
+                path.join(settings.MEDIA_ROOT, 'previews', self.directory)]
         for d in dirs:
-            if os.path.isdir(d):
+            if path.isdir(d):
                 try:
-                    shutil.rmtree(d)
+                    rmtree(d)
                 except OSError:
                     raise ValidationError(_('Unable to delete album directories.'))
 
@@ -163,7 +163,7 @@ class Album(models.Model):
             .first()
         )
         if task:
-            content = json.loads(task.result)
+            content = jsonloads(task.result)
             if content['album'] == self.directory:
                 return content['total'] - content['current']
         return 0
@@ -171,16 +171,16 @@ class Album(models.Model):
 
     @property
     def media_dir(self):
-        album_dir = os.path.join('photos', self.directory)
+        album_dir = path.join('photos', self.directory)
         return album_dir
 
     def get_photos_in_dir(self):
-        os.chdir(settings.MEDIA_ROOT)
+        chdir(settings.MEDIA_ROOT)
         extensions = ['*.jpg', '*.jpeg', '*.png']
         photos = []
         for ext in extensions:
-            photos.extend(glob(os.path.join(self.media_dir, ext)))
-            photos.extend(glob(os.path.join(self.media_dir, ext.upper())))
+            photos.extend(glob(path.join(self.media_dir, ext)))
+            photos.extend(glob(path.join(self.media_dir, ext.upper())))
         return photos
 
     def scan_new_photos(self):
@@ -197,7 +197,7 @@ class Album(models.Model):
             if photo not in existing_photos:
                 try:
                     new_photo = Photo(
-                        title=os.path.splitext(os.path.basename(photo))[0],
+                        title=path.splitext(path.basename(photo))[0],
                         album_id=self.pk,
                         image=photo,
                         ready=False)
@@ -205,7 +205,7 @@ class Album(models.Model):
                     new_photos += 1
                 except Exception as e:
                     errors += _('Failed to add photo %(filename)s to album.') \
-                              % {'filename': os.path.basename(photo)}
+                              % {'filename': path.basename(photo)}
                     log.error(f'Failed to add photo {os.path.basename(photo)}: {e}')
         return new_photos, errors
 
@@ -316,22 +316,22 @@ class Photo(models.Model):
 
     @property
     def preview_filename(self):
-        fname = os.path.basename(self.image.name)
+        fname = path.basename(self.image.name)
         return 'preview_' + fname
 
     @property
     def hidpi_preview_filename(self):
-        fname = os.path.basename(self.image.name)
+        fname = path.basename(self.image.name)
         return 'hidpipreview_' + fname
 
     @property
     def thumbnail_img_filename(self):
-        fname = os.path.basename(self.image.name)
+        fname = path.basename(self.image.name)
         return 'thumb_' + fname
 
     @property
     def hidpi_thumbnail_img_filename(self):
-        fname = os.path.basename(self.image.name)
+        fname = path.basename(self.image.name)
         return 'hidpithumb_' + fname
 
     @cached_property
@@ -364,17 +364,17 @@ class Photo(models.Model):
             return Photo.objects.get(pk=previous_item)
 
     def preview_dir(self):
-        preview_dir = os.path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
-        if not os.path.exists(preview_dir):
-            os.makedirs(preview_dir)
-        return os.path.relpath(preview_dir, start=settings.MEDIA_ROOT)
+        preview_dir = path.join(settings.MEDIA_ROOT, 'previews', self.album.directory)
+        if not path.exists(preview_dir):
+            makedirs(preview_dir)
+        return path.relpath(preview_dir, start=settings.MEDIA_ROOT)
 
     def create_preview_image(self, size, quality, output_file):
         image = auto_orient(Image.open(self.image.path))
         max_size = (size, size)
         image.thumbnail(size=max_size, resample=Image.LANCZOS)
         image.save(
-            fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+            fp=path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
             format=image.format,
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
@@ -392,7 +392,7 @@ class Photo(models.Model):
             bleed=0,
             centering=(0.5, 0.5))
         image.save(
-            fp=os.path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
+            fp=path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
             format=image.format,
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
@@ -406,7 +406,7 @@ class Photo(models.Model):
                 quality=90,
                 output_file=self.preview_filename
             )
-            self.preview_img = os.path.join(
+            self.preview_img = path.join(
                 self.preview_dir(),
                 self.preview_filename
             )
@@ -416,7 +416,7 @@ class Photo(models.Model):
                 quality=90,
                 output_file=self.hidpi_preview_filename
             )
-            self.hidpi_preview_img = os.path.join(
+            self.hidpi_preview_img = path.join(
                 self.preview_dir(),
                 self.hidpi_preview_filename
             )
@@ -427,7 +427,7 @@ class Photo(models.Model):
             quality=80,
             output_file=self.thumbnail_img_filename
         )
-        self.thumbnail_img = os.path.join(
+        self.thumbnail_img = path.join(
             self.preview_dir(),
             self.thumbnail_img_filename
         )
@@ -436,7 +436,7 @@ class Photo(models.Model):
             quality=80,
             output_file=self.hidpi_thumbnail_img_filename
         )
-        self.hidpi_thumbnail_img = os.path.join(
+        self.hidpi_thumbnail_img = path.join(
             self.preview_dir(),
             self.hidpi_thumbnail_img_filename
         )

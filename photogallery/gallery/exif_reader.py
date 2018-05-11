@@ -1,11 +1,11 @@
-import logging
 from datetime import datetime
+from logging import getLogger
 
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 from django.conf import settings
 
-log = logging.getLogger(__name__)
+log = getLogger(__name__)
 
 
 class ExifInfo(object):
