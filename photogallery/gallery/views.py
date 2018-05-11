@@ -12,7 +12,6 @@ from django.db.models import Count, Q
 from django.http import HttpResponseForbidden, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.utils.crypto import get_random_string
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, View
