@@ -16,8 +16,9 @@ def get_temporary_image(temp_file, width, height):
 
 
 class TestLoginLogoutViews(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user('user', 'user@domain.tld', 'user')
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user('user', 'user@domain.tld', 'user')
 
     def test_login_page_loads(self):
         response = self.client.get(reverse('gallery:login'))
@@ -55,9 +56,12 @@ class TestEmptyIndexView(TestCase):
 
 
 class TestIndexView(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         Album.objects.create(title='Test Album')
         Album.objects.create(title='Private Album', public=False)
+
+    def setUp(self):
         self.response = self.client.get(reverse('gallery:index'))
 
     def test_album_visible(self):
@@ -71,8 +75,11 @@ class TestIndexView(TestCase):
 
 
 class TestLoggedInIndexView(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         Album.objects.create(title='Test Album', public=False)
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
         self.response = self.client.get(reverse('gallery:index'))
 
@@ -85,13 +92,16 @@ class TestLoggedInIndexView(TestCase):
 
 
 class TestEmptyAlbumView(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
-        url = reverse('gallery:album', kwargs={'slug': album.directory})
-        self.response = self.client.get(url)
+        cls.url = reverse('gallery:album', kwargs={'slug': album.directory})
+
+    def setUp(self):
+        self.response = self.client.get(self.url)
 
     def test_page_loads(self):
         self.assertEqual(self.response.status_code, 200)
@@ -108,7 +118,8 @@ class TestEmptyAlbumView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestAlbumView(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(self):
         self.album = Album.objects.create(
             title='Test Album',
             description='Test description'
@@ -118,6 +129,8 @@ class TestAlbumView(TestCase):
         self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
         self.photo.save()
         self.url = reverse('gallery:album', kwargs={'slug': self.album.directory})
+
+    def setUp(self):
         self.response = self.client.get(self.url)
 
     def test_page_loads(self):
@@ -144,16 +157,19 @@ class TestAlbumView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestAlbumLargeView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:album-large', kwargs={'slug': self.album.directory})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:album-large', kwargs={'slug': cls.album.directory})
+
+    def setUp(self):
         self.response = self.client.get(self.url)
 
     def test_page_loads(self):
@@ -180,16 +196,19 @@ class TestAlbumLargeView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:photo', kwargs={'slug': self.photo.slug})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:photo', kwargs={'slug': cls.photo.slug})
+
+    def setUp(self):
         self.response = self.client.get(self.url)
 
     def test_page_loads(self):
@@ -260,13 +279,16 @@ class TestPhotoMassUploadView(TestCase):
 
 
 class TestAlbumEditView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
+        cls.url = reverse('gallery:album-edit', kwargs={'slug': cls.album.directory})
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
-        self.url = reverse('gallery:album-edit', kwargs={'slug': self.album.directory})
         self.response = self.client.get(self.url)
 
     def test_page_loads(self):
@@ -282,12 +304,13 @@ class TestAlbumEditView(TestCase):
 
 
 class TestDeleteAlbumView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
-        self.url = reverse('gallery:album-delete', kwargs={'slug': self.album.directory})
+        cls.url = reverse('gallery:album-delete', kwargs={'slug': cls.album.directory})
 
     def test_delete(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
@@ -301,16 +324,19 @@ class TestDeleteAlbumView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoEditView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:photo-edit', kwargs={'slug': self.photo.slug})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:photo-edit', kwargs={'slug': cls.photo.slug})
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
         self.response = self.client.get(self.url)
 
@@ -328,16 +354,19 @@ class TestPhotoEditView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoCoverView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:photo-setascover', kwargs={'slug': self.photo.slug})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:photo-setascover', kwargs={'slug': cls.photo.slug})
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
         self.response = self.client.get(self.url)
 
@@ -355,16 +384,19 @@ class TestPhotoCoverView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoMapView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:photo-map', kwargs={'slug': self.photo.slug})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:photo-map', kwargs={'slug': cls.photo.slug})
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
         self.response = self.client.get(self.url)
 
@@ -382,16 +414,19 @@ class TestPhotoMapView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoDeleteView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album',
             description='Test description.'
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(title='Test Photo', image=self.test_image.name, album=self.album)
-        self.photo.save()
-        self.url = reverse('gallery:photo-delete', kwargs={'slug': self.photo.slug})
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(title='Test Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo.save()
+        cls.url = reverse('gallery:photo-delete', kwargs={'slug': cls.photo.slug})
+
+    def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='user')[0])
         self.response = self.client.post(self.url)
 
@@ -406,32 +441,33 @@ class TestPhotoDeleteView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestSearchView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album ABC',
             description='Test description with special characters. Röäm.'
         )
-        self.hidden_album = Album.objects.create(
+        cls.hidden_album = Album.objects.create(
             title='Hidden Album',
             description='This is a hidden album.',
             public=False
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(
             title='Unique Photo',
             description='CBA',
-            image=self.test_image.name,
-            album=self.album
+            image=cls.test_image.name,
+            album=cls.album
         )
-        self.photo.save()
-        self.photo2 = Photo(
+        cls.photo.save()
+        cls.photo2 = Photo(
             title='Just a nice photo',
             description='xyz',
-            image=self.test_image.name,
-            album=self.hidden_album
+            image=cls.test_image.name,
+            album=cls.hidden_album
         )
-        self.photo2.save()
+        cls.photo2.save()
 
     def test_without_search_query(self):
         self.url = reverse('gallery:search')
@@ -508,32 +544,33 @@ class TestSearchView(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestSearchAPIView(TestCase):
-    def setUp(self):
-        self.album = Album.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.album = Album.objects.create(
             title='Test Album ABC',
             description='Test description with special characters. Röäm.'
         )
-        self.hidden_album = Album.objects.create(
+        cls.hidden_album = Album.objects.create(
             title='Hidden Album',
             description='This is a hidden album.',
             public=False
         )
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.photo = Photo(
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.photo = Photo(
             title='Unique Photo',
             description='CBA',
-            image=self.test_image.name,
-            album=self.album
+            image=cls.test_image.name,
+            album=cls.album
         )
-        self.photo.save()
-        self.photo2 = Photo(
+        cls.photo.save()
+        cls.photo2 = Photo(
             title='Just a nice photo',
             description='xyz',
-            image=self.test_image.name,
-            album=self.hidden_album
+            image=cls.test_image.name,
+            album=cls.hidden_album
         )
-        self.photo2.save()
+        cls.photo2.save()
 
     def test_without_search_query(self):
         self.url = reverse('gallery:search-api')

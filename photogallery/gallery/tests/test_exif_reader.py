@@ -9,10 +9,11 @@ from gallery.utils import auto_orient
 
 
 class TestExifAutoOrient(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         chdir('/gallery/gallery/tests/testdata')
-        self.portrait_photo = auto_orient(Image.open('test-photo.jpg'))
-        self.landscape_photo = auto_orient(Image.open('test-photo2.jpg'))
+        cls.portrait_photo = auto_orient(Image.open('test-photo.jpg'))
+        cls.landscape_photo = auto_orient(Image.open('test-photo2.jpg'))
 
     def test_portrait_photo(self):
         self.assertEqual(self.portrait_photo.height, 400)
@@ -24,9 +25,10 @@ class TestExifAutoOrient(TestCase):
 
 
 class TestExifParsing(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         chdir('/gallery/gallery/tests/testdata')
-        self.exifdata = ExifInfo(filename='test-photo.jpg')
+        cls.exifdata = ExifInfo(filename='test-photo.jpg')
 
     def test_has_exif_data(self):
         self.assertTrue(self.exifdata.has_exif_data)

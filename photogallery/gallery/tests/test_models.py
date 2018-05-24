@@ -17,13 +17,14 @@ def get_temporary_image(temp_file, width, height):
 
 
 class TestNewAlbum(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
 
-        self.public_album = Album.objects.create(
+        cls.public_album = Album.objects.create(
             title='Public Album',
             description='Test description.'
         )
-        self.private_album = Album.objects.create(
+        cls.private_album = Album.objects.create(
             title='Private Album',
             public=False,
             date=datetime.date(2018, 1, 30),
@@ -86,10 +87,11 @@ class TestNewAlbum(TestCase):
 
 
 class TestSubAlbum(TestCase):
-    def setUp(self):
-        self.root_album = Album.objects.create(title='Root album')
-        self.sub_album = Album.objects.create(title='Sub album', parent=self.root_album)
-        self.sub_sub_album = Album.objects.create(title='Sub sub album', parent=self.sub_album)
+    @classmethod
+    def setUpTestData(cls):
+        cls.root_album = Album.objects.create(title='Root album')
+        cls.sub_album = Album.objects.create(title='Sub album', parent=cls.root_album)
+        cls.sub_sub_album = Album.objects.create(title='Sub sub album', parent=cls.sub_album)
 
     def test_root_album(self):
         self.assertIsNone(self.root_album.parent)
@@ -138,22 +140,23 @@ class TestAlbumEdit(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestNewPhoto(TestCase):
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(
+    @classmethod
+    def setUpTestData(cls):
+        cls.temp_file = tempfile.NamedTemporaryFile(
             delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
-        test_image = get_temporary_image(self.temp_file, width=200, height=100)
-        self.test_time = datetime.datetime.now()
-        self.album = Album.objects.create(title='Album')
-        self.photo = Photo(
+        test_image = get_temporary_image(cls.temp_file, width=200, height=100)
+        cls.test_time = datetime.datetime.now()
+        cls.album = Album.objects.create(title='Album')
+        cls.photo = Photo(
             title='Test Photo',
             image=test_image.name,
-            album=self.album,
-            date=self.test_time
+            album=cls.album,
+            date=cls.test_time
         )
-        self.photo.save()
+        cls.photo.save()
 
     def test_title(self):
         self.assertEqual(self.photo.title, 'Test Photo')
@@ -214,20 +217,21 @@ class TestNewPhoto(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestPhotoFileNames(TestCase):
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(
+    @classmethod
+    def setUpTestData(cls):
+        cls.temp_file = tempfile.NamedTemporaryFile(
             delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
-        test_image = get_temporary_image(self.temp_file, width=100, height=100)
-        self.album = Album.objects.create(title='Album')
-        self.photo = Photo(
+        test_image = get_temporary_image(cls.temp_file, width=100, height=100)
+        cls.album = Album.objects.create(title='Album')
+        cls.photo = Photo(
             title='Test Photo',
             image=test_image.name,
-            album=self.album,
+            album=cls.album,
         )
-        self.photo.save()
+        cls.photo.save()
 
     def test_preview_filename(self):
         self.assertEqual(
@@ -278,20 +282,21 @@ class TestPhotoPreviewDirCreation(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestHighResPhoto(TestCase):
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(
+    @classmethod
+    def setUpTestData(cls):
+        cls.temp_file = tempfile.NamedTemporaryFile(
             delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
-        test_image = get_temporary_image(self.temp_file, width=2500, height=2000)
-        self.album = Album.objects.create(title='Album')
-        self.photo = Photo(
+        test_image = get_temporary_image(cls.temp_file, width=2500, height=2000)
+        cls.album = Album.objects.create(title='Album')
+        cls.photo = Photo(
             title='Test Photo',
             image=test_image.name,
-            album=self.album,
+            album=cls.album,
         )
-        self.photo.save()
+        cls.photo.save()
 
     def test_preview_image(self):
         image = Image.open(self.photo.preview_img.path)
@@ -310,20 +315,21 @@ class TestHighResPhoto(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestMidResPhoto(TestCase):
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(
+    @classmethod
+    def setUpTestData(cls):
+        cls.temp_file = tempfile.NamedTemporaryFile(
             delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
-        test_image = get_temporary_image(self.temp_file, width=1400, height=900)
-        self.album = Album.objects.create(title='Album')
-        self.photo = Photo(
+        test_image = get_temporary_image(cls.temp_file, width=1400, height=900)
+        cls.album = Album.objects.create(title='Album')
+        cls.photo = Photo(
             title='Test Photo',
             image=test_image.name,
-            album=self.album,
+            album=cls.album,
         )
-        self.photo.save()
+        cls.photo.save()
 
     def test_preview_image(self):
         self.assertTrue(path.isfile(self.photo.preview_img.path))
@@ -338,20 +344,21 @@ class TestMidResPhoto(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestLowResPhoto(TestCase):
-    def setUp(self):
-        self.temp_file = tempfile.NamedTemporaryFile(
+    @classmethod
+    def setUpTestData(cls):
+        cls.temp_file = tempfile.NamedTemporaryFile(
             delete=True,
             prefix='test-photo',
             suffix='.jpg'
         )
-        test_image = get_temporary_image(self.temp_file, width=800, height=600)
-        self.album = Album.objects.create(title='Album')
-        self.photo = Photo(
+        test_image = get_temporary_image(cls.temp_file, width=800, height=600)
+        cls.album = Album.objects.create(title='Album')
+        cls.photo = Photo(
             title='Test Photo',
             image=test_image.name,
-            album=self.album,
+            album=cls.album,
         )
-        self.photo.save()
+        cls.photo.save()
 
     def test_empty_preview_image(self):
         self.assertFalse(bool(self.photo.preview_img))
@@ -369,19 +376,20 @@ class TestLowResPhoto(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestNextAndPreviousPhoto(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.album = Album.objects.create(title='Album')
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.album = Album.objects.create(title='Album')
 
-        self.photo1 = Photo(title='Photo', image=self.test_image.name, album=self.album)
-        self.photo1.save()
+        cls.photo1 = Photo(title='Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo1.save()
 
-        self.photo2 = Photo(title='Photo 2', image=self.test_image.name, album=self.album)
-        self.photo2.save()
+        cls.photo2 = Photo(title='Photo 2', image=cls.test_image.name, album=cls.album)
+        cls.photo2.save()
 
-        self.photo3 = Photo(title='Photo 3', image=self.test_image.name, album=self.album)
-        self.photo3.save()
+        cls.photo3 = Photo(title='Photo 3', image=cls.test_image.name, album=cls.album)
+        cls.photo3.save()
 
     def test_next(self):
         self.assertIsNotNone(self.photo1.next_photo)
@@ -403,19 +411,20 @@ class TestNextAndPreviousPhoto(TestCase):
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class TestCustomSortOrderNextAndPrev(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         temp_file = tempfile.NamedTemporaryFile(delete=True, suffix='.jpg')
-        self.test_image = get_temporary_image(temp_file, width=100, height=100)
-        self.album = Album.objects.create(title='Album', sort_order='-title')
+        cls.test_image = get_temporary_image(temp_file, width=100, height=100)
+        cls.album = Album.objects.create(title='Album', sort_order='-title')
 
-        self.photo1 = Photo(title='Photo', image=self.test_image.name, album=self.album)
-        self.photo1.save()
+        cls.photo1 = Photo(title='Photo', image=cls.test_image.name, album=cls.album)
+        cls.photo1.save()
 
-        self.photo2 = Photo(title='Photo 2', image=self.test_image.name, album=self.album)
-        self.photo2.save()
+        cls.photo2 = Photo(title='Photo 2', image=cls.test_image.name, album=cls.album)
+        cls.photo2.save()
 
-        self.photo3 = Photo(title='Photo 3', image=self.test_image.name, album=self.album)
-        self.photo3.save()
+        cls.photo3 = Photo(title='Photo 3', image=cls.test_image.name, album=cls.album)
+        cls.photo3.save()
 
     def test_next(self):
         self.assertIsNotNone(self.photo3.next_photo)
