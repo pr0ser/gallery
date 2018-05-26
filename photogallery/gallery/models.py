@@ -616,7 +616,7 @@ class ExifData(models.Model):
                     self.locality, self.country = get_geocoding(self.latitude, self.longitude)
                     self.save()
                 except Exception:
-                    pass
+                    log.error(f'Failed to update geocoding for photo {self.photo.title}: {e}')
 
     def admin_thumbnail(self):
         if self.photo.ready:
