@@ -35,8 +35,11 @@ def async_save_photo(self, album_id):
 
 
 @shared_task
-def update_album_localities(album_id):
+def update_album_localities(album_id, overwrite=False):
     photos = (gallery.models.Photo.objects.all().filter(album_id=album_id).iterator())
     for photo in photos:
         if hasattr(photo, 'exifdata'):
-            photo.exifdata.update_geocoding(overwrite=True)
+            if overwrite:
+                photo.exifdata.update_geocoding(overwrite=True)
+            else:
+                photo.exifdata.update_geocoding()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-11 09:19+0000\n"
+"POT-Creation-Date: 2018-05-28 15:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gallery/admin.py:9 gallery/admin.py:10
+#: gallery/admin.py:10 gallery/admin.py:11
 msgid "Gallery administration"
 msgstr "Gallerian ylläpito"
 
@@ -30,24 +30,40 @@ msgstr "Ylempi albumi"
 msgid "Album details"
 msgstr "Albumin tiedot"
 
-#: gallery/admin.py:62
+#: gallery/admin.py:55
+msgid "Locality information will be updated in the background."
+msgstr "Paikkatiedot päivitetään taustalla."
+
+#: gallery/admin.py:58
+msgid "Update selected albums missing locality information"
+msgstr "Päivitä valittujen albumien puuttuvat paikkatiedot"
+
+#: gallery/admin.py:64
+msgid "Locality information will be overwritten in the background."
+msgstr "Paikkatiedot ylikirjoitetaan taustalla."
+
+#: gallery/admin.py:67
+msgid "Overwrite selected albums locality information"
+msgstr "Ylikirjoita valittujen albumien paikkatiedot"
+
+#: gallery/admin.py:81
 msgid "Photo metadata"
 msgstr "Kuvan metatiedot"
 
-#: gallery/admin.py:70 gallery/forms.py:93 gallery/forms.py:115
+#: gallery/admin.py:89 gallery/forms.py:93 gallery/forms.py:115
 #: gallery/models.py:237
 msgid "Album"
 msgstr "Albumi"
 
-#: gallery/admin.py:73 gallery/models.py:501
+#: gallery/admin.py:92 gallery/models.py:501
 msgid "Photo"
 msgstr "Kuva"
 
-#: gallery/admin.py:93
+#: gallery/admin.py:112
 msgid "Camera and photo details"
 msgstr "Kameran ja kuvan tiedot"
 
-#: gallery/admin.py:105
+#: gallery/admin.py:124
 msgid "Location details"
 msgstr "Sijaintiin liittyvät tiedot"
 
@@ -279,14 +295,10 @@ msgstr "Maa"
 msgid "EXIF data"
 msgstr "EXIF-tiedot"
 
-#: gallery/views.py:268
+#: gallery/views.py:266
 msgid "No new photos found in the album directory."
 msgstr "Albumin hakemistosta ei löytynyt uusia kuvia."
 
-#: gallery/views.py:298
-msgid "Geocoding information will be updated on the background. It might take a while."
-msgstr "Kuvien paikkakuntatiedot päivitetään taustalla. Tämä voi kestää hetken."
-
-#: gallery/views.py:404
+#: gallery/views.py:392
 msgid "Show all"
 msgstr "Näytä kaikki"

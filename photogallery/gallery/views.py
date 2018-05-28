@@ -288,16 +288,6 @@ class UpdatePhotosView(LoginRequiredMixin, View):
         return redirect('gallery:album', slug=album.directory)
 
 
-class UpdateAlbumLocalityView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        album = get_object_or_404(Album, directory=kwargs.get('slug'))
-        update_album_localities.delay(album.id)
-        messages.info(
-            request, _('Geocoding information will be updated '
-                       'on the background. It might take a while.'))
-        return redirect('gallery:album', slug=album.directory)
-
-
 class EditExifDataView(LoginRequiredMixin, UpdateView):
     model = ExifData
     form_class = EditExifDataForm

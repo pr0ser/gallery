@@ -3,6 +3,7 @@ from django.contrib.admin import AdminSite
 from django.utils.translation import ugettext_lazy as _
 
 from gallery.models import Album, Photo, ExifData
+from gallery.tasks import update_album_localities
 
 
 class GalleryAdminSite(AdminSite):
@@ -43,9 +44,28 @@ class AlbumAdmin(admin.ModelAdmin):
         'show_metadata',
         'show_location'
     )
+    actions = ['update_album_geocoding', 'overwrite_album_geocoding']
 
     def get_queryset(self, request):
         return super(AlbumAdmin, self).get_queryset(request).select_related('album_cover')
+
+    def update_album_geocoding(self, request, queryset):
+        for album in queryset:
+            update_album_localities.delay(album_id=album.id)
+        self.message_user(request, _('Locality information will be updated in the background.'))
+
+    update_album_geocoding.short_description = _(
+        'Update selected albums missing locality information'
+    )
+
+    def overwrite_album_geocoding(self, request, queryset):
+        for album in queryset:
+            update_album_localities.delay(album_id=album.id, overwrite=True)
+        self.message_user(request, _('Locality information will be overwritten in the background.'))
+
+    overwrite_album_geocoding.short_description = _(
+        'Overwrite selected albums locality information'
+    )
 
 
 class PhotoAdmin(admin.ModelAdmin):
