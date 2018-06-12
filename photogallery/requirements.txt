@@ -1,4 +1,4 @@
-celery>=4.1.0,<4.2.0
+celery>=4.2.0,<4.3.0
 Django>=2.0,<2.1.0
 django-celery-results>=1.0.1,<1.1.0
 django-cleanup>=2.1.0,<2.2.0
