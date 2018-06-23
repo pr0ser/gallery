@@ -201,7 +201,7 @@ class DeletePhotoView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         next_url = self.request.POST.get('next')
-        if is_safe_url(next_url):
+        if is_safe_url(next_url, allowed_hosts=settings.ALLOWED_HOSTS):
             return next_url
         else:
             return super(DeletePhotoView, self).get_success_url()
