@@ -1,5 +1,5 @@
  /*
- * # Semantic UI - 2.3.1
+ * # Semantic UI - 2.3.2
  * https://github.com/Semantic-Org/Semantic-UI
  * http://www.semantic-ui.com/
  *
@@ -11,7 +11,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 /*!
- * # Semantic UI 2.3.1 - Breadcrumb
+ * # Semantic UI 2.3.2 - Breadcrumb
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -142,7 +142,7 @@
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Button
+ * # Semantic UI 2.3.2 - Button
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -3946,6 +3946,92 @@
   margin-left: -1px;
 }
 
+/* Inverted */
+
+.ui.inverted.primary.buttons .button,
+.ui.inverted.primary.button {
+  background-color: transparent;
+  -webkit-box-shadow: 0px 0px 0px 2px #54C8FF inset !important;
+  box-shadow: 0px 0px 0px 2px #54C8FF inset !important;
+  color: #54C8FF;
+}
+
+.ui.inverted.primary.buttons .button:hover,
+.ui.inverted.primary.button:hover,
+.ui.inverted.primary.buttons .button:focus,
+.ui.inverted.primary.button:focus,
+.ui.inverted.primary.buttons .button.active,
+.ui.inverted.primary.button.active,
+.ui.inverted.primary.buttons .button:active,
+.ui.inverted.primary.button:active {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  color: #FFFFFF;
+}
+
+.ui.inverted.primary.buttons .button:hover,
+.ui.inverted.primary.button:hover {
+  background-color: #3ac0ff;
+}
+
+.ui.inverted.primary.buttons .button:focus,
+.ui.inverted.primary.button:focus {
+  background-color: #2bbbff;
+}
+
+.ui.inverted.primary.buttons .active.button,
+.ui.inverted.primary.active.button {
+  background-color: #3ac0ff;
+}
+
+.ui.inverted.primary.buttons .button:active,
+.ui.inverted.primary.button:active {
+  background-color: #21b8ff;
+}
+
+/* Inverted Basic */
+
+.ui.inverted.primary.basic.buttons .button,
+.ui.inverted.primary.buttons .basic.button,
+.ui.inverted.primary.basic.button {
+  background-color: transparent;
+  -webkit-box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.5) inset !important;
+  box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.5) inset !important;
+  color: #FFFFFF !important;
+}
+
+.ui.inverted.primary.basic.buttons .button:hover,
+.ui.inverted.primary.buttons .basic.button:hover,
+.ui.inverted.primary.basic.button:hover {
+  -webkit-box-shadow: 0px 0px 0px 2px #3ac0ff inset !important;
+  box-shadow: 0px 0px 0px 2px #3ac0ff inset !important;
+  color: #54C8FF !important;
+}
+
+.ui.inverted.primary.basic.buttons .button:focus,
+.ui.inverted.primary.basic.buttons .button:focus,
+.ui.inverted.primary.basic.button:focus {
+  -webkit-box-shadow: 0px 0px 0px 2px #2bbbff inset !important;
+  box-shadow: 0px 0px 0px 2px #2bbbff inset !important;
+  color: #54C8FF !important;
+}
+
+.ui.inverted.primary.basic.buttons .active.button,
+.ui.inverted.primary.buttons .basic.active.button,
+.ui.inverted.primary.basic.active.button {
+  -webkit-box-shadow: 0px 0px 0px 2px #3ac0ff inset !important;
+  box-shadow: 0px 0px 0px 2px #3ac0ff inset !important;
+  color: #54C8FF !important;
+}
+
+.ui.inverted.primary.basic.buttons .button:active,
+.ui.inverted.primary.buttons .basic.button:active,
+.ui.inverted.primary.basic.button:active {
+  -webkit-box-shadow: 0px 0px 0px 2px #21b8ff inset !important;
+  box-shadow: 0px 0px 0px 2px #21b8ff inset !important;
+  color: #54C8FF !important;
+}
+
 /*-------------------
       Secondary
 --------------------*/
@@ -4037,6 +4123,92 @@
 
 .ui.buttons:not(.vertical) > .basic.primary.button:not(:first-child) {
   margin-left: -1px;
+}
+
+/* Inverted */
+
+.ui.inverted.secondary.buttons .button,
+.ui.inverted.secondary.button {
+  background-color: transparent;
+  -webkit-box-shadow: 0px 0px 0px 2px #545454 inset !important;
+  box-shadow: 0px 0px 0px 2px #545454 inset !important;
+  color: #545454;
+}
+
+.ui.inverted.secondary.buttons .button:hover,
+.ui.inverted.secondary.button:hover,
+.ui.inverted.secondary.buttons .button:focus,
+.ui.inverted.secondary.button:focus,
+.ui.inverted.secondary.buttons .button.active,
+.ui.inverted.secondary.button.active,
+.ui.inverted.secondary.buttons .button:active,
+.ui.inverted.secondary.button:active {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  color: #FFFFFF;
+}
+
+.ui.inverted.secondary.buttons .button:hover,
+.ui.inverted.secondary.button:hover {
+  background-color: #616161;
+}
+
+.ui.inverted.secondary.buttons .button:focus,
+.ui.inverted.secondary.button:focus {
+  background-color: #686868;
+}
+
+.ui.inverted.secondary.buttons .active.button,
+.ui.inverted.secondary.active.button {
+  background-color: #616161;
+}
+
+.ui.inverted.secondary.buttons .button:active,
+.ui.inverted.secondary.button:active {
+  background-color: #6e6e6e;
+}
+
+/* Inverted Basic */
+
+.ui.inverted.secondary.basic.buttons .button,
+.ui.inverted.secondary.buttons .basic.button,
+.ui.inverted.secondary.basic.button {
+  background-color: transparent;
+  -webkit-box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.5) inset !important;
+  box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.5) inset !important;
+  color: #FFFFFF !important;
+}
+
+.ui.inverted.secondary.basic.buttons .button:hover,
+.ui.inverted.secondary.buttons .basic.button:hover,
+.ui.inverted.secondary.basic.button:hover {
+  -webkit-box-shadow: 0px 0px 0px 2px #616161 inset !important;
+  box-shadow: 0px 0px 0px 2px #616161 inset !important;
+  color: #545454 !important;
+}
+
+.ui.inverted.secondary.basic.buttons .button:focus,
+.ui.inverted.secondary.basic.buttons .button:focus,
+.ui.inverted.secondary.basic.button:focus {
+  -webkit-box-shadow: 0px 0px 0px 2px #686868 inset !important;
+  box-shadow: 0px 0px 0px 2px #686868 inset !important;
+  color: #545454 !important;
+}
+
+.ui.inverted.secondary.basic.buttons .active.button,
+.ui.inverted.secondary.buttons .basic.active.button,
+.ui.inverted.secondary.basic.active.button {
+  -webkit-box-shadow: 0px 0px 0px 2px #616161 inset !important;
+  box-shadow: 0px 0px 0px 2px #616161 inset !important;
+  color: #545454 !important;
+}
+
+.ui.inverted.secondary.basic.buttons .button:active,
+.ui.inverted.secondary.buttons .basic.button:active,
+.ui.inverted.secondary.basic.button:active {
+  -webkit-box-shadow: 0px 0px 0px 2px #6e6e6e inset !important;
+  box-shadow: 0px 0px 0px 2px #6e6e6e inset !important;
+  color: #545454 !important;
 }
 
 /*---------------
@@ -4331,7 +4503,7 @@
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Item
+ * # Semantic UI 2.3.2 - Item
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -5438,7 +5610,7 @@ a.ui.card:hover,
     User Variable Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Checkbox
+ * # Semantic UI 2.3.2 - Checkbox
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6113,7 +6285,7 @@ a.ui.card:hover,
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Container
+ * # Semantic UI 2.3.2 - Container
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6274,7 +6446,7 @@ a.ui.card:hover,
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Dimmer
+ * # Semantic UI 2.3.2 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6527,7 +6699,7 @@ body.dimmable > .dimmer {
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Divider
+ * # Semantic UI 2.3.2 - Divider
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6794,7 +6966,7 @@ body.dimmable > .dimmer {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Dropdown
+ * # Semantic UI 2.3.2 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -8441,7 +8613,7 @@ select.ui.dropdown {
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Form
+ * # Semantic UI 2.3.2 - Form
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -9620,7 +9792,7 @@ select.ui.dropdown {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Grid
+ * # Semantic UI 2.3.2 - Grid
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -11929,7 +12101,7 @@ select.ui.dropdown {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Header
+ * # Semantic UI 2.3.2 - Header
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -12756,7 +12928,7 @@ a.ui.inverted.grey.header:hover {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Icon
+ * # Semantic UI 2.3.2 - Icon
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -18463,7 +18635,7 @@ i.icon.youtube.play:before {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Image
+ * # Semantic UI 2.3.2 - Image
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -18785,7 +18957,7 @@ img.ui.bordered.image {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Input
+ * # Semantic UI 2.3.2 - Input
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -19357,7 +19529,7 @@ img.ui.bordered.image {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Item
+ * # Semantic UI 2.3.2 - Item
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -19878,7 +20050,7 @@ img.ui.bordered.image {
     User Variable Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - List
+ * # Semantic UI 2.3.2 - List
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -23250,7 +23422,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Message
+ * # Semantic UI 2.3.2 - Message
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -23820,7 +23992,7 @@ Floated Menu / Item
         Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Modal
+ * # Semantic UI 2.3.2 - Modal
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -24472,7 +24644,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Popup
+ * # Semantic UI 2.3.2 - Popup
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -25302,7 +25474,7 @@ Floated Menu / Item
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Progress Bar
+ * # Semantic UI 2.3.2 - Progress Bar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -25884,7 +26056,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Reset
+ * # Semantic UI 2.3.2 - Reset
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -26373,7 +26545,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Search
+ * # Semantic UI 2.3.2 - Search
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -26843,7 +27015,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Segment
+ * # Semantic UI 2.3.2 - Segment
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -27743,7 +27915,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Sidebar
+ * # Semantic UI 2.3.2 - Sidebar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -28428,7 +28600,7 @@ body.pushable > .pusher {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Site
+ * # Semantic UI 2.3.2 - Site
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -28819,7 +28991,7 @@ input[type=date]::-webkit-inner-spin-button {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.1 - Transition
+ * # Semantic UI 2.3.2 - Transition
  * http://github.com/semantic-org/semantic-ui/
  *
  *
