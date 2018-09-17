@@ -337,7 +337,7 @@ $.fn.search = function(parameters) {
               apiSettings = {
                 debug             : settings.debug,
                 on                : false,
-                cache             : true,
+                cache             : settings.cache,
                 action            : 'search',
                 urlData           : {
                   query : searchTerm
@@ -1377,7 +1377,7 @@ $.fn.search.settings = {
         // message type
         if(type == 'empty') {
           html += ''
-            + '<div class="header">Ei tuloksia</div class="header">'
+            + '<div class="header">No Results</div class="header">'
             + '<div class="description">' + message + '</div class="description">'
           ;
         }

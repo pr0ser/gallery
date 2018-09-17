@@ -1,5 +1,5 @@
  /*
- * # Semantic UI - 2.3.2
+ * # Semantic UI - 2.4.0
  * https://github.com/Semantic-Org/Semantic-UI
  * http://www.semantic-ui.com/
  *
@@ -11,7 +11,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 /*!
- * # Semantic UI 2.3.2 - Breadcrumb
+ * # Semantic UI 2.4.0 - Breadcrumb
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -142,7 +142,7 @@
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Button
+ * # Semantic UI 2.4.0 - Button
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -4503,7 +4503,7 @@
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Item
+ * # Semantic UI 2.4.0 - Item
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -5610,7 +5610,7 @@ a.ui.card:hover,
     User Variable Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Checkbox
+ * # Semantic UI 2.4.0 - Checkbox
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6285,7 +6285,7 @@ a.ui.card:hover,
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Container
+ * # Semantic UI 2.4.0 - Container
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6446,7 +6446,7 @@ a.ui.card:hover,
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Dimmer
+ * # Semantic UI 2.4.0 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6566,6 +6566,18 @@ a.ui.card:hover,
 /*******************************
            Variations
 *******************************/
+
+/*--------------
+    Legacy
+---------------*/
+
+/* Animating / Active / Visible */
+
+.dimmed.dimmable > .ui.animating.legacy.dimmer,
+.dimmed.dimmable > .ui.visible.legacy.dimmer,
+.ui.active.legacy.dimmer {
+  display: block;
+}
 
 /*--------------
     Alignment
@@ -6699,7 +6711,7 @@ body.dimmable > .dimmer {
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Divider
+ * # Semantic UI 2.4.0 - Divider
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -6966,7 +6978,7 @@ body.dimmable > .dimmer {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Dropdown
+ * # Semantic UI 2.4.0 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -7993,6 +8005,20 @@ select.ui.dropdown {
 }
 
 /*--------------------
+        Clear
+----------------------*/
+
+.ui.dropdown > .clear.dropdown.icon {
+  opacity: 0.8;
+  -webkit-transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease;
+}
+
+.ui.dropdown > .clear.dropdown.icon:hover {
+  opacity: 1;
+}
+
+/*--------------------
         Disabled
 ----------------------*/
 
@@ -8613,7 +8639,7 @@ select.ui.dropdown {
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Form
+ * # Semantic UI 2.4.0 - Form
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -8946,7 +8972,7 @@ select.ui.dropdown {
 }
 
 .ui.form :-ms-input-placeholder {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .ui.form ::-moz-placeholder {
@@ -8958,7 +8984,7 @@ select.ui.dropdown {
 }
 
 .ui.form :focus:-ms-input-placeholder {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .ui.form :focus::-moz-placeholder {
@@ -9792,7 +9818,7 @@ select.ui.dropdown {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Grid
+ * # Semantic UI 2.4.0 - Grid
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -12101,7 +12127,7 @@ select.ui.dropdown {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Header
+ * # Semantic UI 2.4.0 - Header
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -12928,7 +12954,7 @@ a.ui.inverted.grey.header:hover {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Icon
+ * # Semantic UI 2.4.0 - Icon
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -18635,7 +18661,7 @@ i.icon.youtube.play:before {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Image
+ * # Semantic UI 2.4.0 - Image
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -18957,7 +18983,7 @@ img.ui.bordered.image {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Input
+ * # Semantic UI 2.4.0 - Input
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -19529,7 +19555,7 @@ img.ui.bordered.image {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Item
+ * # Semantic UI 2.4.0 - Item
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -20050,7 +20076,7 @@ img.ui.bordered.image {
     User Variable Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - List
+ * # Semantic UI 2.4.0 - List
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -20205,6 +20231,7 @@ ol.ui.list ol li,
 .ui.list > .item > .image + .content,
 .ui.list > .item > .icon + .content {
   display: table-cell;
+  width: 100%;
   padding: 0em 0em 0em 0.5em;
   vertical-align: top;
 }
@@ -20212,6 +20239,7 @@ ol.ui.list ol li,
 .ui.list .list > .item > img.image + .content,
 .ui.list > .item > img.image + .content {
   display: inline-block;
+  width: auto;
 }
 
 .ui.list .list > .item > .content > .list,
@@ -21412,7 +21440,7 @@ ol.ui.horizontal.list li:before,
   display: inline-block;
   font-size: 1em !important;
   float: none;
-  margin: 0em 0.75em 0em 0em;
+  margin: 0em 0.75em 0em 0em !important;
 }
 
 /* Secondary */
@@ -21640,7 +21668,7 @@ Floated Menu / Item
 /* Left Floated */
 
 .ui.menu:not(.vertical) .left.item,
-.ui.menu:not(.vertical) .left.menu {
+.ui.menu:not(.vertical) :not(.dropdown) > .left.menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -23422,7 +23450,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Message
+ * # Semantic UI 2.4.0 - Message
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -23992,7 +24020,7 @@ Floated Menu / Item
         Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Modal
+ * # Semantic UI 2.4.0 - Modal
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -24006,6 +24034,7 @@ Floated Menu / Item
 *******************************/
 
 .ui.modal {
+  position: absolute;
   display: none;
   z-index: 1001;
   text-align: left;
@@ -24345,6 +24374,21 @@ Floated Menu / Item
   color: #b9b9b9;
 }
 
+/* Resort to margin positioning if legacy */
+
+.ui.legacy.modal,
+.ui.legacy.page.dimmer > .ui.modal {
+  top: 50%;
+  left: 50%;
+}
+
+.ui.legacy.page.dimmer > .ui.scrolling.modal,
+.ui.page.dimmer > .ui.scrolling.legacy.modal,
+.ui.top.aligned.legacy.page.dimmer > .ui.modal,
+.ui.top.aligned.dimmer > .ui.legacy.modal {
+  top: auto;
+}
+
 /* Tablet and Mobile */
 
 @media only screen and (max-width: 991px) {
@@ -24381,6 +24425,24 @@ Floated Menu / Item
   margin: 5vh auto;
 }
 
+@media only screen and (max-width: 767px) {
+  .modals.dimmer[class*="top aligned"] .modal {
+    margin: 1rem auto;
+  }
+}
+
+/* Legacy Top Aligned */
+
+.legacy.modals.dimmer[class*="top aligned"] {
+  padding-top: 5vh;
+}
+
+@media only screen and (max-width: 767px) {
+  .legacy.modals.dimmer[class*="top aligned"] {
+    padding-top: 1rem;
+  }
+}
+
 /*--------------
     Scrolling
 ---------------*/
@@ -24407,7 +24469,7 @@ Floated Menu / Item
 }
 
 .modals.dimmer .ui.scrolling.modal {
-  margin: 3.5rem auto !important;
+  margin: 3.5rem auto;
 }
 
 /* Undetached Scrolling */
@@ -24644,7 +24706,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Popup
+ * # Semantic UI 2.4.0 - Popup
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -25474,7 +25536,7 @@ Floated Menu / Item
         User Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Progress Bar
+ * # Semantic UI 2.4.0 - Progress Bar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -26056,7 +26118,7 @@ Floated Menu / Item
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Reset
+ * # Semantic UI 2.4.0 - Reset
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -26545,7 +26607,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Search
+ * # Semantic UI 2.4.0 - Search
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -26608,6 +26670,8 @@ th {
   -webkit-transform-origin: center top;
   transform-origin: center top;
   white-space: normal;
+  text-align: left;
+  text-transform: none;
   background: #323232;
   margin-top: 0.5em;
   width: 18em;
@@ -27015,7 +27079,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Segment
+ * # Semantic UI 2.4.0 - Segment
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -27127,6 +27191,74 @@ th {
 /*******************************
              Types
 *******************************/
+
+/*-------------------
+     Placeholder
+--------------------*/
+
+.ui.placeholder.segment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  max-width: initial;
+  -webkit-animation: none;
+  animation: none;
+  overflow: visible;
+  padding: 1em 1em;
+  min-height: 18rem;
+  background: #F9FAFB;
+  border-color: #242424;
+  -webkit-box-shadow: 0px 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
+  box-shadow: 0px 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
+}
+
+.ui.placeholder.segment .button,
+.ui.placeholder.segment textarea {
+  display: block;
+}
+
+.ui.placeholder.segment .field,
+.ui.placeholder.segment textarea,
+.ui.placeholder.segment > .ui.input,
+.ui.placeholder.segment .button {
+  max-width: 15rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ui.placeholder.segment .column .button,
+.ui.placeholder.segment .column .field,
+.ui.placeholder.segment .column textarea,
+.ui.placeholder.segment .column > .ui.input {
+  max-width: 15rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ui.placeholder.segment > .inline {
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.ui.placeholder.segment > .inline > .button {
+  display: inline-block;
+  width: auto;
+  margin: 0px 0.35714286rem 0px 0px;
+}
+
+.ui.placeholder.segment > .inline > .button:last-child {
+  margin-right: 0px;
+}
 
 /*-------------------
         Piled
@@ -27915,7 +28047,7 @@ th {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Sidebar
+ * # Semantic UI 2.4.0 - Sidebar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -28600,7 +28732,7 @@ body.pushable > .pusher {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Site
+ * # Semantic UI 2.4.0 - Site
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -28991,7 +29123,7 @@ input[type=date]::-webkit-inner-spin-button {
          Site Overrides
 *******************************/
 /*!
- * # Semantic UI 2.3.2 - Transition
+ * # Semantic UI 2.4.0 - Transition
  * http://github.com/semantic-org/semantic-ui/
  *
  *
