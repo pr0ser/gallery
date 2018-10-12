@@ -309,15 +309,15 @@ class SearchView(ListView):
 
     def get_queryset(self):
         vector = (
-                SearchVector('title', weight='A') +
-                SearchVector('description', weight='A') +
-                SearchVector('album__title', weight='B') +
-                SearchVector('album__description', weight='B') +
-                SearchVector('exifdata__locality', weight='C') +
-                SearchVector('exifdata__country', weight='C') +
-                SearchVector('exifdata__make', weight='D') +
-                SearchVector('exifdata__model', weight='D') +
-                SearchVector('exifdata__lens', weight='D')
+            SearchVector('title', weight='A') +
+            SearchVector('description', weight='A') +
+            SearchVector('album__title', weight='B') +
+            SearchVector('album__description', weight='B') +
+            SearchVector('exifdata__locality', weight='C') +
+            SearchVector('exifdata__country', weight='C') +
+            SearchVector('exifdata__make', weight='D') +
+            SearchVector('exifdata__model', weight='D') +
+            SearchVector('exifdata__lens', weight='D')
         )
         user = self.request.user
         query = self.request.GET.get('q')

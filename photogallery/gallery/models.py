@@ -379,7 +379,8 @@ class Photo(models.Model):
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
             optimize=True,
-            progressive=True)
+            progressive=True
+        )
 
     def create_thumbnail(self, size, quality, output_file):
         image = auto_orient(Image.open(self.image.path))
@@ -390,14 +391,16 @@ class Photo(models.Model):
             size=(width, height),
             method=Image.LANCZOS,
             bleed=0,
-            centering=(0.5, 0.5))
+            centering=(0.5, 0.5)
+        )
         image.save(
             fp=path.join(settings.MEDIA_ROOT, self.preview_dir(), output_file),
             format=image.format,
             quality=quality,
             icc_profile=image.info.get('icc_profile'),
             optimize=True,
-            progressive=True)
+            progressive=True
+        )
 
     def create_previews(self):
         if self.image.height > 1327 or self.image.width > 1327:
