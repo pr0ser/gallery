@@ -32,8 +32,8 @@ DB_HOST | Database hostname in Django settings. Set as "db" for docker-compose t
 DB_PORT | Database port in Django settings
 DEBUG | Django debug. Set as True or False
 SECRET_KEY | Django secret key. Needs to be generated separately
-UPLOAD_PERMISSIONS | Django upload permissions. Specify like 644 or 660, not as Django specifies it (0o664 or 0664)
-DIRECTORY_PERMISSIONS | Django directory permissions Specify like 755 or 750, not as Django specifies it (0o755 or 0770)
+UPLOAD_PERMISSIONS | Django upload permissions. Specify like 644 or 660, not as Django documentation specifies it (0o664 or 0664)
+DIRECTORY_PERMISSIONS | Django directory permissions Specify like 755 or 750, not as Django specifies documentation it (0o755 or 0770)
 ALLOWED_HOSTS | Django allowed hosts, for example ['example.com', 'www.example.com'] or just ['localhost']
 GEOCODING_API_KEY | Google [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) key
 MAPS_API_KEY | Google [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/) key
