@@ -1,5 +1,5 @@
  /*
- * # Semantic UI - 2.4.0
+ * # Semantic UI - 2.4.2
  * https://github.com/Semantic-Org/Semantic-UI
  * http://www.semantic-ui.com/
  *
@@ -9,7 +9,7 @@
  *
  */
 /*!
- * # Semantic UI 2.4.0 - API
+ * # Semantic UI 2.4.2 - API
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -1177,7 +1177,7 @@ $.api.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Checkbox
+ * # Semantic UI 2.4.2 - Checkbox
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -2009,7 +2009,7 @@ $.fn.checkbox.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Dimmer
+ * # Semantic UI 2.4.2 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -2743,7 +2743,7 @@ $.fn.dimmer.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Dropdown
+ * # Semantic UI 2.4.2 - Dropdown
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -3349,7 +3349,6 @@ $.fn.dropdown = function(parameters) {
             else {
               if(settings.on == 'click') {
                 $module
-                  .on('click' + eventNamespace, selector.icon, module.event.icon.click)
                   .on('click' + eventNamespace, module.event.test.toggle)
                 ;
               }
@@ -3365,6 +3364,7 @@ $.fn.dropdown = function(parameters) {
                 ;
               }
               $module
+                .on('click' + eventNamespace, selector.icon, module.event.icon.click)
                 .on('mousedown' + eventNamespace, module.event.mousedown)
                 .on('mouseup'   + eventNamespace, module.event.mouseup)
                 .on('focus'     + eventNamespace, module.event.focus)
@@ -3766,7 +3766,7 @@ $.fn.dropdown = function(parameters) {
               if($icon.hasClass(className.clear)) {
                 module.clear();
               }
-              else {
+              else if (module.can.click()) {
                 module.toggle();
               }
             }
@@ -6699,7 +6699,7 @@ $.fn.dropdown.settings.templates = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Form Validation
+ * # Semantic UI 2.4.2 - Form Validation
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -8406,7 +8406,7 @@ $.fn.form.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Modal
+ * # Semantic UI 2.4.2 - Modal
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -9441,7 +9441,7 @@ $.fn.modal.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Popup
+ * # Semantic UI 2.4.2 - Popup
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -10974,7 +10974,7 @@ $.fn.popup.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Progress
+ * # Semantic UI 2.4.2 - Progress
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -11906,7 +11906,7 @@ $.fn.progress.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Search
+ * # Semantic UI 2.4.2 - Search
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -13284,7 +13284,7 @@ $.fn.search.settings = {
         // message type
         if(type == 'empty') {
           html += ''
-            + '<div class="header">No Results</div class="header">'
+            + '<div class="header">Ei hakutuloksia</div class="header">'
             + '<div class="description">' + message + '</div class="description">'
           ;
         }
@@ -13412,7 +13412,7 @@ $.fn.search.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Sidebar
+ * # Semantic UI 2.4.2 - Sidebar
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -14446,7 +14446,7 @@ $.fn.sidebar.settings = {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Site
+ * # Semantic UI 2.4.2 - Site
  * http://github.com/semantic-org/semantic-ui/
  *
  *
@@ -14934,7 +14934,7 @@ $.extend($.expr[ ":" ], {
 })( jQuery, window, document );
 
 /*!
- * # Semantic UI 2.4.0 - Transition
+ * # Semantic UI 2.4.2 - Transition
  * http://github.com/semantic-org/semantic-ui/
  *
  *

@@ -19,5 +19,5 @@
   "autoInstall": false,
   "rtl": false,
   "components": ["api", "breadcrumb", "button", "card", "checkbox", "container", "dimmer", "divider", "dropdown", "form", "form", "grid", "header", "icon", "image", "input", "item", "list", "menu", "message", "modal", "popup", "progress", "reset", "search", "segment", "sidebar", "site", "transition"],
-  "version": "2.4.0"
+  "version": "2.4.2"
 }
