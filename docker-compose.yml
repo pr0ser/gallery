@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres:10.5-alpine
+    image: postgres:11-alpine
     env_file: gallery.env
     restart: always
     ports:
