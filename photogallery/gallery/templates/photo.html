@@ -46,9 +46,10 @@
       <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
       {% if photo.album.parent %}
         {% for parent in photo.album.parent_albums reversed %}
-          <i class="right angle icon divider"></i>
-          <a class="section"
-             href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+          {% if parent.public or user.is_authenticated %}
+            <i class="right angle icon divider"></i>
+            <a class="section" href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+          {% endif %}
         {% endfor %}
       {% endif %}
       <i class="right angle icon divider"></i>

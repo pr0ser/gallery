@@ -17,22 +17,22 @@
 {% endif %}
 
 {% block content %}
-  {% if album.public or user.is_authenticated %}
-    <div class="ui container">
-      <div class="ui breadcrumb">
-        <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
-        {% if album.parent %}
-          {% for parent in album.parent_albums reversed %}
+  <div class="ui container">
+    <div class="ui breadcrumb">
+      <a class="section" href="{% url 'gallery:index' %}">Etusivu</a>
+      {% if album.parent %}
+        {% for parent in album.parent_albums reversed %}
+          {% if parent.public or user.is_authenticated %}
             <i class="right angle icon divider"></i>
-            <a class="section"
-               href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
-          {% endfor %}
-        {% endif %}
-        <i class="right angle icon divider"></i>
-        <div class="active section">{{ album.title }}</div>
-      </div>
+            <a class="section" href="{% url 'gallery:album' parent.directory %}">{{ parent.title }}</a>
+          {% endif %}
+        {% endfor %}
+
+      {% endif %}
+      <i class="right angle icon divider"></i>
+      <div class="active section">{{ album.title }}</div>
     </div>
-  {% endif %}
+  </div>
 
   <div class="ui container" id="album-header">
     <div class="ui two column middle aligned container padded grid">
