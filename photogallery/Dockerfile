@@ -1,8 +1,7 @@
-FROM python:3.7-alpine3.8
+FROM python:3.7-alpine3.9
 
 ENV PYTHONUNBUFFERED 0
-RUN mkdir /gallery
-RUN mkdir /gallery/logs
+RUN mkdir -p /gallery/logs
 WORKDIR /gallery
 ADD requirements.txt /gallery/
 ARG SIMD_LEVEL=avx2
