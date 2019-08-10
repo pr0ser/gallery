@@ -1,4 +1,4 @@
-FROM python:3.7-alpine3.9
+FROM python:3.7-alpine3.10
 
 ENV PYTHONUNBUFFERED 0
 RUN mkdir -p /gallery/logs
