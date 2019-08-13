@@ -1,5 +1,11 @@
 #!/bin/sh
-sleep 5
+
+echo "Waiting for PostgreSQL to start..."
+while ! nc -z "$DB_HOST" "$DB_PORT"; do
+  sleep 1
+done
+echo "PostgreSQL started"
+
 python manage.py migrate
 gunicorn photogallery.wsgi:application \
 --workers $GUNICORN_WORKERS \
