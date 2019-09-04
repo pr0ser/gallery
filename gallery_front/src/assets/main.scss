@@ -1,0 +1,47 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+
+$base-background-color: #2b2b2b;
+$base-title-color: #e1e1e1;
+$base-text-color: #bbbbbb;
+$base-border-color: #303030;
+
+
+$text: $base-text-color;
+$text-light: darken($text, 10);
+$text-strong: lighten($text, 5);
+$box-color: $text;
+$body-color: $base-title-color;
+$body-background-color: $base-background-color;
+
+// Cards
+$card-color: $text;
+$card-background-color: lighten($base-background-color, 4);
+$card-header-color: $text;
+$card-footer-border-top: 1px solid $base-border-color;
+$card-footer-padding: 0.5rem;
+$card-header-padding: 0.75rem;
+$card-content-padding: 0.75rem;
+
+// Titles
+$title-color: $base-title-color;
+$subtitle-color: $base-text-color;
+
+// Navbar
+$navbar-height: 3.8rem;
+
+// Modal
+
+// Breadcrumb
+$breadcrumb-item-color: #4eb0ff;
+$breadcrumb-item-active-color: $base-title-color;
+$breadcrumb-item-hover-color: lighten($breadcrumb-item-color, 8);
+
+// Section
+
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";

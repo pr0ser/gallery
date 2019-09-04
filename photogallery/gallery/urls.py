@@ -1,7 +1,11 @@
-from django.urls import path as url
+from django.urls import path as url, include
 from django.views.generic.base import RedirectView
+from rest_framework import routers
 
 from gallery.views import *
+from gallery.views_api import *
+
+router = routers.DefaultRouter()
 
 app_name = 'gallery'
 urlpatterns = [
@@ -28,4 +32,8 @@ urlpatterns = [
     url('login/', UserLoginView.as_view(), name='login'),
     url('admin/login/', RedirectView.as_view(url=reverse_lazy('gallery:login'))),
     url('logout', LogoutView.as_view(), name='logout'),
+    url('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url('api/', include(router.urls)),
+    url('api/albums/', AlbumList.as_view(), name="album-list"),
+    url('api/albums/<int:pk>', AlbumDetail.as_view(), name='album-detail'),
 ]
