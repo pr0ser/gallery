@@ -1,0 +1,108 @@
+<template>
+  <router-link :to="'/album/' + id">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image">
+          <img
+            v-if="coverPhotos.large"
+            :src="coverPhotos.large"
+            :alt="title"
+          >
+          <img
+            v-else
+            src="../assets/no_image.png"
+            alt="Ei kuvaa"
+          >
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="title is-6">
+            {{ title }}
+          </p>
+          <p class="content">
+            {{ description }}
+          </p>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <div class="card-footer-item level content is-small">
+          <div class="level-left ">
+            <span class="icon">
+              <i class="fas fa-image" />
+            </span>
+            {{ photoCount }}
+          </div>
+          <div class="level-right">
+            {{ date | formatDate }}
+            <span
+              v-if="isPublic === false"
+              class="icon"
+            >
+              <i class="fas fa-lock" />
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </router-link>
+</template>
+
+<script>
+  export default {
+    name: "AlbumCard",
+    props: {
+      id: {
+        type: Number,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: false,
+        default: ""
+      },
+      coverPhotos: {
+        type: Object,
+        required: false,
+        default: () => {}
+      },
+      photoCount: {
+        type: Number,
+        required: true,
+        default: 0
+      },
+      date: {
+        type: String,
+        required: true,
+        default: ""
+      },
+      isPublic: {
+        type: Boolean,
+        required: true,
+        default: true
+      }
+    }
+  }
+</script>
+
+<style scoped>
+.card {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   border-radius: 5px;
+}
+.card .image img {
+  border-radius: 5px 5px 0 0;
+}
+.card-footer {
+   margin-top: auto;
+}
+.card-footer-item {
+  color: #858585;
+}
+</style>
