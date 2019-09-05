@@ -47,14 +47,14 @@
           @click="isPhotoModalActive=false"
         >
       </b-modal>
-
     </div>
-
-
   </main>
 
   <div v-else>
-    <b-loading :is-full-page="false" :active.sync="loading"/>
+    <b-loading
+      :is-full-page="false"
+      :active.sync="loading"
+    />
   </div>
 </template>
 

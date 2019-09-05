@@ -1,10 +1,14 @@
 <template>
-  <div id="breadcrumb" class="section container">
-    <nav class="breadcrumb" aria-label="breadcrumbs">
+  <div
+    id="breadcrumb"
+    class="section container"
+  >
+    <nav class="breadcrumb">
       <ul>
-        <li><router-link to="/">
-          Etusivu
-        </router-link>
+        <li>
+          <router-link to="/">
+            Etusivu
+          </router-link>
         </li>
         <li
           v-for="album in albums"
