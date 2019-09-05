@@ -1,10 +1,8 @@
 <template>
-  <main
-    v-if="loading===false"
-  >
+  <main v-if="loading===false">
     <Breadcrumb
       :albums="album.parent_albums"
-      :currentPage="album.title"
+      :current-page="album.title"
     />
     <section class="section container">
       <h1 class="title">
@@ -26,11 +24,8 @@
           :key="photo.id"
           class="column is-one-quarter-fullhd is-one-quarter-desktop is-one-quarter-tablet is-half-mobile"
         >
-          <a
-            @click="openModal(photo)"
-          >
-            <figure class="image is-square">
-
+          <a @click="openModal(photo)">
+            <figure class="image">
               <img
                 :src="photo.hidpi_thumbnail_img"
                 alt="photo.title"
@@ -52,8 +47,15 @@
           @click="isPhotoModalActive=false"
         >
       </b-modal>
+
     </div>
+
+
   </main>
+
+  <div v-else>
+    <b-loading :is-full-page="false" :active.sync="loading"/>
+  </div>
 </template>
 
 <script>
@@ -74,6 +76,7 @@
     computed: {
       sortedPhotos: function () {
         const photos = this.album.photos
+        // sort by title
         return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
       }
     },
@@ -115,5 +118,4 @@
   max-height: 95vh;
   margin: auto;
 }
-
 </style>

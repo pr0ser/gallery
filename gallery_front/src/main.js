@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
 import Buefy from 'buefy'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
-
-import axios from 'axios'
 
 Vue.use({
     install (Vue) {
