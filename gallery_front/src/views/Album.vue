@@ -31,7 +31,7 @@
       <AlbumList
         :album-array="album.subalbums"
       />
-      <hr class="hr">
+      <hr class="hr hr-bottom">
     </div>
     <div class="container">
       <div class="columns is-multiline is-mobile is-variable is-1">
@@ -43,7 +43,8 @@
           <a @click="openModal(photo)">
             <figure class="image">
               <img
-                :src="photo.hidpi_thumbnail_img"
+                :src="photo.thumbnail_img"
+                :srcset="photo.thumbnail_img + ' 300w, ' + photo.hidpi_thumbnail_img + ' 600w,'"
                 alt="photo.title"
               >
             </figure>
@@ -57,7 +58,8 @@
         custom-class="photo"
       >
         <img
-          :src="selectedPhoto.hidpi_preview_img"
+          :src="getPreviewPhoto('small')"
+          :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
           :alt="selectedPhoto.title"
           class="image"
           @click="isPhotoModalActive=false"
@@ -129,6 +131,17 @@
       openModal: function (photo) {
         this.selectedPhoto = photo
         this.isPhotoModalActive = true
+      },
+      getPreviewPhoto: function (size) {
+        if (size === 'large' && this.selectedPhoto.hidpi_preview_img) {
+          return this.selectedPhoto.hidpi_preview_img
+        }
+        if (size === 'small' && this.selectedPhoto.preview_img) {
+          return this.selectedPhoto.preview_img
+        }
+        else {
+          return this.selectedPhoto.image
+        }
       }
     }
   }
@@ -153,5 +166,8 @@
   display: block;
   height: 2px;
   margin: 0;
+}
+.hr-bottom {
+  margin-top: 2em;
 }
 </style>

@@ -4,8 +4,9 @@
       <div class="card-image">
         <figure class="image">
           <img
-            v-if="coverPhotos.large"
-            :src="coverPhotos.large"
+            v-if="coverPhotos.small"
+            :src="coverPhotos.small"
+            :srcset="coverPhotos.small + ' 330w, ' + coverPhotos.large + ' 600w'"
             :alt="title"
           >
           <img
