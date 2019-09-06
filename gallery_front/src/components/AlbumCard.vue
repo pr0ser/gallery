@@ -26,7 +26,7 @@
         </div>
       </div>
       <footer class="card-footer">
-        <div class="card-footer-item level content is-small">
+        <div class="card-footer-item level content">
           <div class="level-left ">
             <span class="icon">
               <i class="fas fa-image" />
@@ -95,6 +95,7 @@
    flex-direction: column;
    height: 100%;
    border-radius: 5px;
+   margin: auto;
 }
 .card .image img {
   border-radius: 5px 5px 0 0;
@@ -103,6 +104,7 @@
    margin-top: auto;
 }
 .card-footer-item {
-  color: #858585;
+  color: #737373;
+  font-size: 0.86em;
 }
 </style>

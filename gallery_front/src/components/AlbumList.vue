@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="loading===false"
+    id="album-list"
     class="container"
   >
     <div class="columns is-multiline">
@@ -76,5 +77,8 @@
 </script>
 
 <style scoped>
-
+  #album-list {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 </style>
