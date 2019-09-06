@@ -17,6 +17,22 @@
       </h2>
     </section>
 
+    <div
+      v-if="hasSubAlbums"
+      id="subalbums"
+      class="container"
+    >
+      <hr class="hr">
+      <section class="section container">
+        <h2 class="title is-4">
+          Alialbumit
+        </h2>
+      </section>
+      <AlbumList
+        :album-array="album.subalbums"
+      />
+      <hr class="hr">
+    </div>
     <div class="container">
       <div class="columns is-multiline is-mobile is-variable is-1">
         <div
@@ -52,7 +68,7 @@
 
   <div v-else>
     <b-loading
-      :is-full-page="false"
+      :is-full-page="true"
       :active.sync="loading"
     />
   </div>
@@ -60,10 +76,11 @@
 
 <script>
   import Breadcrumb from '../components/Breadcrumb'
+  import AlbumList from '../components/AlbumList'
 
   export default {
     name: "Album",
-    components: {Breadcrumb},
+    components: {AlbumList, Breadcrumb},
     data() {
       return {
         loading: true,
@@ -78,6 +95,14 @@
         const photos = this.album.photos
         // sort by title
         return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
+      },
+      hasSubAlbums: function () {
+        if (this.album.subalbums.length) {
+          return true
+        }
+        else {
+          return false
+        }
       }
     },
     watch: {
@@ -117,5 +142,16 @@
 .photo img {
   max-height: 95vh;
   margin: auto;
+}
+#subalbums {
+  padding-top: 0;
+  padding-bottom: 3em;
+}
+.hr {
+  background-color: #3d3d3d;
+  border: none;
+  display: block;
+  height: 2px;
+  margin: 0;
 }
 </style>

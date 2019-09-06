@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from rest_framework import generics, permissions
 
 from gallery.models import Album
@@ -19,6 +19,14 @@ class AlbumList(generics.ListCreateAPIView):
 
 
 class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Album.objects.all().prefetch_related('photos')
+    queryset = (
+        Album.objects
+        .prefetch_related('photos')
+        .prefetch_related(
+            Prefetch('subalbums', queryset=Album.objects.annotate(photocount=Count('photos')))
+        )
+        .prefetch_related('subalbums__album_cover')
+        .select_related('parent__parent')
+    )
     serializer_class = AlbumSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

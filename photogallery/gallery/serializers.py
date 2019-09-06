@@ -46,13 +46,13 @@ class PhotoSerializer(serializers.ModelSerializer):
             'hidpi_preview_img',
             'thumbnail_img',
             'hidpi_thumbnail_img',
-            'ready'
         ]
 
 
 class AlbumSerializer(serializers.ModelSerializer):
     photos = PhotoSerializer(many=True, read_only=True, allow_null=True)
     parent_albums = serializers.SerializerMethodField()
+    subalbums = AlbumListSerializer(many=True, read_only=True, allow_null=True)
 
     class Meta:
         model = Album
@@ -64,6 +64,7 @@ class AlbumSerializer(serializers.ModelSerializer):
             'description',
             'parent_albums',
             'public',
+            'subalbums',
             'photos'
         )
         extra_kwargs = {
