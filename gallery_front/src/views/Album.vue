@@ -12,9 +12,8 @@
       <h2
         v-if="album.description"
         class="subtitle"
-      >
-        {{ album.description }}
-      </h2>
+        v-html="album.description"
+      />
     </section>
 
     <div

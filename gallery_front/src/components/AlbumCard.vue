@@ -21,9 +21,10 @@
           <p class="title is-6">
             {{ title }}
           </p>
-          <p class="content">
-            {{ description }}
-          </p>
+          <p
+            class="content"
+            v-html="description"
+          />
         </div>
       </div>
       <footer class="card-footer">
