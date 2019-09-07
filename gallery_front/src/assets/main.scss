@@ -16,6 +16,9 @@ $box-color: $text;
 $body-color: $base-title-color;
 $body-background-color: $base-background-color;
 
+// Breakpoints
+$tablet: 768px;
+
 // Cards
 $card-color: $text;
 $card-background-color: lighten($base-background-color, 4);

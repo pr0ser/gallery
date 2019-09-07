@@ -1,7 +1,8 @@
 <template>
   <main
     v-if="loading===false"
-    class="container">
+    class="container"
+  >
     <section class="section">
       <h1 class="title">
         Albumit
