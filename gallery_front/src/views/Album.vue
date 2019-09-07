@@ -56,15 +56,20 @@
         v-if="isPhotoModalActive"
         class="photo-modal"
       >
-        <div class="photo-modal-background">
+        <div
+          class="photo-modal-background"
+          @click="isPhotoModalActive = false"
+        >
           <img
-            @click="isPhotoModalActive=false"
             id="photo"
-            :src="getPreviewPhoto('large')" alt="test"
+            :src="getPreviewPhoto('large')"
+            alt="test"
+            @click="isPhotoModalActive=false"
           >
           <button
+            class="modal-close is-large"
             @click="isPhotoModalActive = false"
-            class="modal-close is-large" aria-label="close"></button>
+          />
         </div>
       </div>
     </transition>
