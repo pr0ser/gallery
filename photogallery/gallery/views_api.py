@@ -6,16 +6,28 @@ from .serializers import AlbumListSerializer, AlbumSerializer
 
 
 class AlbumList(generics.ListCreateAPIView):
-    queryset = (
-        Album.objects
-        .all()
-        .filter(parent=None)
-        .filter(public=True)
-        .select_related('album_cover')
-        .annotate(photocount=Count('photos'))
-    )
     serializer_class = AlbumListSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return (
+                Album.objects
+                .all()
+                .filter(parent=None)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
+        else:
+            return (
+                Album.objects
+                .all()
+                .filter(parent=None)
+                .filter(public=True)
+                .select_related('album_cover')
+                .annotate(photocount=Count('photos'))
+            )
 
 
 class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):

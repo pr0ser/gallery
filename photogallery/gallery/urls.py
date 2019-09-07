@@ -1,5 +1,6 @@
 from django.urls import path as url, include
 from django.views.generic.base import RedirectView
+from djoser.views import TokenCreateView, TokenDestroyView
 from rest_framework import routers
 
 from gallery.views import *
@@ -32,7 +33,11 @@ urlpatterns = [
     url('login/', UserLoginView.as_view(), name='login'),
     url('admin/login/', RedirectView.as_view(url=reverse_lazy('gallery:login'))),
     url('logout', LogoutView.as_view(), name='logout'),
+
+    # DRF API urls
     url('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url('api/auth/login', TokenCreateView.as_view()),
+    url('api/auth/logout', TokenDestroyView.as_view()),
     url('api/', include(router.urls)),
     url('api/albums/', AlbumList.as_view(), name="album-list"),
     url('api/albums/<int:pk>', AlbumDetail.as_view(), name='album-detail'),
