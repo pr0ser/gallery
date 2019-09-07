@@ -22,10 +22,10 @@
             {{ title }}
           </p>
           <p
-            class="content">
+            class="content"
+          >
             {{ description | striphtml | truncate(120) }}
           </p>
-
         </div>
       </div>
       <footer class="card-footer">

@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Album from './views/Album'
 
-
 Vue.use(Router)
 
 export default new Router({

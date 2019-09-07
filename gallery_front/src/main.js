@@ -2,10 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-import Buefy from 'buefy'
+import {Navbar, Loading, Modal} from 'buefy'
 
 Vue.config.productionTip = false
-Vue.use(Buefy)
+
+Vue.use(Navbar)
+Vue.use(Loading)
+Vue.use(Modal)
 
 Vue.use({
     install (Vue) {

@@ -27,7 +27,6 @@
 </script>
 
 <style lang="css" scoped>
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 #logo {
   font-family: 'Playfair Display SC', serif;
   font-size: 1.8em;

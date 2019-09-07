@@ -44,8 +44,8 @@ $breadcrumb-item-color: $link;
 $breadcrumb-item-active-color: $base-title-color;
 $breadcrumb-item-hover-color: $link-hover;
 
-// Section
-
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 
 // Import Bulma and Buefy styles
 @import "~bulma";

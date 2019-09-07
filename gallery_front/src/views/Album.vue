@@ -57,6 +57,7 @@
         custom-class="photo"
       >
         <img
+          v-if="selectedPhoto"
           :src="getPreviewPhoto('small')"
           :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
           :alt="selectedPhoto.title"
