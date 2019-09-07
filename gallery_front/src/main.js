@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-import Buefy from 'buefy'
-Vue.use(Buefy)
+import { Navbar, Loading } from 'buefy'
+Vue.use(Navbar)
+Vue.use(Loading)
 
 Vue.config.productionTip = false
 

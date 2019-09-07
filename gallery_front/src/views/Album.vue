@@ -50,22 +50,24 @@
           </a>
         </div>
       </div>
-
-      <b-modal
-        :active.sync="isPhotoModalActive"
-        width="1400px"
-        custom-class="photo"
-      >
-        <img
-          v-if="selectedPhoto"
-          :src="getPreviewPhoto('small')"
-          :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
-          :alt="selectedPhoto.title"
-          class="image"
-          @click="isPhotoModalActive=false"
-        >
-      </b-modal>
     </div>
+    <transition name="fade">
+      <div
+        v-if="isPhotoModalActive"
+        class="photo-modal"
+      >
+        <div class="photo-modal-background">
+          <img
+            @click="isPhotoModalActive=false"
+            id="photo"
+            :src="getPreviewPhoto('large')" alt="test"
+          >
+          <button
+            @click="isPhotoModalActive = false"
+            class="modal-close is-large" aria-label="close"></button>
+        </div>
+      </div>
+    </transition>
   </main>
 
   <div v-else>
@@ -150,9 +152,39 @@ export default {
   padding-bottom: 0.3em;
   padding-top: 0.25em;
 }
-.photo img {
-  max-height: 95vh;
+
+.photo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: black;
+  background: rgba(0, 0, 0, 0.80);
+  z-index: 50;
+}
+.photo-modal-background {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
   margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#photo {
+  height: auto;
+  position: absolute;
+  overflow: hidden;
+  max-height: 100%;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 #subalbums {
   padding-top: 0;
