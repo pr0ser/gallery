@@ -7,6 +7,8 @@ $base-background-color: #2b2b2b;
 $base-title-color: #e1e1e1;
 $base-text-color: #bbbbbb;
 $base-border-color: #303030;
+$link: #4eb0ff;
+$link-hover: lighten($link, 8);
 
 
 $text: $base-text-color;
@@ -38,9 +40,9 @@ $navbar-height: 3.8rem;
 // Modal
 
 // Breadcrumb
-$breadcrumb-item-color: #4eb0ff;
+$breadcrumb-item-color: $link;
 $breadcrumb-item-active-color: $base-title-color;
-$breadcrumb-item-hover-color: lighten($breadcrumb-item-color, 8);
+$breadcrumb-item-hover-color: $link-hover;
 
 // Section
 

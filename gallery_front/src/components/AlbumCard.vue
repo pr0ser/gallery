@@ -22,9 +22,10 @@
             {{ title }}
           </p>
           <p
-            class="content"
-            v-html="description"
-          />
+            class="content">
+            {{ description | striphtml | truncate(120) }}
+          </p>
+
         </div>
       </div>
       <footer class="card-footer">

@@ -30,3 +30,14 @@ Vue.filter('formatDate', function (value) {
     return day + '.' + month + '.' + year
   }
 })
+
+Vue.filter('truncate', function (text, stop, clamp) {
+    return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+})
+
+Vue.filter('striphtml', function (value) {
+  let div = document.createElement("div");
+  div.innerHTML = value;
+  let text = div.textContent || div.innerText || "";
+  return text;
+});
