@@ -10,7 +10,7 @@ class AlbumList(generics.ListCreateAPIView):
         Album.objects
         .all()
         .filter(parent=None)
-        # .filter(public=True)
+        .filter(public=True)
         .select_related('album_cover')
         .annotate(photocount=Count('photos'))
     )
