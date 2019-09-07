@@ -27,20 +27,20 @@
 </template>
 
 <script>
-  export default {
-    name: "Breadcrumb",
-    props: {
-      albums: {
-        type: Array,
-        required: false,
-        default: () => []
-      },
-      currentPage: {
-        type: String,
-        required: true
-      }
+export default {
+  name: 'Breadcrumb',
+  props: {
+    albums: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    currentPage: {
+      type: String,
+      required: true
     }
   }
+}
 </script>
 
 <style scoped>

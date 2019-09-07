@@ -77,74 +77,72 @@
 </template>
 
 <script>
-  import Breadcrumb from '../components/Breadcrumb'
-  import AlbumList from '../components/AlbumList'
+import Breadcrumb from '../components/Breadcrumb'
+import AlbumList from '../components/AlbumList'
 
-  export default {
-    name: "Album",
-    components: {AlbumList, Breadcrumb},
-    data() {
-      return {
-        loading: true,
-        error: false,
-        album: {},
-        isPhotoModalActive: false,
-        selectedPhoto: {}
-      }
+export default {
+  name: 'Album',
+  components: { AlbumList, Breadcrumb },
+  data () {
+    return {
+      loading: true,
+      error: false,
+      album: {},
+      isPhotoModalActive: false,
+      selectedPhoto: {}
+    }
+  },
+  computed: {
+    sortedPhotos: function () {
+      const photos = this.album.photos
+      // sort by title
+      return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
     },
-    computed: {
-      sortedPhotos: function () {
-        const photos = this.album.photos
-        // sort by title
-        return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
-      },
-      hasSubAlbums: function () {
-        if (this.album.subalbums.length) {
-          return true
-        }
-        else {
-          return false
-        }
+    hasSubAlbums: function () {
+      if (this.album.subalbums.length) {
+        return true
+      } else {
+        return false
       }
-    },
-    watch: {
-      $route(to, from) {
-        this.getData()
-      }
-    },
-    beforeMount() {
+    }
+  },
+  watch: {
+    $route (to, from) {
       this.getData()
+    }
+  },
+  beforeMount () {
+    this.getData()
+  },
+  methods: {
+    getData: function () {
+      this.$api.get('/albums/' + this.$route.params.id)
+        .then(response => {
+          this.album = response.data
+          this.loading = false
+        })
+        .catch(error => {
+          console.log(error)
+          this.error = true
+          this.loading = false
+        })
     },
-    methods: {
-      getData: function () {
-        this.$api.get('/albums/' + this.$route.params.id)
-          .then(response => {
-            this.album = response.data
-            this.loading = false
-          })
-          .catch(error => {
-            console.log(error)
-            this.error = true
-            this.loading = false
-          })
-      },
-      openModal: function (photo) {
-        this.selectedPhoto = photo
-        this.isPhotoModalActive = true
-      },
-      getPreviewPhoto: function (size) {
-        if (size === 'large' && this.selectedPhoto.hidpi_preview_img) {
-          return this.selectedPhoto.hidpi_preview_img
-        }
-        if (size === 'small' && this.selectedPhoto.preview_img) {
-          return this.selectedPhoto.preview_img
-        }
-        else {
-          return this.selectedPhoto.image
-        }
+    openModal: function (photo) {
+      this.selectedPhoto = photo
+      this.isPhotoModalActive = true
+    },
+    getPreviewPhoto: function (size) {
+      if (size === 'large' && this.selectedPhoto.hidpi_preview_img) {
+        return this.selectedPhoto.hidpi_preview_img
+      }
+      if (size === 'small' && this.selectedPhoto.preview_img) {
+        return this.selectedPhoto.preview_img
+      } else {
+        return this.selectedPhoto.image
       }
     }
   }
+}
 </script>
 
 <style scoped>

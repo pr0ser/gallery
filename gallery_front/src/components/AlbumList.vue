@@ -24,30 +24,29 @@
 </template>
 
 <script>
-  import AlbumCard from './AlbumCard'
-  export default {
-    name: "AlbumList",
-    components: {AlbumCard},
-    props: {
-      albumArray: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      getCoverPhotos: function (album) {
-        if (album['album_cover']) {
-          return {
-            "small": album.album_cover.thumbnail_img,
-            "large": album.album_cover.hidpi_thumbnail_img
-          }
+import AlbumCard from './AlbumCard'
+export default {
+  name: 'AlbumList',
+  components: { AlbumCard },
+  props: {
+    albumArray: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    getCoverPhotos: function (album) {
+      if (album['album_cover']) {
+        return {
+          'small': album.album_cover.thumbnail_img,
+          'large': album.album_cover.hidpi_thumbnail_img
         }
-        else {
-          return {}
-        }
+      } else {
+        return {}
       }
     }
   }
+}
 </script>
 
 <style scoped>

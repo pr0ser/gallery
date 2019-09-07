@@ -1,4 +1,4 @@
-  module.exports = {
+module.exports = {
   module: {
     rules: [
       // ... other rules omitted
@@ -14,6 +14,6 @@
         ]
       }
     ]
-  },
+  }
   // plugin omitted
 }

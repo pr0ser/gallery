@@ -2,16 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-import {Navbar, Loading, Modal} from 'buefy'
+import Buefy from 'buefy'
+Vue.use(Buefy)
 
 Vue.config.productionTip = false
 
-Vue.use(Navbar)
-Vue.use(Loading)
-Vue.use(Modal)
-
 Vue.use({
-    install (Vue) {
+  install (Vue) {
     Vue.prototype.$api = axios.create({
       baseURL: process.env.VUE_APP_APIBASEURL
     })
@@ -25,22 +22,22 @@ new Vue({
 
 Vue.filter('formatDate', function (value) {
   if (value) {
-    let date = new Date(value);
-    let year = date.getFullYear();
-    let month = date.getMonth()+1;
-    let day = date.getDate();
+    let date = new Date(value)
+    let year = date.getFullYear()
+    let month = date.getMonth() + 1
+    let day = date.getDate()
 
     return day + '.' + month + '.' + year
   }
 })
 
 Vue.filter('truncate', function (text, stop, clamp) {
-    return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+  return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
 })
 
 Vue.filter('striphtml', function (value) {
-  let div = document.createElement("div");
-  div.innerHTML = value;
-  let text = div.textContent || div.innerText || "";
-  return text;
-});
+  let div = document.createElement('div')
+  div.innerHTML = value
+  let text = div.textContent || div.innerText || ''
+  return text
+})

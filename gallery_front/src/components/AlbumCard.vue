@@ -52,44 +52,44 @@
 </template>
 
 <script>
-  export default {
-    name: "AlbumCard",
-    props: {
-      id: {
-        type: Number,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        required: false,
-        default: ""
-      },
-      coverPhotos: {
-        type: Object,
-        required: false,
-        default: () => {}
-      },
-      photoCount: {
-        type: Number,
-        required: true,
-        default: 0
-      },
-      date: {
-        type: String,
-        required: true,
-        default: ""
-      },
-      isPublic: {
-        type: Boolean,
-        required: true,
-        default: true
-      }
+export default {
+  name: 'AlbumCard',
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    coverPhotos: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    photoCount: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    date: {
+      type: String,
+      required: true,
+      default: ''
+    },
+    isPublic: {
+      type: Boolean,
+      required: true,
+      default: true
     }
   }
+}
 </script>
 
 <style scoped>

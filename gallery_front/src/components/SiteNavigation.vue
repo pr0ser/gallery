@@ -21,9 +21,9 @@
 </template>
 
 <script>
-  export default {
-    name: "SiteNavigation"
-  }
+export default {
+  name: 'SiteNavigation'
+}
 </script>
 
 <style lang="css" scoped>

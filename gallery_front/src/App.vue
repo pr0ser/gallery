@@ -8,10 +8,10 @@
 </template>
 
 <script>
-  import SiteNavigation from './components/SiteNavigation'
-  export default {
-    components: {SiteNavigation}
-  }
+import SiteNavigation from './components/SiteNavigation'
+export default {
+  components: { SiteNavigation }
+}
 </script>
 
 <style lang="scss">

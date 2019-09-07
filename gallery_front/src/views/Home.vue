@@ -30,15 +30,15 @@ import AlbumList from '@/components/AlbumList'
 
 export default {
   name: 'Home',
-  components: {AlbumList},
-  data() {
+  components: { AlbumList },
+  data () {
     return {
       loading: true,
       error: false,
       albums: []
     }
   },
-  beforeMount() {
+  beforeMount () {
     this.getData()
   },
   methods: {
