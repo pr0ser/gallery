@@ -62,8 +62,9 @@
         >
           <img
             id="photo"
-            :src="getPreviewPhoto('large')"
-            alt="test"
+            :src="getPreviewPhoto('small')"
+            :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
+            :alt="selectedPhoto.title"
             @click="isPhotoModalActive=false"
           >
           <button
