@@ -32,5 +32,7 @@ export default {
   font-size: 1.8em;
   font-weight: bold;
 }
-
+#app .navbar  {
+  background-color: black;
+}
 </style>

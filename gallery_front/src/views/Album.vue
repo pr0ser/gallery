@@ -63,7 +63,8 @@
           <img
             id="photo"
             :src="getPreviewPhoto('small')"
-            :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
+            :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
+            sizes="100vw"
             :alt="selectedPhoto.title"
             @click="isPhotoModalActive=false"
           >
@@ -180,7 +181,6 @@ export default {
   bottom: 0;
   right: 0;
 }
-
 #photo {
   height: auto;
   position: absolute;
