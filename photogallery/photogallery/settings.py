@@ -46,6 +46,11 @@ DEFAULT_RENDERER_CLASSES = (
     'rest_framework.renderers.JSONRenderer',
 )
 
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -63,13 +68,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 30
 }
-
-if DEBUG:
-    INSTALLED_APPS += ['dj_static']
-
-    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    )
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -104,7 +102,6 @@ TEMPLATES = [
 # WSGI configuration
 WSGI_APPLICATION = 'photogallery.wsgi.application'
 
-
 # Database
 DATABASES = {
     'default': {
@@ -117,7 +114,6 @@ DATABASES = {
         'CONN_MAX_AGE': 600,
     }
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -134,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 LANGUAGE_CODE = 'fi'
@@ -238,12 +233,6 @@ LOGIN_REDIRECT_URL = '/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-# Load Django debug toolbar
-if DEBUG:
-    INTERNAL_IPS = ('127.0.0.1', '172.18.0.1', '172.19.0.1')
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-    INSTALLED_APPS += ['debug_toolbar']
-
 # CORS headers configuration
 
 CORS_ORIGIN_ALLOW_ALL = False
@@ -263,3 +252,10 @@ CORS_ALLOW_HEADERS = (
 )
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Debug configuration
+if DEBUG:
+    INTERNAL_IPS = ('127.0.0.1', '172.18.0.1', '172.19.0.1')
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    INSTALLED_APPS += ['debug_toolbar']
+    INSTALLED_APPS += ['dj_static']
