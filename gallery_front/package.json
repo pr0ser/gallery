@@ -38,7 +38,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "vue/no-v-html": "off"
+      "vue/no-v-html": "off",
+      "vue/eqeqeq": "warning"
     }
   },
   "postcss": {
