@@ -1,5 +1,5 @@
 <template>
-  <main v-if="loading===false">
+  <main v-if="loading = false">
     <Breadcrumb
       :albums="album.parent_albums"
       :current-page="album.title"
@@ -60,14 +60,24 @@
           class="photo-modal-background"
           @click="isPhotoModalActive = false"
         >
-          <img
-            id="photo"
-            :src="getPreviewPhoto('small')"
-            :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
-            sizes="100vw"
-            :alt="selectedPhoto.title"
-            @click="isPhotoModalActive=false"
-          >
+          <transition name="fade">
+            <img
+              v-show="isPhotoLoading = false"
+              id="photo"
+              :src="getPreviewPhoto('small')"
+              :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
+              sizes="100vw"
+              :alt="selectedPhoto.title"
+              @load="showPhoto"
+              @click="isPhotoModalActive = false"
+            >
+          </transition>
+
+          <b-loading
+            :is-full-page="true"
+            :active.sync="isPhotoLoading"
+          />
+
           <button
             class="modal-close is-large"
             @click="isPhotoModalActive = false"
@@ -98,6 +108,7 @@ export default {
       error: false,
       album: {},
       isPhotoModalActive: false,
+      isPhotoLoading: false,
       selectedPhoto: {}
     }
   },
@@ -139,6 +150,10 @@ export default {
     openModal: function (photo) {
       this.selectedPhoto = photo
       this.isPhotoModalActive = true
+      this.isPhotoLoading = true
+    },
+    showPhoto: function () {
+      this.isPhotoLoading = false
     },
     getPreviewPhoto: function (size) {
       if (size === 'large' && this.selectedPhoto.hidpi_preview_img) {
