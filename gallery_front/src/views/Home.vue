@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getData: function () {
-      this.$api.get('/albums/')
+      this.$api.get('/albums')
         .then(response => {
           this.albums = response.data.results
           this.loading = false

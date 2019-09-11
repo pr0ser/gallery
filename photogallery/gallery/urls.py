@@ -39,6 +39,6 @@ urlpatterns = [
     url('api/auth/login', TokenCreateView.as_view()),
     url('api/auth/logout', TokenDestroyView.as_view()),
     url('api/', include(router.urls)),
-    url('api/albums/', AlbumList.as_view(), name="album-list"),
+    url('api/albums', AlbumList.as_view(), name="album-list"),
     url('api/albums/<int:pk>', AlbumDetail.as_view(), name='album-detail'),
 ]
