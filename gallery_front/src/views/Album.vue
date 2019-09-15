@@ -107,6 +107,7 @@ export default {
       loading: true,
       error: false,
       album: {},
+      hasSubAlbums: false,
       isPhotoModalActive: false,
       isPhotoLoading: false,
       selectedPhoto: {}
@@ -117,13 +118,6 @@ export default {
       const photos = this.album.photos
       // sort by title
       return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
-    },
-    hasSubAlbums: function () {
-      if (this.album.subalbums.length) {
-        return true
-      } else {
-        return false
-      }
     }
   },
   watch: {
@@ -139,6 +133,7 @@ export default {
       this.$api.get('/albums/' + this.$route.params.id)
         .then(response => {
           this.album = response.data
+          this.hasSubAlbums = !!this.album.subalbums.length
           this.loading = false
         })
         .catch(error => {
