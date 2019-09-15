@@ -39,7 +39,7 @@
           <div class="level-right">
             {{ date | formatDate }}
             <span
-              v-if="isPublic === false"
+              v-if="!isPublic"
               class="icon"
             >
               <i class="fas fa-lock" />

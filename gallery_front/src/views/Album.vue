@@ -1,5 +1,5 @@
 <template>
-  <main v-if="loading === false">
+  <main v-if="!loading">
     <Breadcrumb
       :albums="album.parent_albums"
       :current-page="album.title"
@@ -62,7 +62,7 @@
         >
           <transition name="fade">
             <img
-              v-show="isPhotoLoading === false"
+              v-show="!isPhotoLoading"
               id="photo"
               :src="getPreviewPhoto('small')"
               :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"

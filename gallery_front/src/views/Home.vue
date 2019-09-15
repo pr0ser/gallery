@@ -1,6 +1,6 @@
 <template>
   <main
-    v-if="loading===false"
+    v-if="!loading"
     class="container"
   >
     <section class="section">
