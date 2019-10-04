@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <b-navbar class="is-black">
+    <b-navbar type="is-black">
       <template slot="brand">
         <b-navbar-item
           id="logo"
@@ -12,8 +12,22 @@
       </template>
 
       <template slot="end">
-        <b-navbar-item tag="div">
-          test
+        <b-navbar-item
+          tag="div"
+          class="is-hidden-touch is-hidden-desktop-only"
+        >
+          <span class="icon">
+            <i class="fas fa-sign-in-alt" />
+          </span>
+        </b-navbar-item>
+        <b-navbar-item
+          tag="div"
+          class="is-hidden-desktop"
+        >
+          <span class="icon">
+            <i class="fas fa-sign-in-alt" />
+          </span>
+          Kirjaudu
         </b-navbar-item>
       </template>
     </b-navbar>
@@ -33,6 +47,6 @@ export default {
   font-weight: bold;
 }
 #app .navbar  {
-  background-color: black;
+  background-color: #000000;
 }
 </style>
