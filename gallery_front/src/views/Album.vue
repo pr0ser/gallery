@@ -44,7 +44,8 @@
               <img
                 :src="photo.thumbnail_img"
                 :srcset="photo.thumbnail_img + ' 300w, ' + photo.hidpi_thumbnail_img + ' 600w,'"
-                alt="photo.title"
+                :alt="photo.title"
+                loading="lazy"
               >
             </figure>
           </a>
