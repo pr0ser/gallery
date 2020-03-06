@@ -3,8 +3,8 @@ from django.views.generic.base import RedirectView
 from djoser.views import TokenCreateView, TokenDestroyView
 from rest_framework import routers
 
-from gallery.views import *
-from gallery.views_api import *
+from .views import *
+from .views_api import *
 
 router = routers.DefaultRouter()
 

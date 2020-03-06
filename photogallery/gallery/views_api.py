@@ -1,7 +1,7 @@
 from django.db.models import Count, Prefetch
 from rest_framework import generics, permissions
 
-from gallery.models import Album
+from .models import Album
 from .serializers import AlbumListSerializer, AlbumSerializer
 
 

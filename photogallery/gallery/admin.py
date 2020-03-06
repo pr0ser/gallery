@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.utils.translation import ugettext_lazy as _
 
-from gallery.models import Album, Photo, ExifData
-from gallery.tasks import update_album_localities
+from .models import Album, Photo, ExifData
+from .tasks import update_album_localities
 
 
 class GalleryAdminSite(AdminSite):

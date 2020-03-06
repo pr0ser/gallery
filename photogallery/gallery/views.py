@@ -18,10 +18,10 @@ from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from zipstream import ZipFile, ZIP_STORED
 
-from gallery.forms import *
-from gallery.models import Album, Photo
-from gallery.tasks import async_save_photo, update_album_localities
-from gallery.utils import PartialQuery
+from .forms import *
+from .models import Album, Photo, ExifData
+from .tasks import async_save_photo, update_album_localities
+from .utils import PartialQuery
 
 log = getLogger(__name__)
 

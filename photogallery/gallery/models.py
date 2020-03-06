@@ -20,9 +20,9 @@ from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.translation import ugettext_lazy as _
 from django_celery_results.models import TaskResult
 
-import gallery.tasks
-from gallery.exif_reader import ExifInfo
-from gallery.utils import calc_hash, auto_orient, get_geocoding
+from .exif_reader import ExifInfo
+from .tasks import post_process_image
+from .utils import calc_hash, auto_orient, get_geocoding
 
 log = getLogger(__name__)
 
@@ -206,7 +206,7 @@ class Album(models.Model):
                 except Exception as e:
                     errors += _('Failed to add photo %(filename)s to album.') \
                               % {'filename': path.basename(photo)}
-                    log.error(f'Failed to add photo {os.path.basename(photo)}: {e}')
+                    log.error(f'Failed to add photo {path.basename(photo)}: {e}')
         return new_photos, errors
 
     def admin_thumbnail(self):
@@ -304,7 +304,7 @@ class Photo(models.Model):
         if calc_hash(self.image.path) != self.file_hash:
             self.file_hash = calc_hash(self.image.path)
             if not self.ready:
-                gallery.tasks.post_process_image.delay(self.id)
+                post_process_image.delay(self.id)
             else:
                 self.create_previews()
                 self.create_thumbnails()
