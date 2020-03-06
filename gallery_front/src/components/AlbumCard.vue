@@ -8,11 +8,13 @@
             :src="coverPhotos.small"
             :srcset="coverPhotos.small + ' 330w, ' + coverPhotos.large + ' 600w'"
             :alt="title"
+            loading="lazy"
           >
           <img
             v-else
             src="../assets/no_image.png"
             alt="Ei kuvaa"
+            loading="lazy"
           >
         </figure>
       </div>
