@@ -102,8 +102,9 @@ def get_geocoding(latitude, longitude):
 
 class PartialQuery(SearchQuery):
     def as_sql(self, compiler, connection):
-        raw_value = self.value.encode('utf-8').decode('latin1')
+        raw_value = str(self.source_expressions[0].value)
         value = adapt(' & '.join(raw_value.split()) + ':*')
+        value.encoding = "utf-8"
         if self.config:
             config_sql, config_params = compiler.compile(self.config)
             template = f'to_tsquery({config_sql}::regconfig, {value})'
