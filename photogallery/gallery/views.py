@@ -37,6 +37,7 @@ class IndexView(ListView):
                 Album.objects
                 .all()
                 .filter(parent=None)
+                .order_by('-date')
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))
             )
@@ -46,6 +47,7 @@ class IndexView(ListView):
                 .all()
                 .filter(parent=None)
                 .filter(public=True)
+                .order_by('-date')
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))
             )
