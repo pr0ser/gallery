@@ -77,6 +77,7 @@ class AlbumView(ListView):
             context['sub_albums'] = (
                 Album.objects
                 .filter(parent=album.id)
+                .order_by('-date')
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))
             )
@@ -85,6 +86,7 @@ class AlbumView(ListView):
                 Album.objects
                 .filter(parent=album.id)
                 .filter(public=True)
+                .order_by('-date')
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))
             )
