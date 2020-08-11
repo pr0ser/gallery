@@ -16,6 +16,7 @@ $box-color: $text;
 $body-color: $base-title-color;
 $body-background-color: $base-background-color;
 $black: #000000;
+$primary: #2185d0;
 
 // Breakpoints
 $tablet: 768px;
@@ -33,14 +34,18 @@ $card-content-padding: 0.75rem;
 $title-color: $base-title-color;
 $subtitle-color: $base-text-color;
 
-// Navbar
+// Navbars
 $navbar-height: 3.8rem;
 $navbar-dropdown-background-color: $black;
 
-// Breadcrumb
+// Breadcrumbs
 $breadcrumb-item-color: $link;
 $breadcrumb-item-active-color: $base-title-color;
 $breadcrumb-item-hover-color: $link-hover;
+
+// Boxes
+$box-background-color: lighten($base-background-color, 4);
+$box-shadow: 0 0.5em 2em -0.125em rgba(black, 0.2);
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');

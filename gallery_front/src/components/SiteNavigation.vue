@@ -11,9 +11,41 @@
         </b-navbar-item>
       </template>
 
-      <template slot="end">
+      <template
+        v-if="authenticated"
+        slot="end"
+      >
         <b-navbar-item
-          tag="div"
+          tag="a"
+          class="is-hidden-touch is-hidden-desktop-only"
+          title="Kirjaudu ulos"
+          @click="signOut"
+        >
+          <span class="icon">
+            <i class="fas fa-sign-out-alt" />
+          </span>
+        </b-navbar-item>
+        <b-navbar-item
+          tag="a"
+          class="is-hidden-desktop"
+          title="Kirjaudu ulos"
+          @click="signOut"
+        >
+          <span class="icon">
+            <i class="fas fa-sign-out-alt" />
+          </span>
+          Kirjaudu ulos
+        </b-navbar-item>
+      </template>
+
+      <template
+        v-else
+        slot="end"
+      >
+        <b-navbar-item
+          tag="router-link"
+          to="/login"
+          title="Kirjaudu sisään"
           class="is-hidden-touch is-hidden-desktop-only"
         >
           <span class="icon">
@@ -21,7 +53,9 @@
           </span>
         </b-navbar-item>
         <b-navbar-item
-          tag="div"
+          tag="router-link"
+          to="/login"
+          title="Kirjaudu sisään"
           class="is-hidden-desktop"
         >
           <span class="icon">
@@ -35,8 +69,30 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
-  name: 'SiteNavigation'
+  name: 'SiteNavigation',
+
+  computed: {
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+      user: 'auth/user'
+    })
+  },
+
+  methods: {
+    ...mapActions({
+      signOutAction: 'auth/signOut'
+    }),
+
+    signOut () {
+      this.signOutAction().then(() => {
+        console.log('Signed out')
+      })
+    }
+  }
+
 }
 </script>
 

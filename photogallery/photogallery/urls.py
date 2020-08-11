@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, re_path
 from django.urls import path as url
+from djoser.views import TokenCreateView, TokenDestroyView, UserViewSet
+from rest_framework import routers
 
 """photogallery URL Configuration
 
@@ -20,9 +22,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
 urlpatterns = [
     url('', include('gallery.urls')),
     url('admin/', admin.site.urls),
+    url('api/auth/', include('djoser.urls')),
+    url('api/auth/login', TokenCreateView.as_view()),
+    url('api/auth/logout', TokenDestroyView.as_view()),
 ]
 
 if settings.DEBUG:

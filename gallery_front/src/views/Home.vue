@@ -26,6 +26,7 @@
 
 <script>
 // @ is an alias to /src
+import axios from '../axios'
 import AlbumList from '@/components/AlbumList'
 
 export default {
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     getData: function () {
-      this.$api.get('/albums')
+      axios.get('/albums')
         .then(response => {
           this.albums = response.data.results
           this.loading = false

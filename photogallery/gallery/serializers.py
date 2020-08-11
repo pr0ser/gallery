@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Album, Photo
@@ -84,3 +85,9 @@ class AlbumSerializer(serializers.ModelSerializer):
             current_album = current_album.parent
         albums.reverse()
         return albums
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')

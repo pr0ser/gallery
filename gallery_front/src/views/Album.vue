@@ -99,6 +99,7 @@
 <script>
 import Breadcrumb from '../components/Breadcrumb'
 import AlbumList from '../components/AlbumList'
+import axios from '../axios'
 
 export default {
   name: 'Album',
@@ -131,7 +132,7 @@ export default {
   },
   methods: {
     getData: function () {
-      this.$api.get('/albums/' + this.$route.params.id)
+      axios.get('albums/' + this.$route.params.id)
         .then(response => {
           this.album = response.data
           this.hasSubAlbums = !!this.album.subalbums.length

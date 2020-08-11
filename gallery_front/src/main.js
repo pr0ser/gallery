@@ -1,23 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
 import { Navbar, Loading } from 'buefy'
+import store from './store'
+
+require('@/store/subscriber')
+
 Vue.use(Navbar)
+
 Vue.use(Loading)
 
 Vue.config.productionTip = false
 
-Vue.use({
-  install (Vue) {
-    Vue.prototype.$api = axios.create({
-      baseURL: process.env.VUE_APP_APIBASEURL
-    })
-  }
-})
+store.dispatch('auth/attempt', localStorage.getItem('token'))
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 
