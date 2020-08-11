@@ -16,6 +16,7 @@ class AlbumList(generics.ListCreateAPIView):
                 Album.objects
                 .all()
                 .filter(parent=None)
+                .order_by('-date')
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))
             )
@@ -24,6 +25,7 @@ class AlbumList(generics.ListCreateAPIView):
                 Album.objects
                 .all()
                 .filter(parent=None)
+                .order_by('-date')
                 .filter(public=True)
                 .select_related('album_cover')
                 .annotate(photocount=Count('photos'))

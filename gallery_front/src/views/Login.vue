@@ -40,7 +40,7 @@
                   v-model="credentials.password"
                   class="input is-medium"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Salasana"
                 >
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock" />
