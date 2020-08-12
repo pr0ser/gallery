@@ -47,8 +47,10 @@ export default {
         let response = await axios.get('auth/users/me/')
         commit('SET_USER', response.data)
       } catch (e) {
-        commit('SET_TOKEN', null)
-        commit('SET_USER', null)
+        if (e.response.status === 401) {
+          commit('SET_TOKEN', null)
+          commit('SET_USER', null)
+        }
       }
     },
 
