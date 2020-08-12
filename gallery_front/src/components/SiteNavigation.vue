@@ -88,7 +88,12 @@ export default {
 
     signOut () {
       this.signOutAction().then(() => {
-        console.log('Signed out')
+        this.$buefy.notification.open({
+          message: 'Kirjauduit ulos',
+          type: 'is-info',
+          position: 'is-top-right',
+          duration: 3000
+        })
       })
     }
   }
