@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Navbar, Loading } from 'buefy'
+import { Navbar, Loading, Notification } from 'buefy'
 import store from './store'
 
 require('@/store/subscriber')
 
 Vue.use(Navbar)
-
 Vue.use(Loading)
+Vue.use(Notification)
 
 Vue.config.productionTip = false
 

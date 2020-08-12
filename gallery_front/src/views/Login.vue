@@ -52,11 +52,22 @@
                 <button
                   type="submit"
                   class="button is-info is-medium is-fullwidth"
+                  :class="{ 'is-loading': loading }"
                 >
                   Kirjaudu
                 </button>
               </p>
             </div>
+            <b-notification
+              :active.sync="error"
+              type="is-danger"
+              has-icon
+              icon-pack="fas"
+              aria-close-label="Sulje ilmoitus"
+              role="alert"
+            >
+              Ei voitu kirjautua annetuilla tunnuksilla. Tarkista käyttäjätunnus ja salasana.
+            </b-notification>
           </form>
         </div>
       </div>
@@ -77,6 +88,7 @@
               <button
                 id="logout"
                 class="button is-info"
+                :class="{ 'is-loading': loading }"
                 @click="signOut"
               >
                 Kirjaudu ulos
@@ -91,6 +103,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -121,13 +134,22 @@ export default {
     }),
 
     signOut () {
+      this.loading = true
       this.signOutAction().then(() => {
-        console.log('sign out!')
+        this.loading = false
       })
     },
 
     login () {
-      this.signIn(this.credentials)
+      this.loading = true
+      this.signIn(this.credentials).then(() => {
+        this.loading = false
+      })
+        .catch(error => {
+          console.log(error)
+          this.error = true
+          this.loading = false
+        })
     }
   }
 }
