@@ -127,7 +127,7 @@ export default {
       this.getData()
     }
   },
-  beforeMount () {
+  created () {
     this.getData()
   },
   methods: {

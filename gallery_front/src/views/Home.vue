@@ -39,7 +39,7 @@ export default {
       albums: []
     }
   },
-  beforeMount () {
+  created () {
     this.getData()
   },
   methods: {
