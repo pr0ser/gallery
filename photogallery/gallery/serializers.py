@@ -65,6 +65,7 @@ class AlbumSerializer(serializers.ModelSerializer):
             'description',
             'parent_albums',
             'public',
+            'sort_order',
             'subalbums',
             'photos'
         )

@@ -118,8 +118,19 @@ export default {
   computed: {
     sortedPhotos: function () {
       const photos = this.album.photos
-      // sort by title
-      return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
+      const sortOrder = this.album.sort_order
+
+      switch (sortOrder) {
+        case 'title':
+          return photos.sort((a, b) => (a.title > b.title) ? 1 : -1)
+        case '-title':
+          return photos.sort((a, b) => (a.title < b.title) ? 1 : -1)
+        case 'date':
+          return photos.sort((a, b) => (a.date > b.date) ? 1 : -1)
+        case '-date':
+          return photos.sort((a, b) => (a.date < b.date) ? 1 : -1)
+      }
+      return photos
     }
   },
   watch: {
