@@ -1,7 +1,7 @@
 from django.db.models import Count, Prefetch
 from rest_framework import generics, permissions
 
-from .models import Album, Photo
+from .models import Album
 from .serializers import AlbumListSerializer, AlbumSerializer
 
 
@@ -11,7 +11,6 @@ class AlbumList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        print(self.request)
         if user.is_authenticated:
             return (
                 Album.objects
