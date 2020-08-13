@@ -38,7 +38,7 @@ class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
         Album.objects
         .prefetch_related('photos')
         .prefetch_related(
-            Prefetch('subalbums', queryset=Album.objects.annotate(photocount=Count('photos')))
+            Prefetch('subalbums', queryset=Album.objects.order_by('-date').annotate(photocount=Count('photos')))
         )
         .prefetch_related('subalbums__album_cover')
         .select_related('parent__parent')
