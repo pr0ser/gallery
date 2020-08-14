@@ -35,8 +35,8 @@
           <b-notification
             type="is-danger"
             has-icon
-            closable="false"
             icon-pack="fas"
+            :closable="false"
           >
             Virhe haettaessa sisältöä. <a @click="getData">Yritä uudelleen.</a>
           </b-notification>
