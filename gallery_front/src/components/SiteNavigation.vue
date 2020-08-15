@@ -88,10 +88,9 @@ export default {
 
     signOut () {
       this.signOutAction().then(() => {
-        this.$buefy.notification.open({
+        this.$buefy.toast.open({
           message: 'Kirjauduit ulos',
           type: 'is-info',
-          position: 'is-top-right',
           duration: 3000
         })
       })
