@@ -28,6 +28,7 @@
                   class="input is-medium"
                   type="text"
                   placeholder="Käyttäjätunnus"
+                  required
                 >
                 <span class="icon is-small is-left">
                   <i class="fas fa-user" />
@@ -41,6 +42,7 @@
                   class="input is-medium"
                   type="password"
                   placeholder="Salasana"
+                  required
                 >
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock" />
