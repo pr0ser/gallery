@@ -37,6 +37,9 @@ $subtitle-color: $base-text-color;
 // Navbars
 $navbar-height: 3.8rem;
 $navbar-dropdown-background-color: $black;
+$navbar-item-color: $text;
+$navbar-divider-background-color: lighten($base-background-color, 4);
+$navbar-dropdown-border-top: 2px solid lighten($base-background-color, 4);
 
 // Breadcrumbs
 $breadcrumb-item-color: $link;

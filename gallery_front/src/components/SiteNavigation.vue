@@ -15,27 +15,29 @@
         v-if="authenticated"
         slot="end"
       >
-        <b-navbar-item
-          tag="a"
-          class="is-hidden-touch is-hidden-desktop-only"
-          title="Kirjaudu ulos"
-          @click="signOut"
+        <b-navbar-dropdown
+          label="Menu"
+          right
         >
-          <span class="icon">
-            <i class="fas fa-sign-out-alt" />
-          </span>
-        </b-navbar-item>
-        <b-navbar-item
-          tag="a"
-          class="is-hidden-desktop"
-          title="Kirjaudu ulos"
-          @click="signOut"
-        >
-          <span class="icon">
-            <i class="fas fa-sign-out-alt" />
-          </span>
-          Kirjaudu ulos
-        </b-navbar-item>
+          <b-navbar-item href="#">
+            <span class="icon"><i class="fas fa-upload" /></span>
+            <span>Lisää kuvia</span>
+          </b-navbar-item>
+          <b-navbar-item href="#">
+            <span class="icon"><i class="fas fa-plus" /></span>
+            <span>Luo albumi</span>
+          </b-navbar-item>
+          <hr class="navbar-divider">
+          <b-navbar-item href="https://gallery.fantti.net/admin/">
+            <span class="icon"><i class="fas fa-cog" /></span>
+            <span>Ylläpito</span>
+          </b-navbar-item>
+          <hr class="navbar-divider">
+          <b-navbar-item @click="signOut">
+            <span class="icon"><i class="fas fa-sign-in-alt" /></span>
+            <span>Kirjaudu ulos</span>
+          </b-navbar-item>
+        </b-navbar-dropdown>
       </template>
 
       <template
@@ -105,8 +107,5 @@ export default {
   font-family: 'Playfair Display SC', serif;
   font-size: 1.8em;
   font-weight: bold;
-}
-#app .navbar  {
-  background-color: #000000;
 }
 </style>
