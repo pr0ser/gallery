@@ -1,109 +1,120 @@
 <template>
-  <main v-if="!loading">
-    <Breadcrumb
-      :albums="album.parent_albums"
-      :current-page="album.title"
-    />
-    <section class="section container">
-      <h1 class="title">
-        {{ album.title }}
-      </h1>
-
-      <h2
-        v-if="album.description"
-        class="subtitle"
-        v-html="album.description"
-      />
-    </section>
-
+  <main>
     <div
-      v-if="hasSubAlbums"
-      id="subalbums"
-      class="container"
+      v-if="!loading && !error"
     >
-      <hr class="hr">
-      <section class="section container">
-        <h2 class="title is-4">
-          Alialbumit
-        </h2>
-      </section>
-      <AlbumList
-        :album-array="album.subalbums"
+      <Breadcrumb
+        :albums="album.parent_albums"
+        :current-page="album.title"
       />
-      <hr class="hr hr-bottom">
-    </div>
-    <div class="container">
-      <div class="columns is-multiline is-mobile is-variable is-1">
-        <div
-          v-for="photo in sortedPhotos"
-          :key="photo.id"
-          class="column is-one-quarter-fullhd is-one-quarter-desktop is-one-quarter-tablet is-half-mobile"
-        >
-          <a @click="openModal(photo)">
-            <figure class="image">
-              <img
-                :src="photo.thumbnail_img"
-                :srcset="photo.thumbnail_img + ' 300w, ' + photo.hidpi_thumbnail_img + ' 600w,'"
-                :alt="photo.title"
-                loading="lazy"
-              >
-            </figure>
-          </a>
-        </div>
-      </div>
-    </div>
-    <transition name="fade">
+      <section class="section container">
+        <h1 class="title">
+          {{ album.title }}
+        </h1>
+
+        <h2
+          v-if="album.description"
+          class="subtitle"
+          v-html="album.description"
+        />
+      </section>
+
       <div
-        v-if="isPhotoModalActive"
-        class="photo-modal"
+        v-if="hasSubAlbums"
+        id="subalbums"
+        class="container"
       >
-        <div
-          class="photo-modal-background"
-          @click="isPhotoModalActive = false"
-        >
-          <transition name="fade">
-            <img
-              v-show="!isPhotoLoading"
-              id="photo"
-              :src="getPreviewPhoto('small')"
-              :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
-              sizes="100vw"
-              :alt="selectedPhoto.title"
-              @load="showPhoto"
-              @click="isPhotoModalActive = false"
-            >
-          </transition>
-
-          <b-loading
-            :is-full-page="true"
-            :active.sync="isPhotoLoading"
-          />
-
-          <button
-            class="modal-close is-large"
-            @click="isPhotoModalActive === false"
-          />
+        <hr class="hr">
+        <section class="section container">
+          <h2 class="title is-4">
+            Alialbumit
+          </h2>
+        </section>
+        <AlbumList
+          :album-array="album.subalbums"
+        />
+        <hr class="hr hr-bottom">
+      </div>
+      <div class="container">
+        <div class="columns is-multiline is-mobile is-variable is-1">
+          <div
+            v-for="photo in sortedPhotos"
+            :key="photo.id"
+            class="column is-one-quarter-fullhd is-one-quarter-desktop is-one-quarter-tablet is-half-mobile"
+          >
+            <a @click="openModal(photo)">
+              <figure class="image">
+                <img
+                  :src="photo.thumbnail_img"
+                  :srcset="photo.thumbnail_img + ' 300w, ' + photo.hidpi_thumbnail_img + ' 600w,'"
+                  :alt="photo.title"
+                  loading="lazy"
+                >
+              </figure>
+            </a>
+          </div>
         </div>
       </div>
-    </transition>
-  </main>
+      <transition name="fade">
+        <div
+          v-if="isPhotoModalActive"
+          class="photo-modal"
+        >
+          <div
+            class="photo-modal-background"
+            @click="isPhotoModalActive = false"
+          >
+            <transition name="fade">
+              <img
+                v-show="!isPhotoLoading"
+                id="photo"
+                :src="getPreviewPhoto('small')"
+                :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
+                sizes="100vw"
+                :alt="selectedPhoto.title"
+                @load="showPhoto"
+                @click="isPhotoModalActive = false"
+              >
+            </transition>
 
-  <div v-else>
-    <b-loading
-      :is-full-page="true"
-      :active.sync="loading"
-    />
-  </div>
+            <b-loading
+              :is-full-page="true"
+              :active.sync="isPhotoLoading"
+            />
+
+            <button
+              class="modal-close is-large"
+              @click="isPhotoModalActive === false"
+            />
+          </div>
+        </div>
+      </transition>
+    </div>
+    <div v-else>
+      <b-loading
+        :is-full-page="true"
+        :active.sync="loading"
+      />
+    </div>
+    <ErrorMessage
+      v-if="error"
+      :retry="true"
+      @retry="getData"
+    >
+      Virhe haettaessa tietoja.
+    </ErrorMessage>
+  </main>
 </template>
 
 <script>
 import Breadcrumb from '../components/Breadcrumb'
 import AlbumList from '../components/AlbumList'
+import ErrorMessage from '@/components/ErrorMessage'
 import axios from '../axios'
 
 export default {
   name: 'Album',
-  components: { AlbumList, Breadcrumb },
+  components: { ErrorMessage, AlbumList, Breadcrumb },
   data () {
     return {
       loading: true,
@@ -143,6 +154,7 @@ export default {
   },
   methods: {
     getData: function () {
+      this.error = false
       axios.get('albums/' + this.$route.params.id)
         .then(response => {
           this.album = response.data

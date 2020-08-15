@@ -24,35 +24,24 @@
       />
     </div>
 
-    <div
+    <ErrorMessage
       v-if="error"
-      class="section is-one-third"
+      :retry="true"
+      @retry="getData"
     >
-      <div
-        class="columns is-centered"
-      >
-        <div class="column is-two-fifths">
-          <b-notification
-            type="is-danger"
-            has-icon
-            icon-pack="fas"
-            :closable="false"
-          >
-            Virhe haettaessa sisältöä. <a @click="getData">Yritä uudelleen.</a>
-          </b-notification>
-        </div>
-      </div>
-    </div>
+      Virhe haettaessa tietoja.
+    </ErrorMessage>
   </main>
 </template>
 <script>
 // @ is an alias to /src
 import axios from '../axios'
 import AlbumList from '@/components/AlbumList'
+import ErrorMessage from '@/components/ErrorMessage'
 
 export default {
   name: 'Home',
-  components: { AlbumList },
+  components: { ErrorMessage, AlbumList },
   data () {
     return {
       loading: true,
