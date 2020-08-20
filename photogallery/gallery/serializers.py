@@ -25,12 +25,17 @@ class AlbumListSerializer(serializers.ModelSerializer):
             'url',
             'photo_count',
             'public',
-            'directory',
             'album_cover',
+            'parent',
+            'sort_order',
+            'downloadable',
+            'show_metadata',
+            'show_location'
         )
 
     def get_photo_count(self, obj):
-        return obj.photocount
+        if hasattr(obj, 'photocount'):
+            return obj.photocount
 
 
 class PhotoSerializer(serializers.ModelSerializer):
@@ -57,7 +62,6 @@ class AlbumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Album
-        lookup_field = 'directory'
         fields = (
             'id',
             'title',
@@ -69,9 +73,6 @@ class AlbumSerializer(serializers.ModelSerializer):
             'subalbums',
             'photos'
         )
-        extra_kwargs = {
-            'url': {'lookup_field': 'directory'}
-        }
 
     def get_parent_albums(self, obj):
         albums = []

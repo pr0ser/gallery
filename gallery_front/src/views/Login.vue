@@ -146,6 +146,7 @@ export default {
       this.loading = true
       this.signIn(this.credentials).then(() => {
         this.loading = false
+        this.$router.push(this.$route.query.redirect || '/login')
       })
         .catch(error => {
           console.log(error)

@@ -23,7 +23,10 @@
             <span class="icon"><i class="fas fa-upload" /></span>
             <span>Lisää kuvia</span>
           </b-navbar-item>
-          <b-navbar-item href="#">
+          <b-navbar-item
+            tag="router-link"
+            to="/new-album"
+          >
             <span class="icon"><i class="fas fa-plus" /></span>
             <span>Luo albumi</span>
           </b-navbar-item>

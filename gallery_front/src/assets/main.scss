@@ -17,6 +17,7 @@ $body-color: $base-title-color;
 $body-background-color: $base-background-color;
 $black: #000000;
 $primary: #2185d0;
+$form-input-background-color: #212121;
 
 // Breakpoints
 $tablet: 768px;
@@ -50,6 +51,15 @@ $breadcrumb-item-hover-color: $link-hover;
 $box-background-color: lighten($base-background-color, 4);
 $box-shadow: 0 0.5em 2em -0.125em rgba(black, 0.2);
 
+// Form inputs
+$input-background-color: $form-input-background-color;
+$input-border-color: lighten($form-input-background-color, 4);
+$input-hover-border-color: lighten($input-border-color, 20);
+$input-focus-border-color: darken($link, 40);
+
+// Form select
+
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 
@@ -60,4 +70,12 @@ $box-shadow: 0 0.5em 2em -0.125em rgba(black, 0.2);
 // Buefy loader
 .loading-overlay .loading-background {
   background: transparent;
+}
+
+// Override select option color
+.select select option {
+  color: $base-text-color;
+}
+.datepicker .dropdown-content {
+  background-color: #181818;
 }

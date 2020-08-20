@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Navbar, Loading, Notification, Toast } from 'buefy'
+import { Navbar, Loading, Notification, Toast, Field, Input, Datepicker, Select, Switch, Button } from 'buefy'
 import store from './store'
 
 require('@/store/subscriber')
@@ -10,16 +10,39 @@ Vue.use(Navbar)
 Vue.use(Loading)
 Vue.use(Notification)
 Vue.use(Toast)
+Vue.use(Field)
+Vue.use(Input)
+Vue.use(Datepicker)
+Vue.use(Select)
+Vue.use(Switch)
+Vue.use(Button)
 
 Vue.config.productionTip = false
 
-store.dispatch('auth/attempt', localStorage.getItem('token'))
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!store.getters['auth/authenticated']) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+})
 
 Vue.filter('formatDate', function (value) {
   if (value) {
