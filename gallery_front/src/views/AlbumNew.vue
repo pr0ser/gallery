@@ -32,6 +32,7 @@
               v-model="date"
               locale="fi-FI"
               icon-pack="fas"
+              :first-day-of-week="1"
               required
             />
           </b-field>
