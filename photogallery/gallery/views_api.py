@@ -44,7 +44,9 @@ class AlbumList(generics.ListCreateAPIView):
 class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = (
         Album.objects
-        .prefetch_related('photos')
+        .prefetch_related(
+            Prefetch('photos', queryset=Photo.objects.filter(ready=True))
+        )
         .prefetch_related(
             Prefetch('subalbums', queryset=Album.objects.order_by('-date').annotate(photocount=Count('photos')))
         )
