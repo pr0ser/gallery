@@ -1,8 +1,17 @@
+from logging import getLogger
+from os import path
+
 from django.db.models import Count, Prefetch
 from rest_framework import generics, permissions
+from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import Album
+from .models import Album, Photo
 from .serializers import AlbumListSerializer, AlbumSerializer
+
+log = getLogger(__name__)
 
 
 class AlbumList(generics.ListCreateAPIView):
@@ -44,3 +53,35 @@ class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
     )
     serializer_class = AlbumSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class PhotoUpload2(APIView):
+    parser_classes = (FormParser, MultiPartParser)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def post(self, request):
+        album = request.data['album']
+        files = request.FILES.getlist('files')
+        album = Album.objects.get(pk=album)
+        accepted_types = ['image/jpeg', 'image/png']
+        results = {'newPhotos': 0, 'rejectedPhotos': 0}
+
+        for file in files:
+            try:
+                if file.content_type in accepted_types:
+                    title = path.splitext(file.name)[0]
+                    instance = Photo(
+                        title=title,
+                        album_id=album.id,
+                        ready=False,
+                        image=file)
+                    instance.save()
+                    results['newPhotos'] += 1
+                else:
+                    raise Exception(f'Unsupported file type {file.content_type} in {file.name}')
+            except Exception as e:
+                log.error(f'Failed to process photo: {file.name} Error: {e}')
+                results['rejectedPhotos'] += 1
+        if results['newPhotos'] == 0:
+            return Response(data=results, status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response(data=results, status=status.HTTP_201_CREATED)

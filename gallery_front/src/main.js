@@ -1,7 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Navbar, Loading, Notification, Toast, Field, Input, Datepicker, Select, Switch, Button } from 'buefy'
+import {
+  Navbar,
+  Loading,
+  Notification,
+  Toast, Field, Input,
+  Datepicker,
+  Select,
+  Switch,
+  Button,
+  Upload,
+  Icon,
+  Progress
+} from 'buefy'
 import store from './store'
 
 require('@/store/subscriber')
@@ -16,6 +28,9 @@ Vue.use(Datepicker)
 Vue.use(Select)
 Vue.use(Switch)
 Vue.use(Button)
+Vue.use(Upload)
+Vue.use(Icon)
+Vue.use(Progress)
 
 Vue.config.productionTip = false
 

@@ -19,7 +19,10 @@
           label="Menu"
           right
         >
-          <b-navbar-item href="#">
+          <b-navbar-item
+            tag="router-link"
+            to="/upload"
+          >
             <span class="icon"><i class="fas fa-upload" /></span>
             <span>Lisää kuvia</span>
           </b-navbar-item>

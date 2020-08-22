@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 const Album = () => import('./views/Album.vue')
 const AlbumNew = () => import('./views/AlbumNew')
 const Login = () => import('./views/Login.vue')
+const Upload = () => import('./views/Upload.vue')
 
 Vue.use(Router)
 
@@ -25,6 +26,12 @@ export default new Router({
       path: '/new-album',
       name: 'albumnew',
       component: AlbumNew,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/upload',
+      name: 'upload',
+      component: Upload,
       meta: { requiresAuth: true }
     },
     {

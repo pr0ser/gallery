@@ -100,6 +100,7 @@
             <b-button
               type="is-info"
               :class="{ 'is-loading': loading }"
+              :disabled="!albumDetails.title || !albumDetails.description"
               @click="SubmitAlbum"
             >
               Tallenna
