@@ -76,6 +76,17 @@ $progress-bar-background-color: $form-input-background-color;
 .select select option {
   color: $base-text-color;
 }
+
+// Buefy date picker override
 .datepicker .dropdown-content {
   background-color: #181818;
+}
+
+//Buefy upload override
+.upload .upload-draggable:hover.is-primary {
+  border-color: #4eaffd;
+}
+
+.upload .upload-draggable:hover.is-primary {
+  background: rgba(0, 78, 175, 0.05)
 }

@@ -32,6 +32,7 @@
               v-model="files"
               multiple
               drag-drop
+              accept="image/*"
               expanded
             >
               <section class="section">
