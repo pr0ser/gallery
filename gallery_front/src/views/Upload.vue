@@ -64,6 +64,7 @@
             </span>
           </div>
           <b-progress
+            v-if="uploadStarted"
             size="is-large"
             type="is-info"
             show-value
@@ -101,6 +102,7 @@ export default {
       loading: true,
       error: false,
       albums: {},
+      uploadStarted: false,
       uploadComplete: false,
       uploadPercentage: 0,
       album: null,
@@ -128,6 +130,7 @@ export default {
     upload: function () {
       this.error = false
       this.loading = true
+      this.uploadStarted = true
       let formData = new FormData()
       this.files.forEach(file => formData.append('files', file))
       formData.append('album', this.album)
