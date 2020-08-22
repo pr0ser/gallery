@@ -32,6 +32,7 @@
               v-model="files"
               multiple
               drag-drop
+              type="is-info"
               accept="image/*"
               expanded
             >
