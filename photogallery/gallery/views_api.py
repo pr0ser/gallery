@@ -57,7 +57,7 @@ class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class PhotoUpload2(APIView):
+class PhotoUpload(APIView):
     parser_classes = (FormParser, MultiPartParser)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 

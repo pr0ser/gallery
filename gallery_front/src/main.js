@@ -12,7 +12,9 @@ import {
   Button,
   Upload,
   Icon,
-  Progress
+  Progress,
+  Dropdown,
+  Dialog
 } from 'buefy'
 import store from './store'
 
@@ -31,6 +33,8 @@ Vue.use(Button)
 Vue.use(Upload)
 Vue.use(Icon)
 Vue.use(Progress)
+Vue.use(Dropdown)
+Vue.use(Dialog)
 
 Vue.config.productionTip = false
 

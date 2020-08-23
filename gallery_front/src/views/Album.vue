@@ -8,6 +8,12 @@
         :current-page="album.title"
       />
       <section class="section container">
+        <div class="is-pulled-right">
+          <AlbumActionsButton
+            v-if="authenticated"
+            :album-id="album.id"
+          />
+        </div>
         <h1 class="title">
           {{ album.title }}
         </h1>
@@ -109,12 +115,14 @@
 <script>
 import Breadcrumb from '../components/Breadcrumb'
 import AlbumList from '../components/AlbumList'
+import AlbumActionsButton from '@/components/AlbumActionsButton'
 import ErrorMessage from '@/components/ErrorMessage'
 import axios from '../axios'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Album',
-  components: { ErrorMessage, AlbumList, Breadcrumb },
+  components: { ErrorMessage, AlbumList, Breadcrumb, AlbumActionsButton },
   data () {
     return {
       loading: true,
@@ -142,7 +150,11 @@ export default {
           return photos.sort((a, b) => (a.date < b.date) ? 1 : -1)
       }
       return photos
-    }
+    },
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+      user: 'auth/user'
+    })
   },
   watch: {
     $route (to, from) {

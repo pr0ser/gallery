@@ -41,5 +41,5 @@ urlpatterns = [
     url('api/', include(router.urls)),
     url('api/albums', AlbumList.as_view(), name="album-list"),
     url('api/albums/<int:pk>', AlbumDetail.as_view(), name='album-detail'),
-    url('api/upload', PhotoUpload2.as_view(), name="upload")
+    url('api/upload', PhotoUpload.as_view(), name="upload")
 ]

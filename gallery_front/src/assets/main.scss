@@ -60,6 +60,22 @@ $input-focus-border-color: darken($link, 40);
 // Progress bar
 $progress-bar-background-color: $form-input-background-color;
 
+// Dropdown
+$dropdown-content-background-color: $box-background-color;
+$dropdown-item-color: $base-title-color;
+$dropdown-item-hover-color: $base-title-color;
+$dropdown-item-hover-background-color: lighten($dropdown-content-background-color, 5);
+
+// Modal
+$modal-card-body-background-color: $card-background-color;
+$modal-card-head-background-color: darken($card-background-color, 4);
+$modal-card-foot-border-top: 1px solid $base-border-color;
+
+// Button
+$button-background-color: lighten($base-background-color, 10);
+$button-border-color: $base-border-color;
+$button-hover-border-color: lighten($input-border-color, 20);
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
 

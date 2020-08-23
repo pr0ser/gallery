@@ -23,7 +23,7 @@
                 :key="alb.id"
                 :value="alb.id"
               >
-                {{ album.title }}
+                {{ alb.title }}
               </option>
             </b-select>
           </b-field>

@@ -6,12 +6,13 @@ module.exports = {
   },
 
   extends: [
-    'plugin:vue/recommended',
-    '@vue/standard'
+    '@vue/standard',
+    'plugin:vue/recommended'
   ],
 
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
+    sourceType: 'module'
   },
 
   rules: {
