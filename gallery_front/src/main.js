@@ -61,10 +61,10 @@ store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
 
 Vue.filter('formatDate', function (value) {
   if (value) {
-    let date = new Date(value)
-    let year = date.getFullYear()
-    let month = date.getMonth() + 1
-    let day = date.getDate()
+    const date = new Date(value)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
 
     return day + '.' + month + '.' + year
   }
@@ -75,8 +75,8 @@ Vue.filter('truncate', function (text, stop, clamp) {
 })
 
 Vue.filter('striphtml', function (value) {
-  let div = document.createElement('div')
+  const div = document.createElement('div')
   div.innerHTML = value
-  let text = div.textContent || div.innerText || ''
+  const text = div.textContent || div.innerText || ''
   return text
 })

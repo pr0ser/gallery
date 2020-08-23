@@ -36,10 +36,10 @@ export default {
   },
   methods: {
     getCoverPhotos: function (album) {
-      if (album['album_cover']) {
+      if (album.album_cover) {
         return {
-          'small': album.album_cover.thumbnail_img,
-          'large': album.album_cover.hidpi_thumbnail_img
+          small: album.album_cover.thumbnail_img,
+          large: album.album_cover.hidpi_thumbnail_img
         }
       } else {
         return {}

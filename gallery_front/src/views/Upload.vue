@@ -19,9 +19,9 @@
               expanded
             >
               <option
-                v-for="album in albums"
-                :key="album.id"
-                :value="album.id"
+                v-for="alb in albums"
+                :key="alb.id"
+                :value="alb.id"
               >
                 {{ album.title }}
               </option>
@@ -133,7 +133,7 @@ export default {
       this.error = false
       this.loading = true
       this.uploadStarted = true
-      let formData = new FormData()
+      const formData = new FormData()
       this.files.forEach(file => formData.append('files', file))
       formData.append('album', this.album)
 

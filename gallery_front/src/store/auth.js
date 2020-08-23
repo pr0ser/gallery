@@ -30,7 +30,7 @@ export default {
 
   actions: {
     async signIn ({ dispatch }, credentials) {
-      let response = await axios.post('auth/login', credentials)
+      const response = await axios.post('auth/login', credentials)
       return dispatch('attempt', response.data.auth_token)
     },
 
@@ -44,7 +44,7 @@ export default {
       }
 
       try {
-        let response = await axios.get('auth/users/me/')
+        const response = await axios.get('auth/users/me/')
         commit('SET_USER', response.data)
       } catch (e) {
         if (e.response.status === 401) {

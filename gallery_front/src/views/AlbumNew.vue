@@ -153,7 +153,7 @@ export default {
         })
     },
     formatDate: function () {
-      let date = this.date
+      const date = this.date
       return new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
         .toISOString()
         .split('T')[0]
