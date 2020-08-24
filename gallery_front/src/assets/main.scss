@@ -75,6 +75,7 @@ $modal-card-foot-border-top: 1px solid $base-border-color;
 $button-background-color: lighten($base-background-color, 10);
 $button-border-color: $base-border-color;
 $button-hover-border-color: lighten($input-border-color, 20);
+$button-hover-color: $base-title-color;
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');

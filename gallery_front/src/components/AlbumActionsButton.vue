@@ -2,7 +2,6 @@
   <div id="album-actions-button">
     <b-dropdown
       position="is-bottom-left"
-      :append-to-body="true"
     >
       <button
         slot="trigger"
@@ -22,17 +21,22 @@
 
       <b-dropdown-item
         aria-role="listitem"
+        has-link
       >
-        <div class="media">
-          <b-icon
-            class="media-left"
-            icon="edit"
-            pack="fas"
-          />
-          <div class="media-content">
-            <h3>Muokkaa</h3>
+        <router-link
+          :to="{ name: 'albumEdit', params: {id: albumId }}"
+        >
+          <div class="media">
+            <b-icon
+              class="media-left"
+              icon="edit"
+              pack="fas"
+            />
+            <div class="media-content">
+              <h3>Muokkaa</h3>
+            </div>
           </div>
-        </div>
+        </router-link>
       </b-dropdown-item>
 
       <b-dropdown-item
@@ -76,7 +80,6 @@ export default {
     },
     deleteAlbum () {
       axios.delete('albums/' + this.albumId).then(response => {
-        console.log(response)
         this.$buefy.toast.open({
           message: 'Albumi poistettiin.',
           type: 'is-info',
@@ -86,6 +89,11 @@ export default {
       })
         .catch(error => {
           console.log(error)
+          this.$buefy.toast.open({
+            message: 'Albumin poisto epäonnistui.',
+            type: 'is-danger',
+            duration: 3000
+          })
         })
     }
   }

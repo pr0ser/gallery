@@ -71,7 +71,12 @@ class AlbumSerializer(serializers.ModelSerializer):
             'public',
             'sort_order',
             'subalbums',
-            'photos'
+            'photos',
+            'parent',
+            'sort_order',
+            'downloadable',
+            'show_metadata',
+            'show_location'
         )
 
     def get_parent_albums(self, obj):

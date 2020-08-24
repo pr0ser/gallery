@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 const Album = () => import('./views/Album.vue')
 const AlbumNew = () => import('./views/AlbumNew')
+const AlbumEdit = () => import('./views/AlbumEdit.vue')
 const Login = () => import('./views/Login.vue')
 const Upload = () => import('./views/Upload.vue')
 
@@ -21,6 +22,11 @@ export default new Router({
       path: '/album/:id',
       name: 'album',
       component: Album
+    },
+    {
+      path: '/album/:id/edit',
+      name: 'albumEdit',
+      component: AlbumEdit
     },
     {
       path: '/new-album',
