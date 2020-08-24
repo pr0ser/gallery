@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import store from '@/store'
 import Home from './views/Home.vue'
-const Album = () => import('./views/Album.vue')
-const AlbumNew = () => import('./views/AlbumNew')
-const AlbumEdit = () => import('./views/AlbumEdit.vue')
+import Album from './views/Album.vue'
 const Login = () => import('./views/Login.vue')
-const Upload = () => import('./views/Upload.vue')
+const AlbumNew = () => import(/* webpackChunkName: "authenticated" */ './views/AlbumNew')
+const AlbumEdit = () => import(/* webpackChunkName: "authenticated" */ './views/AlbumEdit.vue')
+const Upload = () => import(/* webpackChunkName: "authenticated" */ './views/Upload.vue')
 
 Vue.use(Router)
 
