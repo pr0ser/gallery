@@ -143,7 +143,7 @@ export default {
       this.error = false
       axios.get('/all-albums')
         .then(response => {
-          this.parentAlbums = response.data.results
+          this.parentAlbums = response.data
           this.loading = false
         })
         .catch(error => {

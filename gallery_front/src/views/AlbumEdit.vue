@@ -146,7 +146,7 @@ export default {
     getParentAlbums: function () {
       axios.get('/all-albums')
         .then(response => {
-          this.parentAlbums = response.data.results
+          this.parentAlbums = response.data
           this.stringToDate()
         })
         .catch(error => {

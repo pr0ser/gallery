@@ -124,7 +124,7 @@ export default {
       this.error = false
       axios.get('/all-albums')
         .then(response => {
-          this.albums = response.data.results
+          this.albums = response.data
           if (this.albumId) {
             this.album = this.albumId
           }
