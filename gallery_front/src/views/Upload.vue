@@ -99,6 +99,13 @@ import axios from '@/axios'
 
 export default {
   name: 'Upload',
+  props: {
+    albumId: {
+      type: Number,
+      required: false,
+      default: null
+    }
+  },
   data () {
     return {
       loading: true,
@@ -121,6 +128,9 @@ export default {
       axios.get('albums')
         .then(response => {
           this.albums = response.data.results
+          if (this.albumId) {
+            this.album = this.albumId
+          }
           this.loading = false
         })
         .catch(error => {

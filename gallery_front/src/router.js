@@ -37,6 +37,7 @@ export default new Router({
       path: '/upload',
       name: 'upload',
       component: Upload,
+      props: true,
       meta: { requiresAuth: true }
     },
     {

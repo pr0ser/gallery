@@ -23,6 +23,24 @@
         aria-role="listitem"
         has-link
       >
+        <router-link :to="{ name: 'upload', params: {albumId: albumId }}">
+          <div class="media">
+            <b-icon
+              class="media-left"
+              icon="plus"
+              pack="fas"
+            />
+            <div class="media-content">
+              <h3>Lisää kuvia</h3>
+            </div>
+          </div>
+        </router-link>
+      </b-dropdown-item>
+
+      <b-dropdown-item
+        aria-role="listitem"
+        has-link
+      >
         <router-link
           :to="{ name: 'albumEdit', params: {id: albumId }}"
         >
