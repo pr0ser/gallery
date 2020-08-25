@@ -8,9 +8,7 @@
           class="box"
         >
           <h1 class="title is-4">
-            <span class="icon is-large">
-              <i class="fas fa-upload" />
-            </span>
+            <b-icon icon="upload" />
             Lisää kuvia
           </h1>
           <b-field label="Albumi">
@@ -42,7 +40,6 @@
                     <b-icon
                       icon="upload"
                       size="is-large"
-                      pack="fas"
                     />
                   </p>
                   <p>Raahaa kuvat tähän tai klikkaa.</p>

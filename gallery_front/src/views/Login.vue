@@ -12,59 +12,48 @@
           class="box"
         >
           <h1 class="title is-4">
-            <span class="icon is-large">
-              <i class="fas fa-sign-in-alt" />
-            </span>
+            <b-icon icon="sign-in-alt" />
             Kirjaudu sisään
           </h1>
           <form
             class="is-large"
             @submit.prevent="login()"
           >
-            <div class="field">
-              <p class="control has-icons-left">
-                <input
-                  v-model="credentials.username"
-                  class="input is-medium"
-                  type="text"
-                  placeholder="Käyttäjätunnus"
-                  required
-                >
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user" />
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input
-                  v-model="credentials.password"
-                  class="input is-medium"
-                  type="password"
-                  placeholder="Salasana"
-                  required
-                >
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock" />
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button
-                  type="submit"
-                  class="button is-info is-medium is-fullwidth"
-                  :class="{ 'is-loading': loading }"
-                >
-                  Kirjaudu
-                </button>
-              </p>
-            </div>
+            <b-field>
+              <b-input
+                v-model="credentials.username"
+                placeholder="Käyttäjätunnus"
+                icon="user"
+                size="is-medium"
+                required
+              />
+            </b-field>
+
+            <b-field>
+              <b-input
+                v-model="credentials.password"
+                placeholder="Salasana"
+                icon="lock"
+                size="is-medium"
+                type="password"
+                required
+              />
+            </b-field>
+
+            <b-field>
+              <button
+                type="submit"
+                class="button is-info is-medium is-fullwidth"
+                :class="{ 'is-loading': loading }"
+              >
+                Kirjaudu
+              </button>
+            </b-field>
+
             <b-notification
               :active.sync="error"
               type="is-danger"
               has-icon
-              icon-pack="fas"
               aria-close-label="Sulje ilmoitus"
               role="alert"
             >

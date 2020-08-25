@@ -8,9 +8,7 @@
           class="box"
         >
           <h1 class="title is-4">
-            <span class="icon is-large">
-              <i class="fas fa-edit" />
-            </span>
+            <b-icon icon="edit" />
             Muokkaa albumia
           </h1>
           <b-field label="Nimi">
@@ -31,7 +29,6 @@
             <b-datepicker
               v-model="date"
               locale="fi-FI"
-              icon-pack="fas"
               :first-day-of-week="1"
               required
             />

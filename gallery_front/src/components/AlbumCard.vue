@@ -33,9 +33,7 @@
       <footer class="card-footer">
         <div class="card-footer-item level content">
           <div class="level-left ">
-            <span class="icon">
-              <i class="fas fa-image" />
-            </span>
+            <b-icon icon="image" />
             {{ photoCount }}
           </div>
           <div class="level-right">
@@ -44,7 +42,7 @@
               v-if="!isPublic"
               class="icon"
             >
-              <i class="fas fa-lock" />
+              <b-icon icon="lock" />
             </span>
           </div>
         </div>

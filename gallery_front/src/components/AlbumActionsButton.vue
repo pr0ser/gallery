@@ -8,15 +8,9 @@
         class="button is-dark"
         type="button"
       >
-        <b-icon
-          icon="cog"
-          pack="fas"
-        />
+        <b-icon icon="cog" />
         <span>Muokkaa</span>
-        <b-icon
-          icon="caret-down"
-          pack="fas"
-        />
+        <b-icon icon="caret-down" />
       </button>
 
       <b-dropdown-item
@@ -28,7 +22,6 @@
             <b-icon
               class="media-left"
               icon="plus"
-              pack="fas"
             />
             <div class="media-content">
               <h3>Lisää kuvia</h3>
@@ -48,7 +41,6 @@
             <b-icon
               class="media-left"
               icon="edit"
-              pack="fas"
             />
             <div class="media-content">
               <h3>Muokkaa</h3>
@@ -64,7 +56,6 @@
           <b-icon
             class="media-left"
             icon="trash-alt"
-            pack="fas"
           />
           <div class="media-content">
             <h3>Poista</h3>

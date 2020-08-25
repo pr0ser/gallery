@@ -1,40 +1,52 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import {
-  Navbar,
-  Loading,
-  Notification,
-  Toast, Field, Input,
-  Datepicker,
-  Select,
-  Switch,
-  Button,
-  Upload,
-  Icon,
-  Progress,
-  Dropdown,
-  Dialog
-} from 'buefy'
+import Buefy from 'buefy'
 import store from './store'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faUpload,
+  faEdit,
+  faTrashAlt,
+  faCog,
+  faSignInAlt,
+  faSignOutAlt,
+  faCaretDown,
+  faPlus,
+  faImage,
+  faLock,
+  faAngleLeft,
+  faAngleRight,
+  faExclamationCircle,
+  faUser
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(
+  faUpload,
+  faEdit,
+  faTrashAlt,
+  faCog,
+  faSignInAlt,
+  faSignOutAlt,
+  faCaretDown,
+  faPlus,
+  faImage,
+  faLock,
+  faAngleLeft,
+  faAngleRight,
+  faExclamationCircle,
+  faUser
+)
+
+Vue.component('vue-fontawesome', FontAwesomeIcon)
 
 require('@/store/subscriber')
 
-Vue.use(Navbar)
-Vue.use(Loading)
-Vue.use(Notification)
-Vue.use(Toast)
-Vue.use(Field)
-Vue.use(Input)
-Vue.use(Datepicker)
-Vue.use(Select)
-Vue.use(Switch)
-Vue.use(Button)
-Vue.use(Upload)
-Vue.use(Icon)
-Vue.use(Progress)
-Vue.use(Dropdown)
-Vue.use(Dialog)
+Vue.use(Buefy, {
+  defaultIconComponent: 'vue-fontawesome',
+  defaultIconPack: 'fas'
+})
 
 Vue.config.productionTip = false
 
