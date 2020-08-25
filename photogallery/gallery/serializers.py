@@ -94,6 +94,22 @@ class AlbumSerializer(serializers.ModelSerializer):
         return albums
 
 
+class AllAlbumsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = (
+            'id',
+            'title',
+            'date',
+            'description',
+            'public',
+            'sort_order',
+            'downloadable',
+            'show_metadata',
+            'show_location'
+        )
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

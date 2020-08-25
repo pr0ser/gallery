@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Album, Photo
-from .serializers import AlbumListSerializer, AlbumSerializer
+from .serializers import AlbumListSerializer, AlbumSerializer, AllAlbumsSerializer
 
 log = getLogger(__name__)
 
@@ -55,6 +55,12 @@ class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
     )
     serializer_class = AlbumSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class AllAlbumsList(generics.ListAPIView):
+    serializer_class = AlbumListSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Album.objects.all()
 
 
 class PhotoUpload(APIView):

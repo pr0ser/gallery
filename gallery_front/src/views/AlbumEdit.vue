@@ -134,7 +134,7 @@ export default {
   methods: {
     getData: function () {
       this.error = false
-      axios.get('albums/' + this.$route.params.id)
+      axios.get('/albums/' + this.$route.params.id)
         .then(response => {
           this.albumDetails = response.data
           this.loading = false
@@ -147,7 +147,7 @@ export default {
         })
     },
     getParentAlbums: function () {
-      axios.get('albums')
+      axios.get('/all-albums')
         .then(response => {
           this.parentAlbums = response.data.results
           this.stringToDate()
