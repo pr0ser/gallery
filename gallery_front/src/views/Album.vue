@@ -49,14 +49,13 @@
             class="column is-one-quarter-fullhd is-one-quarter-desktop is-one-quarter-tablet is-half-mobile"
           >
             <a @click="openModal(photo)">
-              <figure class="image">
-                <img
-                  :src="photo.thumbnail_img"
-                  :srcset="photo.thumbnail_img + ' 300w, ' + photo.hidpi_thumbnail_img + ' 600w,'"
-                  :alt="photo.title"
-                  loading="lazy"
-                >
-              </figure>
+              <b-image
+                :src="photo.thumbnail_img"
+                :srcset="photo.thumbnail_img + ' 330w, ' + photo.hidpi_thumbnail_img + ' 600w'"
+                :alt="photo.title"
+                ratio="1by1"
+                :lazy="true"
+              />
             </a>
           </div>
         </div>

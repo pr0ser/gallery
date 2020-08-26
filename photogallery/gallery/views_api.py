@@ -58,7 +58,7 @@ class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class AllAlbumsList(generics.ListAPIView):
-    serializer_class = AlbumListSerializer
+    serializer_class = AllAlbumsSerializer
     permission_classes = (permissions.IsAuthenticated,)
     pagination_class = None
     queryset = Album.objects.all()
