@@ -51,9 +51,10 @@
             <a @click="openModal(photo)">
               <b-image
                 :src="photo.thumbnail_img"
-                :srcset="photo.thumbnail_img + ' 330w, ' + photo.hidpi_thumbnail_img + ' 600w'"
+                :srcset="photo.thumbnail_img + ' 380w, ' + photo.hidpi_thumbnail_img + ' 600w'"
                 :alt="photo.title"
                 ratio="1by1"
+                responsive
                 :lazy="true"
               />
             </a>
@@ -74,7 +75,7 @@
                 v-show="!isPhotoLoading"
                 id="photo"
                 :src="getPreviewPhoto('small')"
-                :srcset="getPreviewPhoto('small') + ' 884w, ' + getPreviewPhoto('large') + ' 1560w'"
+                :srcset="getPreviewPhoto('small') + ' 1327w, ' + getPreviewPhoto('large') + ' 2340w'"
                 sizes="100vw"
                 :alt="selectedPhoto.title"
                 @load="showPhoto"

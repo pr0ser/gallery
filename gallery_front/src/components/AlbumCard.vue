@@ -3,19 +3,23 @@
     <div class="card">
       <div class="card-image">
         <figure class="image">
-          <img
+          <b-image
             v-if="coverPhotos.small"
             :src="coverPhotos.small"
-            :srcset="coverPhotos.small + ' 330w, ' + coverPhotos.large + ' 600w'"
+            :srcset="coverPhotos.small + ' 380w, ' + coverPhotos.large + ' 600w'"
             :alt="title"
-            loading="lazy"
-          >
-          <img
+            :lazy="true"
+            responsive
+            ratio="1by1"
+          />
+          <b-image
             v-else
-            src="../assets/no_image.png"
+            :src="placeholderImg"
             alt="Ei kuvaa"
-            loading="lazy"
-          >
+            :lazy="true"
+            responsive
+            ratio="1by1"
+          />
         </figure>
       </div>
       <div class="card-content">
@@ -87,6 +91,12 @@ export default {
       type: Boolean,
       required: true,
       default: true
+    }
+  },
+  computed: {
+    placeholderImg () {
+      return require('../assets/no_image.png')
+    // The path could be '../assets/img.png', etc., which depends on where your vue file is
     }
   }
 }
