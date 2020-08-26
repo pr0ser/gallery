@@ -2,25 +2,23 @@
   <router-link :to="'/album/' + id">
     <div class="card">
       <div class="card-image">
-        <figure class="image">
-          <b-image
-            v-if="coverPhotos.small"
-            :src="coverPhotos.small"
-            :srcset="coverPhotos.small + ' 380w, ' + coverPhotos.large + ' 600w'"
-            :alt="title"
-            :lazy="true"
-            responsive
-            ratio="1by1"
-          />
-          <b-image
-            v-else
-            :src="placeholderImg"
-            alt="Ei kuvaa"
-            :lazy="true"
-            responsive
-            ratio="1by1"
-          />
-        </figure>
+        <b-image
+          v-if="coverPhotos.small"
+          :src="coverPhotos.small"
+          :srcset="coverPhotos.small + ' 380w, ' + coverPhotos.large + ' 600w'"
+          :alt="title"
+          :lazy="true"
+          responsive
+          ratio="1by1"
+        />
+        <b-image
+          v-else
+          :src="placeholderImg"
+          alt="Ei kuvaa"
+          :lazy="true"
+          responsive
+          ratio="1by1"
+        />
       </div>
       <div class="card-content">
         <div class="content">
@@ -96,13 +94,12 @@ export default {
   computed: {
     placeholderImg () {
       return require('../assets/no_image.png')
-    // The path could be '../assets/img.png', etc., which depends on where your vue file is
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .card {
    display: flex;
    flex-direction: column;
