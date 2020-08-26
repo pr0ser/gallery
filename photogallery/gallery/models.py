@@ -426,7 +426,7 @@ class Photo(models.Model):
 
     def create_thumbnails(self):
         self.create_thumbnail(
-            size=330,
+            size=380,
             quality=80,
             output_file=self.thumbnail_img_filename
         )
