@@ -191,8 +191,8 @@ class TestNewPhoto(TestCase):
 
     def test_thumbnail_img(self):
         self.assertTrue(bool(self.photo.thumbnail_img))
-        self.assertEqual(self.photo.thumbnail_img.width, 330)
-        self.assertEqual(self.photo.thumbnail_img.height, 330)
+        self.assertEqual(self.photo.thumbnail_img.width, 380)
+        self.assertEqual(self.photo.thumbnail_img.height, 380)
         self.assertEqual(
             self.photo.thumbnail_img.name,
             path.join(self.photo.preview_dir(), self.photo.thumbnail_img_filename)
