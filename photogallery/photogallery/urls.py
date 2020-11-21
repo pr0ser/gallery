@@ -33,7 +33,10 @@ urlpatterns = [
     url('api/auth/logout', TokenDestroyView.as_view()),
 ]
 
-if settings.DEBUG:
+if settings.DEBUG or settings.TESTING_MODE:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     import debug_toolbar
-    urlpatterns = [re_path(r'^__debug__/', include(debug_toolbar.urls))] + urlpatterns
+
+    urlpatterns += [
+        url(r'__debug__/', include(debug_toolbar.urls)),
+    ]

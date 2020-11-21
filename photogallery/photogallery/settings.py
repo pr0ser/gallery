@@ -3,6 +3,7 @@ Django settings for gallery project.
 
 """
 
+import sys
 from ast import literal_eval
 from os import path, environ
 
@@ -253,7 +254,9 @@ CORS_ALLOW_HEADERS = (
 CORS_ALLOW_CREDENTIALS = True
 
 # Debug configuration
-if DEBUG:
+TESTING_MODE = 'test' in sys.argv
+
+if DEBUG and not TESTING_MODE:
     INTERNAL_IPS = ('127.0.0.1', '172.18.0.1', '172.19.0.1')
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     INSTALLED_APPS += ['debug_toolbar']
