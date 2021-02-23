@@ -6,7 +6,7 @@ WORKDIR /gallery
 ADD requirements.txt /gallery/
 ARG SIMD_LEVEL=avx2
 RUN apk add --update --no-cache libjpeg-turbo-dev postgresql-dev gettext libffi-dev \
-    && apk add --update --no-cache --virtual .build-deps build-base zlib-dev \
+    && apk add --update --no-cache --virtual .build-deps build-base zlib-dev gcc musl-dev python3-dev libffi-dev openssl-dev cargo \
     && CC="cc -m$SIMD_LEVEL" pip install --no-cache-dir -r requirements.txt \
     && apk del .build-deps \
     && addgroup -S -g 1001 gallery \
